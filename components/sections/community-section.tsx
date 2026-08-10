@@ -144,16 +144,13 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
 
   const toggleLike = async (experienceId: string) => {
     if (!user) return
-
     const isLiked = likedIds.has(experienceId)
 
-    if (isLiked) {
-      await supabase
-        .from('experience_likes')
-        .delete()
-        .eq('user_id', user.id)
-        .eq('experience_id', experienceId)
+    // Snapshot para reverter se a escrita no banco falhar
+    const prevLikedIds = new Set(likedIds)
+    const prevExperiences = [...experiences]
 
+    if (isLiked) {
       setLikedIds(prev => {
         const next = new Set(prev)
         next.delete(experienceId)
@@ -163,14 +160,26 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
         prev.map(e => e.id === experienceId ? { ...e, likes_count: e.likes_count - 1 } : e)
       )
     } else {
-      await supabase
-        .from('experience_likes')
-        .insert({ user_id: user.id, experience_id: experienceId })
-
       setLikedIds(prev => new Set(prev).add(experienceId))
       setExperiences(prev =>
         prev.map(e => e.id === experienceId ? { ...e, likes_count: e.likes_count + 1 } : e)
       )
+    }
+
+    const { error } = isLiked
+      ? await supabase
+        .from('experience_likes')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('experience_id', experienceId)
+      : await supabase
+        .from('experience_likes')
+        .insert({ user_id: user.id, experience_id: experienceId })
+
+    if (error) {
+      setLikedIds(prevLikedIds)
+      setExperiences(prevExperiences)
+      toast.error('Erro ao curtir. Verifique sua conexão.')
     }
   }
 
