@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '@/contexts/auth-context'
 import { createClient } from '@/lib/supabase/client'
-import type { Experience, ForumTopic, Profile, RIASECType, CommunityTab } from '@/lib/types'
+import type { Experience, ForumTopic, Profile, RIASECType, CommunityTab, ForumReply } from '@/lib/types'
 import { RIASEC_INFO } from '@/lib/types'
 import { 
   MessageSquare, 
@@ -712,32 +712,37 @@ function TopicFormModal({
 
 function TopicDetail({ topic, onBack }: { topic: ForumTopic; onBack: () => void }) {
   const { user, profile, awardBadge } = useAuth()
-  const [replies, setReplies] = useState<any[]>([])
+  const [replies, setReplies] = useState<ForumReply[]>([])
   const [loading, setLoading] = useState(true)
   const [replyContent, setReplyContent] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const supabase = createClient()
 
-  useEffect(() => {
-    const fetchReplies = async () => {
-      const { data } = await supabase
-        .from('forum_replies')
-        .select('*, profiles(display_name, avatar_url, is_specialist, specialist_area)')
-        .eq('topic_id', topic.id)
-        .order('created_at', { ascending: true })
+useEffect(() => {
+  let cancelled = false
 
-      setReplies(data || [])
-      setLoading(false)
+  const fetchReplies = async () => {
+    const { data } = await supabase
+      .from('forum_replies')
+      .select('*, profiles(display_name, avatar_url, is_specialist, specialist_area)')
+      .eq('topic_id', topic.id)
+      .order('created_at', { ascending: true })
 
-      // Increment view count
-      await supabase
-        .from('forum_topics')
-        .update({ views_count: topic.views_count + 1 })
-        .eq('id', topic.id)
-    }
+    if (cancelled) return  // ✅ Não atualiza estado se desmontou
 
-    fetchReplies()
-  }, [supabase, topic.id, topic.views_count])
+    setReplies((data as ForumReply[]) || [])
+    setLoading(false)
+
+    // Usar RPC criado no passo 6
+    await supabase.rpc('increment_topic_views', { topic_id: topic.id })
+  }
+
+  fetchReplies()
+
+  return () => {
+    cancelled = true  // ✅ Cleanup
+  }
+}, [supabase, topic.id]) // ← remover topic.views_count das deps (causa loop!)
 
   const handleSubmitReply = async () => {
     if (!user || !replyContent.trim()) return

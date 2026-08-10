@@ -192,6 +192,14 @@ create policy "Authenticated users can create topics" on public.forum_topics
 create policy "Users can update own topics" on public.forum_topics
   for update using (auth.uid() = user_id);
 
+create or replace function public.increment_topic_views(topic_id uuid)
+returns void language sql security definer set search_path = public
+as $$
+  update public.forum_topics
+  set views_count = views_count + 1
+  where id = topic_id;
+$$;
+
 -- ================================================
 -- FORUM REPLIES TABLE
 -- ================================================
