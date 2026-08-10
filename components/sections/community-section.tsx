@@ -1,5 +1,6 @@
 "use client"
 
+import { toast } from 'sonner'
 import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '@/contexts/auth-context'
 import { createClient } from '@/lib/supabase/client'
