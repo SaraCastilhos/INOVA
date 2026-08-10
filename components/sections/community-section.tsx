@@ -192,7 +192,6 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
 
     await supabase.from('experiences').insert({
       user_id: user.id,
-      author_name: profile?.display_name || 'Usuário',
       profession: data.profession,
       riasec_type: data.riasec_type,
       content: data.content,

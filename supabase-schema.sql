@@ -110,6 +110,26 @@ create policy "Anyone can view approved experiences" on public.experiences
 create policy "Users can insert own experiences" on public.experiences
   for insert with check (auth.uid() = user_id);
 
+-- Preenche author_name a partir do perfil autenticado; impede que o
+-- cliente informe um nome arbitrário na requisição de insert.
+create or replace function public.set_experience_author_name()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+begin
+  new.author_name := (
+    select display_name
+    from public.profiles
+    where id = auth.uid()
+  );
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_set_experience_author on public.experiences;
+create trigger trg_set_experience_author
+  before insert on public.experiences
+  for each row execute procedure public.set_experience_author_name();
+
 -- ================================================
 -- EXPERIENCE LIKES TABLE
 -- ================================================
