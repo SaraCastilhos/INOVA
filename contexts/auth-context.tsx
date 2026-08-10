@@ -186,16 +186,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
 
     if (!error) {
-      await refreshProfile()
-      // Award badge for first test
-      if (testResults.length === 0) {
-        await awardBadge('first_test')
-      }
-      if (testResults.length === 2) {
-        await awardBadge('test_master')
-      }
-    }
+    // ✅ Contar diretamente no banco — fonte de verdade
+    const { count } = await supabase
+      .from('test_results')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
 
+    if (count === 1) await awardBadge('first_test')
+    if (count === 3) await awardBadge('test_master')
+
+    await refreshProfile()
+  }
     return { error: error ? new Error(error.message) : null }
   }
 
