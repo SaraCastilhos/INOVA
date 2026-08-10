@@ -5,9 +5,9 @@ import { useAuth } from '@/contexts/auth-context'
 import { createClient } from '@/lib/supabase/client'
 import type { Experience, ForumTopic, Profile, RIASECType, CommunityTab, ForumReply } from '@/lib/types'
 import { RIASEC_INFO } from '@/lib/types'
-import { 
-  MessageSquare, 
-  Users, 
+import {
+  MessageSquare,
+  Users,
   Award,
   Heart,
   Clock,
@@ -50,11 +50,10 @@ export function CommunitySection() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-medium text-sm transition-all ${
-                activeTab === tab.id
-                  ? 'bg-card text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-medium text-sm transition-all ${activeTab === tab.id
+                ? 'bg-card text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
+                }`}
             >
               <Icon className="w-4 h-4" />
               <span className="hidden sm:inline">{tab.label}</span>
@@ -69,11 +68,10 @@ export function CommunitySection() {
           <Filter className="w-4 h-4 text-muted-foreground shrink-0" />
           <button
             onClick={() => setTypeFilter('all')}
-            className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-              typeFilter === 'all'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground hover:text-foreground'
-            }`}
+            className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${typeFilter === 'all'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-muted text-muted-foreground hover:text-foreground'
+              }`}
           >
             Todos
           </button>
@@ -81,11 +79,10 @@ export function CommunitySection() {
             <button
               key={type}
               onClick={() => setTypeFilter(type)}
-              className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-                typeFilter === type
-                  ? 'text-white'
-                  : 'bg-muted text-muted-foreground hover:text-foreground'
-              }`}
+              className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${typeFilter === type
+                ? 'text-white'
+                : 'bg-muted text-muted-foreground hover:text-foreground'
+                }`}
               style={typeFilter === type ? { backgroundColor: RIASEC_INFO[type].cor } : {}}
             >
               {RIASEC_INFO[type].nome}
@@ -134,7 +131,7 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
       .from('experience_likes')
       .select('experience_id')
       .eq('user_id', user.id)
-    
+
     if (data) {
       setLikedIds(new Set(data.map(l => l.experience_id)))
     }
@@ -149,29 +146,29 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
     if (!user) return
 
     const isLiked = likedIds.has(experienceId)
-    
+
     if (isLiked) {
       await supabase
         .from('experience_likes')
         .delete()
         .eq('user_id', user.id)
         .eq('experience_id', experienceId)
-      
+
       setLikedIds(prev => {
         const next = new Set(prev)
         next.delete(experienceId)
         return next
       })
-      setExperiences(prev => 
+      setExperiences(prev =>
         prev.map(e => e.id === experienceId ? { ...e, likes_count: e.likes_count - 1 } : e)
       )
     } else {
       await supabase
         .from('experience_likes')
         .insert({ user_id: user.id, experience_id: experienceId })
-      
+
       setLikedIds(prev => new Set(prev).add(experienceId))
-      setExperiences(prev => 
+      setExperiences(prev =>
         prev.map(e => e.id === experienceId ? { ...e, likes_count: e.likes_count + 1 } : e)
       )
     }
@@ -184,13 +181,7 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
   }) => {
     if (!user) return
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('display_name')
-      .eq('id', user.id)
-      .single()
-
-    await supabase.from('experiences').insert({
+    const { error } = await supabase.from('experiences').insert({
       user_id: user.id,
       profession: data.profession,
       riasec_type: data.riasec_type,
@@ -198,7 +189,11 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
       status: 'pending'
     })
 
-    // Award badge for first experience
+    if (error) {
+      toast.error('Erro ao enviar depoimento. Tente novamente.')
+      return
+    }
+
     const { count } = await supabase
       .from('experiences')
       .select('*', { count: 'exact', head: true })
@@ -208,6 +203,7 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
       await awardBadge('first_experience')
     }
 
+    toast.success('Depoimento enviado! Será publicado após revisão.')
     setShowForm(false)
     fetchExperiences()
   }
@@ -233,8 +229,8 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
 
       {/* Experience Form Modal */}
       {showForm && (
-        <ExperienceFormModal 
-          onClose={() => setShowForm(false)} 
+        <ExperienceFormModal
+          onClose={() => setShowForm(false)}
           onSubmit={handleSubmitExperience}
         />
       )}
@@ -249,8 +245,8 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
       ) : (
         <div className="space-y-4">
           {experiences.map((exp) => (
-            <ExperienceCard 
-              key={exp.id} 
+            <ExperienceCard
+              key={exp.id}
               experience={exp}
               isLiked={likedIds.has(exp.id)}
               onToggleLike={() => toggleLike(exp.id)}
@@ -262,11 +258,11 @@ function ExperiencesTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
   )
 }
 
-function ExperienceCard({ 
-  experience, 
-  isLiked, 
-  onToggleLike 
-}: { 
+function ExperienceCard({
+  experience,
+  isLiked,
+  onToggleLike
+}: {
   experience: Experience
   isLiked: boolean
   onToggleLike: () => void
@@ -278,7 +274,7 @@ function ExperienceCard({
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <div 
+          <div
             className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold"
             style={{ backgroundColor: typeInfo.cor }}
           >
@@ -294,7 +290,7 @@ function ExperienceCard({
             <p className="text-sm text-muted-foreground">{experience.profession}</p>
           </div>
         </div>
-        <span 
+        <span
           className="px-2.5 py-1 rounded-full text-xs font-medium text-white"
           style={{ backgroundColor: typeInfo.cor }}
         >
@@ -309,9 +305,8 @@ function ExperienceCard({
       <div className="flex items-center justify-between pt-2 border-t border-border">
         <button
           onClick={onToggleLike}
-          className={`flex items-center gap-2 text-sm transition-colors ${
-            isLiked ? 'text-red-500' : 'text-muted-foreground hover:text-red-500'
-          }`}
+          className={`flex items-center gap-2 text-sm transition-colors ${isLiked ? 'text-red-500' : 'text-muted-foreground hover:text-red-500'
+            }`}
         >
           <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
           <span>{experience.likes_count}</span>
@@ -340,7 +335,7 @@ function ExperienceFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!profession.trim() || !content.trim()) return
-    
+
     setSubmitting(true)
     await onSubmit({ profession, riasec_type: riasecType, content })
     setSubmitting(false)
@@ -355,7 +350,7 @@ function ExperienceFormModal({
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -381,11 +376,10 @@ function ExperienceFormModal({
                   key={type}
                   type="button"
                   onClick={() => setRiasecType(type)}
-                  className={`p-2 rounded-lg text-sm font-medium transition-all ${
-                    riasecType === type
-                      ? 'text-white'
-                      : 'bg-muted text-muted-foreground hover:text-foreground'
-                  }`}
+                  className={`p-2 rounded-lg text-sm font-medium transition-all ${riasecType === type
+                    ? 'text-white'
+                    : 'bg-muted text-muted-foreground hover:text-foreground'
+                    }`}
                   style={riasecType === type ? { backgroundColor: RIASEC_INFO[type].cor } : {}}
                 >
                   {RIASEC_INFO[type].nome}
@@ -468,14 +462,18 @@ function ForumTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
   const handleCreateTopic = async (data: { title: string; content: string; riasec_type: RIASECType | null }) => {
     if (!user) return
 
-    await supabase.from('forum_topics').insert({
+    const { error } = await supabase.from('forum_topics').insert({
       user_id: user.id,
       title: data.title,
       content: data.content,
       riasec_type: data.riasec_type
     })
 
-    // Award badge for first topic
+    if (error) {
+      toast.error('Erro ao criar tópico. Tente novamente.')
+      return
+    }
+
     const { count } = await supabase
       .from('forum_topics')
       .select('*', { count: 'exact', head: true })
@@ -485,28 +483,9 @@ function ForumTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
       await awardBadge('first_topic')
     }
 
+    toast.success('Tópico criado com sucesso!')
     setShowForm(false)
     fetchTopics()
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    )
-  }
-
-  if (selectedTopic) {
-    return (
-      <TopicDetail 
-        topic={selectedTopic} 
-        onBack={() => {
-          setSelectedTopic(null)
-          fetchTopics()
-        }} 
-      />
-    )
   }
 
   return (
@@ -522,8 +501,8 @@ function ForumTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
 
       {/* Topic Form Modal */}
       {showForm && (
-        <TopicFormModal 
-          onClose={() => setShowForm(false)} 
+        <TopicFormModal
+          onClose={() => setShowForm(false)}
           onSubmit={handleCreateTopic}
         />
       )}
@@ -538,8 +517,8 @@ function ForumTab({ typeFilter }: { typeFilter: RIASECType | 'all' }) {
       ) : (
         <div className="space-y-3">
           {topics.map((topic) => (
-            <TopicCard 
-              key={topic.id} 
+            <TopicCard
+              key={topic.id}
               topic={topic}
               onClick={() => setSelectedTopic(topic)}
             />
@@ -565,7 +544,7 @@ function TopicCard({ topic, onClick }: { topic: ForumTopic; onClick: () => void 
               </span>
             )}
             {topic.riasec_type && (
-              <span 
+              <span
                 className="px-2 py-0.5 text-xs font-medium rounded text-white"
                 style={{ backgroundColor: RIASEC_INFO[topic.riasec_type].cor }}
               >
@@ -608,7 +587,7 @@ function TopicFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!title.trim() || !content.trim()) return
-    
+
     setSubmitting(true)
     await onSubmit({ title, content, riasec_type: riasecType })
     setSubmitting(false)
@@ -623,7 +602,7 @@ function TopicFormModal({
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -647,11 +626,10 @@ function TopicFormModal({
               <button
                 type="button"
                 onClick={() => setRiasecType(null)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                  riasecType === null
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground'
-                }`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${riasecType === null
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground'
+                  }`}
               >
                 Geral
               </button>
@@ -660,11 +638,10 @@ function TopicFormModal({
                   key={type}
                   type="button"
                   onClick={() => setRiasecType(type)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                    riasecType === type
-                      ? 'text-white'
-                      : 'bg-muted text-muted-foreground'
-                  }`}
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${riasecType === type
+                    ? 'text-white'
+                    : 'bg-muted text-muted-foreground'
+                    }`}
                   style={riasecType === type ? { backgroundColor: RIASEC_INFO[type].cor } : {}}
                 >
                   {RIASEC_INFO[type].nome}
@@ -718,44 +695,49 @@ function TopicDetail({ topic, onBack }: { topic: ForumTopic; onBack: () => void 
   const [submitting, setSubmitting] = useState(false)
   const supabase = createClient()
 
-useEffect(() => {
-  let cancelled = false
+  useEffect(() => {
+    let cancelled = false
 
-  const fetchReplies = async () => {
-    const { data } = await supabase
-      .from('forum_replies')
-      .select('*, profiles(display_name, avatar_url, is_specialist, specialist_area)')
-      .eq('topic_id', topic.id)
-      .order('created_at', { ascending: true })
+    const fetchReplies = async () => {
+      const { data } = await supabase
+        .from('forum_replies')
+        .select('*, profiles(display_name, avatar_url, is_specialist, specialist_area)')
+        .eq('topic_id', topic.id)
+        .order('created_at', { ascending: true })
 
-    if (cancelled) return  // ✅ Não atualiza estado se desmontou
+      if (cancelled) return  // ✅ Não atualiza estado se desmontou
 
-    setReplies((data as ForumReply[]) || [])
-    setLoading(false)
+      setReplies((data as ForumReply[]) || [])
+      setLoading(false)
 
-    // Usar RPC criado no passo 6
-    await supabase.rpc('increment_topic_views', { topic_id: topic.id })
-  }
+      // Usar RPC criado no passo 6
+      await supabase.rpc('increment_topic_views', { topic_id: topic.id })
+    }
 
-  fetchReplies()
+    fetchReplies()
 
-  return () => {
-    cancelled = true  // ✅ Cleanup
-  }
-}, [supabase, topic.id]) // ← remover topic.views_count das deps (causa loop!)
+    return () => {
+      cancelled = true  // ✅ Cleanup
+    }
+  }, [supabase, topic.id]) // ← remover topic.views_count das deps (causa loop!)
 
   const handleSubmitReply = async () => {
     if (!user || !replyContent.trim()) return
 
     setSubmitting(true)
-    await supabase.from('forum_replies').insert({
+    const { error } = await supabase.from('forum_replies').insert({
       topic_id: topic.id,
       user_id: user.id,
       content: replyContent,
       is_specialist_answer: profile?.is_specialist || false
     })
 
-    // Award badge for first reply
+    if (error) {
+      toast.error('Erro ao enviar resposta. Tente novamente.')
+      setSubmitting(false)
+      return
+    }
+
     const { count } = await supabase
       .from('forum_replies')
       .select('*', { count: 'exact', head: true })
@@ -767,15 +749,15 @@ useEffect(() => {
 
     setReplyContent('')
     setSubmitting(false)
+    toast.success('Resposta publicada!')
 
-    // Refresh replies
     const { data } = await supabase
       .from('forum_replies')
       .select('*, profiles(display_name, avatar_url, is_specialist, specialist_area)')
       .eq('topic_id', topic.id)
       .order('created_at', { ascending: true })
 
-    setReplies(data || [])
+    setReplies((data as ForumReply[]) || [])
   }
 
   return (
@@ -793,7 +775,7 @@ useEffect(() => {
       <div className="bg-card rounded-xl border border-border p-6">
         <div className="flex items-center gap-2 mb-3">
           {topic.riasec_type && (
-            <span 
+            <span
               className="px-2.5 py-1 text-xs font-medium rounded text-white"
               style={{ backgroundColor: RIASEC_INFO[topic.riasec_type].cor }}
             >
@@ -825,9 +807,8 @@ useEffect(() => {
           </p>
         ) : (
           replies.map((reply) => (
-            <div key={reply.id} className={`bg-card rounded-xl border p-5 ${
-              reply.is_specialist_answer ? 'border-secondary' : 'border-border'
-            }`}>
+            <div key={reply.id} className={`bg-card rounded-xl border p-5 ${reply.is_specialist_answer ? 'border-secondary' : 'border-border'
+              }`}>
               <div className="flex items-start gap-3 mb-3">
                 <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-medium">
                   {reply.profiles?.display_name?.charAt(0) || 'U'}
@@ -968,7 +949,7 @@ function SpecialistsTab() {
 
       {/* Specialist Request Form Modal */}
       {showRequestForm && (
-        <SpecialistRequestModal 
+        <SpecialistRequestModal
           onClose={() => setShowRequestForm(false)}
           onSubmit={handleRequestSpecialist}
         />
@@ -1025,7 +1006,7 @@ function SpecialistRequestModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!area.trim()) return
-    
+
     setSubmitting(true)
     await onSubmit(area)
     setSubmitting(false)
@@ -1040,7 +1021,7 @@ function SpecialistRequestModal({
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <p className="text-sm text-muted-foreground">
             Informe sua área de atuação profissional. Nossa equipe irá analisar sua solicitação.
