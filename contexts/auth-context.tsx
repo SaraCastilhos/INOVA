@@ -200,26 +200,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: error ? new Error(error.message) : null }
   }
 
-  const awardBadge = async (badgeCode: string) => {
-    if (!user) return
+ const awardBadge = async (badgeCode: string) => {
+  if (!user) return
 
-    const { data: badge } = await supabase
-      .from('badges')
-      .select('id')
-      .eq('code', badgeCode)
-      .single()
+  // ✅ Verificar se já tem o badge antes de tentar inserir
+  const alreadyEarned = badges.some(b => b.badges?.code === badgeCode)
+  if (alreadyEarned) return
 
-    if (badge) {
-      const { error } = await supabase
-        .from('user_badges')
-        .insert({ user_id: user.id, badge_id: badge.id })
+  const { data: badge } = await supabase
+    .from('badges')
+    .select('id')
+    .eq('code', badgeCode)
+    .single()
 
-      if (!error) {
-        const updatedBadges = await fetchBadges(user.id)
-        setBadges(updatedBadges)
-      }
-    }
+  if (!badge) return
+
+  const { error } = await supabase
+    .from('user_badges')
+    .insert({ user_id: user.id, badge_id: badge.id })
+
+  // Constraint unique no banco é a última linha de defesa
+  // O erro de duplicata pode ocorrer em race conditions — é esperado e ignorado
+  if (!error) {
+    const updatedBadges = await fetchBadges(user.id)
+    setBadges(updatedBadges)
   }
+}
 
   return (
     <AuthContext.Provider
