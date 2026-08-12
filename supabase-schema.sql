@@ -164,6 +164,14 @@ create policy "Users can insert own experiences" on public.experiences
     and is_featured = false
   );
 
+create policy "Users can delete own experiences" on public.experiences
+  for delete using (auth.uid() = user_id);
+
+create policy "Admins can delete any experience" on public.experiences
+  for delete using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
 -- Preenche author_name a partir do perfil autenticado; impede que o
 -- cliente informe um nome arbitrário na requisição de insert.
 create or replace function public.set_experience_author_name()
@@ -249,6 +257,14 @@ create policy "Authenticated users can create topics" on public.forum_topics
 
 create policy "Users can update own topics" on public.forum_topics
   for update using (auth.uid() = user_id);
+
+create policy "Users can delete own topics" on public.forum_topics
+  for delete using (auth.uid() = user_id);
+
+create policy "Admins can delete any topic" on public.forum_topics
+  for delete using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
 
 create or replace function public.increment_topic_views(topic_id uuid)
 returns void language sql security definer set search_path = public
