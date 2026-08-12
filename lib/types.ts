@@ -96,23 +96,6 @@ export interface UserBadge {
   badges?: Badge
 }
 
-// Legacy types for compatibility
-export interface UserProfile {
-  userId: string
-  displayName: string
-  userType: 'estudante' | 'profissional' | 'ambos'
-  dataCadastro: string
-  ultimoTeste: RIASECResult | null
-  historicoTestes: RIASECResult[]
-}
-
-export interface RIASECResult {
-  id: string
-  data: string
-  pontuacoes: Record<RIASECType, number>
-  topTipos: RIASECType[]
-}
-
 export interface Profissao {
   id: string
   nome: string
@@ -140,22 +123,6 @@ export interface Universidade {
   cursos: string[]
   formasIngresso: string[]
   link: string
-}
-
-export interface Depoimento {
-  id: string
-  profissao: string
-  autor: string
-  tempoExperiencia: string
-  tipoRIASEC: RIASECType
-  depoimento: string
-  conselho: string
-  diaTipico?: string
-  melhorParte?: string
-  piorParte?: string
-  tags: string[]
-  status: 'pendente' | 'aprovado'
-  dataEnvio: string
 }
 
 export interface RIASECQuestion {

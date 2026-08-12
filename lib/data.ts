@@ -1,4 +1,4 @@
-import type { Profissao, FormaIngresso, Universidade, Depoimento, RIASECQuestion } from './types'
+import type { Profissao, FormaIngresso, Universidade, RIASECQuestion } from './types'
 
 export const RIASEC_QUESTIONS: RIASECQuestion[] = [
   // Realista (R)
@@ -157,68 +157,5 @@ export const UNIVERSIDADES: Universidade[] = [
     cursos: ['Medicina', 'Direito', 'Engenharia de Software', 'Comunicação', 'Psicologia'],
     formasIngresso: ['ENEM', 'Vestibular próprio', 'PROUNI', 'FIES'],
     link: 'https://www.pucrs.br'
-  },
-]
-
-export const DEPOIMENTOS_INICIAIS: Depoimento[] = [
-  {
-    id: '1',
-    profissao: 'Psicóloga',
-    autor: 'Ana Carolina',
-    tempoExperiencia: '8 anos',
-    tipoRIASEC: 'S',
-    depoimento: 'O que mais me surpreendeu na psicologia foi a intensidade emocional do trabalho. Cada sessão é única e me ensina algo novo sobre a natureza humana. É desafiador manter o equilíbrio entre empatia e profissionalismo, mas extremamente gratificante ver a evolução dos pacientes.',
-    conselho: 'Prepare-se para uma jornada de autoconhecimento constante. Você vai precisar de supervisão e terapia pessoal, e isso é parte essencial da formação.',
-    diaTipico: 'Atendo em média 6 pacientes por dia, intercalando com pausas para registros e estudos de caso.',
-    melhorParte: 'Ver a transformação e crescimento das pessoas que acompanho.',
-    piorParte: 'A carga emocional pode ser pesada em alguns casos.',
-    tags: ['saúde mental', 'clínica', 'atendimento'],
-    status: 'aprovado',
-    dataEnvio: '2024-01-15T10:00:00Z'
-  },
-  {
-    id: '2',
-    profissao: 'Engenheiro de Software',
-    autor: 'Lucas Mendes',
-    tempoExperiencia: '5 anos',
-    tipoRIASEC: 'I',
-    depoimento: 'A tecnologia muda muito rápido, o que é desafiador e empolgante ao mesmo tempo. Trabalho remoto me deu qualidade de vida, mas exige muita disciplina. O mais legal é ver sistemas que criei sendo usados por milhares de pessoas.',
-    conselho: 'Nunca pare de estudar. Tecnologias vêm e vão, mas os fundamentos de lógica e arquitetura permanecem. E invista em soft skills também!',
-    diaTipico: 'Reuniões de alinhamento pela manhã, desenvolvimento focado à tarde, code review no final do dia.',
-    melhorParte: 'Criar soluções que impactam a vida das pessoas e trabalhar com autonomia.',
-    piorParte: 'Pressão por prazos e a necessidade constante de atualização.',
-    tags: ['tecnologia', 'desenvolvimento', 'remoto'],
-    status: 'aprovado',
-    dataEnvio: '2024-02-20T14:30:00Z'
-  },
-  {
-    id: '3',
-    profissao: 'Designer Gráfico',
-    autor: 'Marina Santos',
-    tempoExperiencia: '10 anos',
-    tipoRIASEC: 'A',
-    depoimento: 'Trabalhar com criatividade é libertador, mas prazos apertados existem e fazem parte da rotina. O mercado é competitivo, então é importante ter um portfólio forte e se especializar em alguma área. Adoro quando um cliente se emociona ao ver sua marca finalizada.',
-    conselho: 'Desenvolva um estilo próprio, mas saiba também se adaptar às necessidades do cliente. E nunca trabalhe de graça achando que é exposição!',
-    diaTipico: 'Briefing com clientes, brainstorm de ideias, execução criativa e apresentação de propostas.',
-    melhorParte: 'A liberdade criativa e ver ideias se tornarem realidade.',
-    piorParte: 'Clientes que pedem muitas alterações ou não valorizam o trabalho criativo.',
-    tags: ['design', 'criatividade', 'freelancer'],
-    status: 'aprovado',
-    dataEnvio: '2024-03-10T09:15:00Z'
-  },
-  {
-    id: '4',
-    profissao: 'Administrador de Empresas',
-    autor: 'Roberto Silva',
-    tempoExperiencia: '12 anos',
-    tipoRIASEC: 'E',
-    depoimento: 'Liderar pessoas é a parte mais difícil e mais gratificante da minha carreira. Passei por várias áreas: RH, finanças, operações. Essa visão ampla é o diferencial de um bom administrador. Hoje gerencio uma equipe de 30 pessoas e cada dia é um aprendizado.',
-    conselho: 'Busque experiências diversas no início da carreira para entender qual área te motiva mais. E lembre-se: resultados vêm através das pessoas.',
-    diaTipico: 'Reuniões estratégicas, análise de indicadores, alinhamento com equipes e resolução de problemas.',
-    melhorParte: 'Ver o crescimento da equipe e os resultados do trabalho coletivo.',
-    piorParte: 'Tomar decisões difíceis que afetam a vida das pessoas.',
-    tags: ['gestão', 'liderança', 'negócios'],
-    status: 'aprovado',
-    dataEnvio: '2024-04-05T11:45:00Z'
   },
 ]
