@@ -8,6 +8,8 @@ export interface Profile {
   birth_date: string | null
   user_type: 'estudante' | 'profissional' | 'ambos'
   avatar_url: string | null
+  bio: string | null
+  contact: string | null
   is_specialist: boolean
   specialist_status: 'none' | 'pending' | 'approved' | 'rejected'
   specialist_area: string | null

@@ -16,6 +16,8 @@ create table if not exists public.profiles (
   birth_date date,
   user_type text not null default 'estudante' check (user_type in ('estudante', 'profissional', 'ambos')),
   avatar_url text,
+  bio text check (char_length(bio) <= 500),
+  contact text check (char_length(contact) <= 200),
   is_specialist boolean not null default false,
   specialist_status text not null default 'none' check (specialist_status in ('none', 'pending', 'approved', 'rejected')),
   specialist_area text,
@@ -360,3 +362,38 @@ create policy "Users can view own badges" on public.user_badges
 
 create policy "System can insert badges" on public.user_badges
   for insert with check (auth.uid() = user_id);
+
+-- ================================================
+-- STORAGE — Fotos de perfil
+-- ================================================
+-- Bucket público de leitura; cada usuário só pode enviar/trocar/apagar
+-- a própria foto, salva em "<user_id>/...".
+
+insert into storage.buckets (id, name, public)
+values ('avatars', 'avatars', true)
+on conflict (id) do nothing;
+
+create policy "Avatar images are publicly accessible"
+  on storage.objects for select
+  using (bucket_id = 'avatars');
+
+create policy "Users can upload their own avatar"
+  on storage.objects for insert
+  with check (
+    bucket_id = 'avatars'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+create policy "Users can update their own avatar"
+  on storage.objects for update
+  using (
+    bucket_id = 'avatars'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+create policy "Users can delete their own avatar"
+  on storage.objects for delete
+  using (
+    bucket_id = 'avatars'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
