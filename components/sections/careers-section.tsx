@@ -4,16 +4,21 @@ import { useState } from 'react'
 import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES } from '@/lib/data'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
-import { Briefcase, GraduationCap, Building2, ExternalLink, MapPin, Filter, X } from 'lucide-react'
+import { Briefcase, GraduationCap, Building2, ExternalLink, MapPin, Filter, X, Search } from 'lucide-react'
 
 type Tab = 'profissoes' | 'ingresso' | 'universidades'
+
+const TODAS_AREAS = Array.from(new Set(PROFISSOES.flatMap((p) => p.areas))).sort()
 
 export function CareersSection() {
   const { testResults } = useAuth()
   const [activeTab, setActiveTab] = useState<Tab>('profissoes')
   const [selectedFilter, setSelectedFilter] = useState<RIASECType | 'todos'>('todos')
+  const [areaFilter, setAreaFilter] = useState<string>('todas')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const lastTest = testResults?.[0]
   const userTopTypes: RIASECType[] = lastTest
@@ -26,9 +31,25 @@ export function CareersSection() {
     { id: 'universidades', label: 'Universidades', icon: <Building2 className="h-4 w-4" /> },
   ]
 
-  const filteredProfissoes = selectedFilter === 'todos'
-    ? PROFISSOES
-    : PROFISSOES.filter(p => p.tipo === selectedFilter)
+  const hasActiveFilters = selectedFilter !== 'todos' || areaFilter !== 'todas' || searchQuery.trim() !== ''
+
+  const clearFilters = () => {
+    setSelectedFilter('todos')
+    setAreaFilter('todas')
+    setSearchQuery('')
+  }
+
+  const filteredProfissoes = PROFISSOES.filter((p) => {
+    const matchesTipo = selectedFilter === 'todos' || p.tipo === selectedFilter
+    const matchesArea = areaFilter === 'todas' || p.areas.includes(areaFilter)
+    const query = searchQuery.trim().toLowerCase()
+    const matchesSearch =
+      !query ||
+      p.nome.toLowerCase().includes(query) ||
+      p.descricao.toLowerCase().includes(query) ||
+      p.areas.some((area) => area.toLowerCase().includes(query))
+    return matchesTipo && matchesArea && matchesSearch
+  })
 
   return (
     <div className="space-y-6 section-enter">
@@ -50,49 +71,86 @@ export function CareersSection() {
       {/* Profissões Tab */}
       {activeTab === 'profissoes' && (
         <div className="space-y-4">
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Buscar por profissão, descrição ou área..."
+              className="w-full pl-10 pr-4 py-2.5 border border-input rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            />
+          </div>
+
           {/* Filter */}
           <Card>
-            <CardContent className="pt-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Filter className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm font-medium text-foreground">Filtrar por tipo RIASEC:</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setSelectedFilter('todos')}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    selectedFilter === 'todos' ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                  }`}
-                >
-                  Todos
-                </button>
-                {(Object.keys(RIASEC_INFO) as RIASECType[]).map((tipo) => {
-                  const isUserType = userTopTypes.includes(tipo)
-                  return (
+            <CardContent className="pt-4 space-y-4">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="flex-1 min-w-[200px]">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Filter className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm font-medium text-foreground">Filtrar por tipo RIASEC:</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
                     <button
-                      key={tipo}
-                      onClick={() => setSelectedFilter(tipo)}
-                      className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-1 ${
-                        selectedFilter === tipo ? 'text-white' : isUserType ? 'ring-2 ring-offset-2' : 'opacity-70 hover:opacity-100'
+                      onClick={() => setSelectedFilter('todos')}
+                      className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                        selectedFilter === 'todos' ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:bg-muted/80'
                       }`}
-                      style={{
-                        backgroundColor: selectedFilter === tipo ? RIASEC_INFO[tipo].cor : `${RIASEC_INFO[tipo].cor}30`,
-                        color: selectedFilter === tipo ? 'white' : RIASEC_INFO[tipo].cor,
-                      }}
                     >
-                      {tipo}
-                      {isUserType && <span className="text-xs">(seu perfil)</span>}
+                      Todos
                     </button>
-                  )
-                })}
+                    {(Object.keys(RIASEC_INFO) as RIASECType[]).map((tipo) => {
+                      const isUserType = userTopTypes.includes(tipo)
+                      return (
+                        <button
+                          key={tipo}
+                          onClick={() => setSelectedFilter(tipo)}
+                          className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-1 ${
+                            selectedFilter === tipo ? 'text-white' : isUserType ? 'ring-2 ring-offset-2' : 'opacity-70 hover:opacity-100'
+                          }`}
+                          style={{
+                            backgroundColor: selectedFilter === tipo ? RIASEC_INFO[tipo].cor : `${RIASEC_INFO[tipo].cor}30`,
+                            color: selectedFilter === tipo ? 'white' : RIASEC_INFO[tipo].cor,
+                          }}
+                        >
+                          {tipo}
+                          {isUserType && <span className="text-xs">(seu perfil)</span>}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <div className="w-full sm:w-auto">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Briefcase className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm font-medium text-foreground">Área de atuação:</span>
+                  </div>
+                  <Select value={areaFilter} onValueChange={setAreaFilter}>
+                    <SelectTrigger className="w-full sm:w-48 capitalize">
+                      <SelectValue placeholder="Todas as áreas" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="todas">Todas as áreas</SelectItem>
+                      {TODAS_AREAS.map((area) => (
+                        <SelectItem key={area} value={area} className="capitalize">
+                          {area}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-              {selectedFilter !== 'todos' && (
+
+              {hasActiveFilters && (
                 <button
-                  onClick={() => setSelectedFilter('todos')}
-                  className="flex items-center gap-1 text-sm text-muted-foreground mt-3 hover:text-foreground"
+                  onClick={clearFilters}
+                  className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
                 >
                   <X className="h-4 w-4" />
-                  Limpar filtro
+                  Limpar filtros
                 </button>
               )}
             </CardContent>
@@ -131,7 +189,9 @@ export function CareersSection() {
           {filteredProfissoes.length === 0 && (
             <Card>
               <CardContent className="py-12 text-center">
-                <p className="text-muted-foreground">Nenhuma profissão encontrada para este filtro.</p>
+                <p className="text-muted-foreground">
+                  Nenhuma profissão encontrada {searchQuery.trim() ? `para "${searchQuery}"` : 'para este filtro'}.
+                </p>
               </CardContent>
             </Card>
           )}
