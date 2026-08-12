@@ -118,6 +118,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setSession(session)
         setUser(session?.user ?? null)
 
+        // INITIAL_SESSION já é tratado por initAuth() acima, e
+        // TOKEN_REFRESHED só renova o token (dispara sozinho a cada
+        // hora) — nenhum dos dois exige recarregar perfil/testes/badges.
+        if (event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') {
+          return
+        }
+
         if (session?.user) {
           await loadUserData(session.user.id)
         } else {
