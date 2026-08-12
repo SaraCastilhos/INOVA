@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Home, FileText, Briefcase, Users, User } from 'lucide-react'
 
 export type Section = 'inicio' | 'teste' | 'carreiras' | 'comunidade' | 'perfil'
@@ -49,9 +50,11 @@ export function BottomNavigation({ activeSection, onNavigate }: BottomNavigation
       {/* Desktop Sidebar Navigation */}
       <nav className="hidden md:flex fixed left-0 top-0 bottom-0 z-40 w-64 flex-col bg-card border-r border-border">
         <div className="p-6 border-b border-border">
-          <img 
-            src="/images/logo-inova.png" 
-            alt="INOVA" 
+          <Image
+            src="/images/logo-inova.png"
+            alt="INOVA"
+            width={120}
+            height={40}
             className="h-10 w-auto"
           />
         </div>
