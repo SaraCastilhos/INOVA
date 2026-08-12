@@ -39,6 +39,56 @@ create policy "Users can update their own profile" on public.profiles
 create policy "Users can insert their own profile" on public.profiles
   for insert with check (auth.uid() = id);
 
+-- Impede que o próprio usuário se promova (is_admin/is_specialist) ou
+-- se auto-aprove como especialista.
+create or replace function public.protect_profile_privileged_columns()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+declare
+  is_privileged boolean;
+begin
+  -- auth.uid() nulo = acesso direto ao banco (SQL Editor, migrações),
+  -- sem contexto de usuário autenticado via app. Tratado como confiável,
+  -- pois é o fluxo usado para criar/promover o admin manualmente.
+  is_privileged := auth.uid() is null
+    or coalesce(auth.role(), '') = 'service_role'
+    or exists (
+      select 1 from public.profiles
+      where id = auth.uid() and is_admin = true
+    );
+
+  if is_privileged then
+    return new;
+  end if;
+
+  new.is_admin := old.is_admin;
+  new.is_specialist := old.is_specialist;
+
+  if new.specialist_status is distinct from old.specialist_status
+     and new.specialist_status <> 'pending' then
+    new.specialist_status := old.specialist_status;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_protect_profile_privileged_columns on public.profiles;
+create trigger trg_protect_profile_privileged_columns
+  before update on public.profiles
+  for each row execute procedure public.protect_profile_privileged_columns();
+
+-- Permite que um admin atualize o perfil de qualquer usuário
+-- (necessário para o futuro painel administrativo aprovar especialistas).
+create policy "Admins can update any profile" on public.profiles
+  for update
+  using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  )
+  with check (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
 -- Auto-create profile on signup
 create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer set search_path = public
@@ -108,7 +158,11 @@ create policy "Anyone can view approved experiences" on public.experiences
   for select using (status = 'approved');
 
 create policy "Users can insert own experiences" on public.experiences
-  for insert with check (auth.uid() = user_id);
+  for insert with check (
+    auth.uid() = user_id
+    and status = 'pending'
+    and is_featured = false
+  );
 
 -- Preenche author_name a partir do perfil autenticado; impede que o
 -- cliente informe um nome arbitrário na requisição de insert.
@@ -187,7 +241,11 @@ create policy "Anyone can view forum topics" on public.forum_topics
   for select using (true);
 
 create policy "Authenticated users can create topics" on public.forum_topics
-  for insert with check (auth.uid() = user_id);
+  for insert with check (
+    auth.uid() = user_id
+    and is_pinned = false
+    and is_closed = false
+  );
 
 create policy "Users can update own topics" on public.forum_topics
   for update using (auth.uid() = user_id);
