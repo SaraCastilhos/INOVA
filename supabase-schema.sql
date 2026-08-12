@@ -150,6 +150,7 @@ create table if not exists public.experiences (
   status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
   is_featured boolean not null default false,
   likes_count integer not null default 0,
+  comments_count integer not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -227,6 +228,52 @@ drop trigger if exists update_likes_count on public.experience_likes;
 create trigger update_likes_count
   after insert or delete on public.experience_likes
   for each row execute procedure update_experience_likes_count();
+
+-- ================================================
+-- EXPERIENCE COMMENTS TABLE
+-- ================================================
+create table if not exists public.experience_comments (
+  id uuid primary key default uuid_generate_v4(),
+  experience_id uuid references public.experiences(id) on delete cascade not null,
+  user_id uuid references public.profiles(id) on delete cascade not null,
+  content text not null,
+  created_at timestamptz not null default now()
+);
+
+alter table public.experience_comments enable row level security;
+
+create policy "Anyone can view comments on approved experiences" on public.experience_comments
+  for select using (
+    exists (select 1 from public.experiences e where e.id = experience_id and e.status = 'approved')
+  );
+
+create policy "Authenticated users can comment" on public.experience_comments
+  for insert with check (auth.uid() = user_id);
+
+create policy "Users can delete own comments" on public.experience_comments
+  for delete using (auth.uid() = user_id);
+
+create policy "Admins can delete any comment" on public.experience_comments
+  for delete using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
+create or replace function public.update_experience_comments_count()
+returns trigger language plpgsql as $$
+begin
+  if TG_OP = 'INSERT' then
+    update public.experiences set comments_count = comments_count + 1 where id = new.experience_id;
+  elsif TG_OP = 'DELETE' then
+    update public.experiences set comments_count = comments_count - 1 where id = old.experience_id;
+  end if;
+  return null;
+end;
+$$;
+
+drop trigger if exists update_comments_count on public.experience_comments;
+create trigger update_comments_count
+  after insert or delete on public.experience_comments
+  for each row execute procedure public.update_experience_comments_count();
 
 -- ================================================
 -- FORUM TOPICS TABLE
@@ -341,7 +388,8 @@ insert into public.badges (code, name, description, icon, category, points) valu
   ('test_master', 'Mestre dos Testes', 'Completou o teste RIASEC 3 vezes', '🏆', 'test', 50),
   ('first_experience', 'Compartilhador', 'Compartilhou sua primeira experiência profissional', '💬', 'community', 30),
   ('first_topic', 'Curioso', 'Criou seu primeiro tópico no fórum', '❓', 'community', 20),
-  ('first_reply', 'Colaborador', 'Respondeu pela primeira vez no fórum', '💡', 'community', 20)
+  ('first_reply', 'Colaborador', 'Respondeu pela primeira vez no fórum', '💡', 'community', 20),
+  ('first_comment', 'Participativo', 'Comentou em um depoimento pela primeira vez', '💭', 'community', 15)
 on conflict (code) do nothing;
 
 -- ================================================

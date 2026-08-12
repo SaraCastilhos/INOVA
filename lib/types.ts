@@ -43,8 +43,19 @@ export interface Experience {
   status: 'pending' | 'approved' | 'rejected'
   is_featured: boolean
   likes_count: number
+  comments_count: number
   created_at: string
   updated_at: string
+  // Joined fields
+  profiles?: Profile
+}
+
+export interface ExperienceComment {
+  id: string
+  experience_id: string
+  user_id: string
+  content: string
+  created_at: string
   // Joined fields
   profiles?: Profile
 }
