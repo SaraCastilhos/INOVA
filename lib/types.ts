@@ -35,7 +35,7 @@ export interface Experience {
   user_id: string
   author_name: string
   profession: string
-  riasec_type: RIASECType
+  riasec_type: RIASECType | null
   content: string
   video_url: string | null
   status: 'pending' | 'approved' | 'rejected'

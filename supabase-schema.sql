@@ -142,7 +142,7 @@ create table if not exists public.experiences (
   user_id uuid references public.profiles(id) on delete cascade not null,
   author_name text not null,
   profession text not null,
-  riasec_type text not null,
+  riasec_type text,
   content text not null,
   video_url text,
   status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
