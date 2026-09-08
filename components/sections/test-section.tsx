@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -55,11 +56,16 @@ export function TestSection({ onNavigate }: TestSectionProps) {
 
     const answersArray = RIASEC_QUESTIONS.map(q => answers[q.id] || 0)
 
-    await saveTestResult(pontuacoes, answersArray)
+    const { error } = await saveTestResult(pontuacoes, answersArray)
+    setSaving(false)
+
+    if (error) {
+      toast.error('Não foi possível salvar seu resultado. Verifique sua conexão e tente novamente.')
+      return
+    }
 
     setScores(pontuacoes)
     setTopTypes(sortedTypes.slice(0, 3))
-    setSaving(false)
     setPhase('result')
   }
 
