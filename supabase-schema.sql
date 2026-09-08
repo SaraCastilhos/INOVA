@@ -152,8 +152,11 @@ create table if not exists public.experiences (
   riasec_type text,
   content text not null check (char_length(content) <= 3000),
   video_url text,
-  status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  -- default 'approved': depoimento é publicado na hora (pós-moderação,
+  -- migração 014). O admin pode marcar 'rejected' para esconder sem apagar.
+  status text not null default 'approved' check (status in ('pending', 'approved', 'rejected')),
   is_featured boolean not null default false,
+  is_closed boolean not null default false,
   likes_count integer not null default 0,
   comments_count integer not null default 0,
   created_at timestamptz not null default now(),
@@ -165,10 +168,12 @@ alter table public.experiences enable row level security;
 create policy "Anyone can view approved experiences" on public.experiences
   for select using (status = 'approved');
 
+-- status = 'approved': publica na hora (pós-moderação). is_featured = false
+-- continua travado — destacar é ato editorial de admin.
 create policy "Users can insert own experiences" on public.experiences
   for insert with check (
     auth.uid() = user_id
-    and status = 'pending'
+    and status = 'approved'
     and is_featured = false
   );
 
@@ -177,6 +182,28 @@ create policy "Users can delete own experiences" on public.experiences
 
 create policy "Admins can delete any experience" on public.experiences
   for delete using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
+-- Autor edita o próprio depoimento já aprovado (texto/profissão) e
+-- encerra/reabre os comentários (is_closed). O with check congela
+-- status='approved' e is_featured=false — sem UI para mudá-los e sem
+-- outro valor aceito, o autor não se auto-aprova nem se destaca.
+create policy "Users can update own experiences" on public.experiences
+  for update
+  using (auth.uid() = user_id and status = 'approved')
+  with check (
+    auth.uid() = user_id
+    and status = 'approved'
+    and is_featured = false
+  );
+
+create policy "Admins can update any experience" on public.experiences
+  for update
+  using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  )
+  with check (
     exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
   );
 
@@ -255,7 +282,15 @@ create policy "Anyone can view comments on approved experiences" on public.exper
   );
 
 create policy "Authenticated users can comment" on public.experience_comments
-  for insert with check (auth.uid() = user_id);
+  for insert with check (
+    auth.uid() = user_id
+    and exists (
+      select 1 from public.experiences e
+      where e.id = experience_id
+        and e.status = 'approved'
+        and e.is_closed = false
+    )
+  );
 
 create policy "Users can delete own comments" on public.experience_comments
   for delete using (auth.uid() = user_id);
@@ -312,15 +347,15 @@ create policy "Authenticated users can create topics" on public.forum_topics
     and is_closed = false
   );
 
--- with check repete a restrição do insert: impede o autor de se
--- auto-fixar (is_pinned) ou se auto-fechar (is_closed) via update direto.
+-- with check mantém a trava de is_pinned: fixar é exclusivo de admin
+-- ("Admins can update any topic"). O autor pode editar título/conteúdo e
+-- fechar/reabrir o próprio tópico.
 create policy "Users can update own topics" on public.forum_topics
   for update
   using (auth.uid() = user_id)
   with check (
     auth.uid() = user_id
     and is_pinned = false
-    and is_closed = false
   );
 
 create policy "Users can delete own topics" on public.forum_topics
@@ -328,6 +363,17 @@ create policy "Users can delete own topics" on public.forum_topics
 
 create policy "Admins can delete any topic" on public.forum_topics
   for delete using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
+-- Admin pode editar/fixar/fechar qualquer tópico. Fixar (is_pinned) é
+-- exclusivo daqui: a policy do autor acima trava is_pinned = false.
+create policy "Admins can update any topic" on public.forum_topics
+  for update
+  using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  )
+  with check (
     exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
   );
 
@@ -347,7 +393,6 @@ create table if not exists public.forum_replies (
   topic_id uuid references public.forum_topics(id) on delete cascade not null,
   user_id uuid references public.profiles(id) on delete cascade not null,
   content text not null check (char_length(content) <= 1250),
-  is_specialist_answer boolean not null default false,
   likes_count integer not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -434,6 +479,130 @@ drop trigger if exists trg_rate_limit on public.forum_replies;
 create trigger trg_rate_limit
   before insert on public.forum_replies
   for each row execute procedure public.enforce_rate_limit();
+
+-- ================================================
+-- FILTRO DE CONTEÚDO (termos ofensivos / spam óbvio) — migração 014
+-- ================================================
+-- Rede de segurança da pós-moderação: bloqueia o insert de conteúdo com
+-- termo da lista blocked_terms ou com spam óbvio. Aplicado nas 4 tabelas
+-- de conteúdo, igual ao enforce_rate_limit.
+create table if not exists public.blocked_terms (
+  term text primary key,
+  created_at timestamptz not null default now()
+);
+
+alter table public.blocked_terms enable row level security;
+
+create policy "Admins manage blocked terms" on public.blocked_terms
+  for all using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  )
+  with check (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
+-- Lista inicial curta e conservadora. Curadoria manual via SQL:
+--   insert into public.blocked_terms (term) values ('termo');
+--   delete from public.blocked_terms where term = 'termo';
+-- Texto simples, minúsculas; casa por palavra inteira, ignora caixa,
+-- NÃO ignora acento.
+insert into public.blocked_terms (term) values
+  ('caralho'), ('porra'), ('buceta'), ('viado'), ('viadinho'),
+  ('bicha'), ('puta que pariu'), ('vai se foder'), ('vai tomar no cu'),
+  ('arrombado'), ('fdp'), ('filho da puta'), ('retardado'),
+  ('mongoloide'), ('crioulo'), ('macaco de senzala'), ('sapatao'),
+  ('traveco'), ('viadagem')
+on conflict (term) do nothing;
+
+create or replace function public.enforce_content_filter()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+declare
+  v_text text;
+  v_hit  text;
+begin
+  v_text := coalesce(new.content, '');
+  if TG_TABLE_NAME = 'forum_topics' then
+    v_text := v_text || ' ' || coalesce(new.title, '');
+  end if;
+
+  if v_text ~ '(.)\1{19,}' then
+    raise exception 'Conteúdo não permitido: parece spam.';
+  end if;
+
+  select term into v_hit
+  from public.blocked_terms
+  where v_text ~* ('\y' || term || '\y')
+  limit 1;
+
+  if v_hit is not null then
+    raise exception 'Conteúdo não permitido: contém linguagem ofensiva.';
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_content_filter on public.experiences;
+create trigger trg_content_filter
+  before insert on public.experiences
+  for each row execute procedure public.enforce_content_filter();
+
+drop trigger if exists trg_content_filter on public.experience_comments;
+create trigger trg_content_filter
+  before insert on public.experience_comments
+  for each row execute procedure public.enforce_content_filter();
+
+drop trigger if exists trg_content_filter on public.forum_topics;
+create trigger trg_content_filter
+  before insert on public.forum_topics
+  for each row execute procedure public.enforce_content_filter();
+
+drop trigger if exists trg_content_filter on public.forum_replies;
+create trigger trg_content_filter
+  before insert on public.forum_replies
+  for each row execute procedure public.enforce_content_filter();
+
+-- ================================================
+-- DENÚNCIAS DE CONTEÚDO — migração 014
+-- ================================================
+-- Fila para o admin triar (enquanto não há painel, ver
+-- supabase-admin-helpers.sql).
+create table if not exists public.content_reports (
+  id uuid primary key default uuid_generate_v4(),
+  reporter_id uuid references public.profiles(id) on delete cascade not null,
+  content_type text not null check (content_type in (
+    'experience', 'experience_comment', 'forum_topic', 'forum_reply'
+  )),
+  content_id uuid not null,
+  reason text check (char_length(reason) <= 500),
+  status text not null default 'open' check (status in ('open', 'reviewed', 'dismissed')),
+  created_at timestamptz not null default now(),
+  unique (reporter_id, content_type, content_id)
+);
+
+alter table public.content_reports enable row level security;
+
+create policy "Users can create reports" on public.content_reports
+  for insert with check (auth.uid() = reporter_id);
+
+create policy "Admins can view reports" on public.content_reports
+  for select using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
+create policy "Admins can update reports" on public.content_reports
+  for update using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  )
+  with check (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
+create policy "Admins can delete reports" on public.content_reports
+  for delete using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
 
 -- ================================================
 -- BADGES TABLE

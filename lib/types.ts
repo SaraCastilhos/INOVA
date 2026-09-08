@@ -42,6 +42,7 @@ export interface Experience {
   video_url: string | null
   status: 'pending' | 'approved' | 'rejected'
   is_featured: boolean
+  is_closed: boolean
   likes_count: number
   comments_count: number
   created_at: string
@@ -81,12 +82,27 @@ export interface ForumReply {
   topic_id: string
   user_id: string
   content: string
-  is_specialist_answer: boolean
   likes_count: number
   created_at: string
   updated_at: string
   // Joined fields
   profiles?: Profile
+}
+
+export type ReportableContentType =
+  | 'experience'
+  | 'experience_comment'
+  | 'forum_topic'
+  | 'forum_reply'
+
+export interface ContentReport {
+  id: string
+  reporter_id: string
+  content_type: ReportableContentType
+  content_id: string
+  reason: string | null
+  status: 'open' | 'reviewed' | 'dismissed'
+  created_at: string
 }
 
 export interface Badge {
