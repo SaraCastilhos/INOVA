@@ -304,8 +304,16 @@ create policy "Authenticated users can create topics" on public.forum_topics
     and is_closed = false
   );
 
+-- with check repete a restrição do insert: impede o autor de se
+-- auto-fixar (is_pinned) ou se auto-fechar (is_closed) via update direto.
 create policy "Users can update own topics" on public.forum_topics
-  for update using (auth.uid() = user_id);
+  for update
+  using (auth.uid() = user_id)
+  with check (
+    auth.uid() = user_id
+    and is_pinned = false
+    and is_closed = false
+  );
 
 create policy "Users can delete own topics" on public.forum_topics
   for delete using (auth.uid() = user_id);
