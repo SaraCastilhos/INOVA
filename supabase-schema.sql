@@ -150,7 +150,7 @@ create table if not exists public.experiences (
   author_name text not null,
   profession text not null,
   riasec_type text,
-  content text not null,
+  content text not null check (char_length(content) <= 3000),
   video_url text,
   status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
   is_featured boolean not null default false,
@@ -243,7 +243,7 @@ create table if not exists public.experience_comments (
   id uuid primary key default uuid_generate_v4(),
   experience_id uuid references public.experiences(id) on delete cascade not null,
   user_id uuid references public.profiles(id) on delete cascade not null,
-  content text not null,
+  content text not null check (char_length(content) <= 1250),
   created_at timestamptz not null default now()
 );
 
@@ -289,8 +289,8 @@ create trigger update_comments_count
 create table if not exists public.forum_topics (
   id uuid primary key default uuid_generate_v4(),
   user_id uuid references public.profiles(id) on delete cascade not null,
-  title text not null,
-  content text not null,
+  title text not null check (char_length(title) <= 200),
+  content text not null check (char_length(content) <= 3000),
   riasec_type text,
   is_pinned boolean not null default false,
   is_closed boolean not null default false,
@@ -346,7 +346,7 @@ create table if not exists public.forum_replies (
   id uuid primary key default uuid_generate_v4(),
   topic_id uuid references public.forum_topics(id) on delete cascade not null,
   user_id uuid references public.profiles(id) on delete cascade not null,
-  content text not null,
+  content text not null check (char_length(content) <= 1250),
   is_specialist_answer boolean not null default false,
   likes_count integer not null default 0,
   created_at timestamptz not null default now(),
@@ -387,6 +387,53 @@ drop trigger if exists update_replies_count on public.forum_replies;
 create trigger update_replies_count
   after insert or delete on public.forum_replies
   for each row execute procedure update_topic_replies_count();
+
+-- ================================================
+-- LIMITE DE FREQUÊNCIA DE PUBLICAÇÃO (anti-flood)
+-- ================================================
+-- Máximo de 30 registros do mesmo usuário, na mesma tabela, a cada 10
+-- minutos. Aplicado em experiences, experience_comments, forum_topics
+-- e forum_replies. security definer: a contagem precisa enxergar todas
+-- as linhas do usuário (inclusive experiências pendentes), não só o
+-- que a RLS comum deixaria ver.
+create or replace function public.enforce_rate_limit()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+declare
+  recent_count integer;
+begin
+  execute format(
+    'select count(*) from public.%I where user_id = $1 and created_at > now() - interval ''10 minutes''',
+    TG_TABLE_NAME
+  ) into recent_count using new.user_id;
+
+  if recent_count >= 30 then
+    raise exception 'Você atingiu o limite de publicações por enquanto. Aguarde alguns minutos e tente novamente.';
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_rate_limit on public.experiences;
+create trigger trg_rate_limit
+  before insert on public.experiences
+  for each row execute procedure public.enforce_rate_limit();
+
+drop trigger if exists trg_rate_limit on public.experience_comments;
+create trigger trg_rate_limit
+  before insert on public.experience_comments
+  for each row execute procedure public.enforce_rate_limit();
+
+drop trigger if exists trg_rate_limit on public.forum_topics;
+create trigger trg_rate_limit
+  before insert on public.forum_topics
+  for each row execute procedure public.enforce_rate_limit();
+
+drop trigger if exists trg_rate_limit on public.forum_replies;
+create trigger trg_rate_limit
+  before insert on public.forum_replies
+  for each row execute procedure public.enforce_rate_limit();
 
 -- ================================================
 -- BADGES TABLE
