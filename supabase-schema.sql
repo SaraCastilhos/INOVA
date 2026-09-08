@@ -212,8 +212,10 @@ create policy "Users can manage own likes" on public.experience_likes
   for all using (auth.uid() = user_id);
 
 -- Update likes count trigger
+-- security definer: sem isso, a atualização do contador roda sob RLS
+-- do usuário comum e é bloqueada silenciosamente (0 linhas afetadas).
 create or replace function update_experience_likes_count()
-returns trigger language plpgsql as $$
+returns trigger language plpgsql security definer set search_path = public as $$
 begin
   if TG_OP = 'INSERT' then
     update public.experiences set likes_count = likes_count + 1 where id = new.experience_id;
@@ -258,8 +260,9 @@ create policy "Admins can delete any comment" on public.experience_comments
     exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
   );
 
+-- security definer pelo mesmo motivo do trigger de likes acima.
 create or replace function public.update_experience_comments_count()
-returns trigger language plpgsql as $$
+returns trigger language plpgsql security definer set search_path = public as $$
 begin
   if TG_OP = 'INSERT' then
     update public.experiences set comments_count = comments_count + 1 where id = new.experience_id;
@@ -353,9 +356,10 @@ create policy "Anyone can view replies" on public.forum_replies
 create policy "Authenticated users can create replies" on public.forum_replies
   for insert with check (auth.uid() = user_id);
 
--- Update replies count trigger
+-- Update replies count trigger (security definer pelo mesmo motivo do
+-- trigger de likes/comentários acima)
 create or replace function update_topic_replies_count()
-returns trigger language plpgsql as $$
+returns trigger language plpgsql security definer set search_path = public as $$
 begin
   if TG_OP = 'INSERT' then
     update public.forum_topics set replies_count = replies_count + 1 where id = new.topic_id;
