@@ -38,6 +38,22 @@ import {
   Calendar
 } from 'lucide-react'
 
+// Limites de tamanho inspirados no LinkedIn (posts ~3000, comentários
+// ~1250) — precisam bater com as constraints check(...) do banco
+// (migração 010). Mudar aqui sem migrar o banco só afeta a validação no
+// navegador, não o que o servidor aceita.
+const POST_LENGTH_LIMIT = 3000
+const COMMENT_LENGTH_LIMIT = 1250
+const TOPIC_TITLE_LENGTH_LIMIT = 200
+
+// O gatilho de limite de frequência (migração 010) rejeita o insert com
+// uma mensagem que contém este texto — usamos isso pra mostrar a
+// mensagem de verdade do banco em vez do toast genérico de erro.
+function friendlyInsertError(error: { message: string } | null | undefined, fallback: string) {
+  if (error?.message?.includes('limite de publicações')) return error.message
+  return fallback
+}
+
 const tabs: { id: CommunityTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { id: 'experiences', label: 'Depoimentos', icon: MessageSquare },
   { id: 'forum', label: 'Fórum', icon: MessageCircle },
@@ -126,6 +142,7 @@ function ExperiencesTab({
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set())
+  const [likingIds, setLikingIds] = useState<Set<string>>(new Set())
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
   const [deleting, setDeleting] = useState(false)
   const supabase = createClient()
@@ -161,6 +178,14 @@ function ExperiencesTab({
 
   const toggleLike = async (experienceId: string) => {
     if (!user) return
+    // Ignora cliques repetidos enquanto a curtida anterior ainda está
+    // em andamento — evita que dois toggles simultâneos cheguem ao
+    // banco fora de ordem e deixem a contagem incoerente (incluindo
+    // valores negativos).
+    if (likingIds.has(experienceId)) return
+
+    setLikingIds(prev => new Set(prev).add(experienceId))
+
     const isLiked = likedIds.has(experienceId)
 
     // Snapshot para reverter se a escrita no banco falhar
@@ -174,7 +199,7 @@ function ExperiencesTab({
         return next
       })
       setExperiences(prev =>
-        prev.map(e => e.id === experienceId ? { ...e, likes_count: e.likes_count - 1 } : e)
+        prev.map(e => e.id === experienceId ? { ...e, likes_count: Math.max(0, e.likes_count - 1) } : e)
       )
     } else {
       setLikedIds(prev => new Set(prev).add(experienceId))
@@ -198,15 +223,24 @@ function ExperiencesTab({
       setExperiences(prevExperiences)
       toast.error('Erro ao curtir. Verifique sua conexão.')
     }
+
+    setLikingIds(prev => {
+      const next = new Set(prev)
+      next.delete(experienceId)
+      return next
+    })
   }
 
   const handleDeleteExperience = async () => {
     if (!deleteTargetId) return
     setDeleting(true)
-    const { error } = await supabase.from('experiences').delete().eq('id', deleteTargetId)
+    const { data, error } = await supabase.from('experiences').delete().eq('id', deleteTargetId).select('id')
     setDeleting(false)
 
-    if (error) {
+    // Um DELETE bloqueado pelo RLS (sem permissão) não gera "error" — só
+    // afeta 0 linhas. Sem checar isso, o app diria "excluído" mesmo sem
+    // ter apagado nada, e o item voltaria a aparecer ao recarregar.
+    if (error || !data || data.length === 0) {
       toast.error('Erro ao excluir depoimento. Tente novamente.')
       return
     }
@@ -230,7 +264,7 @@ function ExperiencesTab({
     })
 
     if (error) {
-      toast.error('Erro ao enviar depoimento. Tente novamente.')
+      toast.error(friendlyInsertError(error, 'Erro ao enviar depoimento. Tente novamente.'))
       return
     }
 
@@ -305,6 +339,7 @@ function ExperiencesTab({
               key={exp.id}
               experience={exp}
               isLiked={likedIds.has(exp.id)}
+              isLiking={likingIds.has(exp.id)}
               onToggleLike={() => toggleLike(exp.id)}
               canDelete={!!user && (user.id === exp.user_id || !!profile?.is_admin)}
               onDelete={() => setDeleteTargetId(exp.id)}
@@ -341,6 +376,7 @@ function ExperiencesTab({
 function ExperienceCard({
   experience,
   isLiked,
+  isLiking,
   onToggleLike,
   canDelete,
   onDelete,
@@ -348,88 +384,14 @@ function ExperienceCard({
 }: {
   experience: Experience
   isLiked: boolean
+  isLiking: boolean
   onToggleLike: () => void
   canDelete: boolean
   onDelete: () => void
   onViewProfile: (profile: Profile) => void
 }) {
-  const { user, profile, awardBadge } = useAuth()
-  const supabase = createClient()
-
   const [showComments, setShowComments] = useState(false)
-  const [comments, setComments] = useState<ExperienceComment[]>([])
-  const [loadingComments, setLoadingComments] = useState(false)
-  const [commentInput, setCommentInput] = useState('')
-  const [submittingComment, setSubmittingComment] = useState(false)
   const [commentsCount, setCommentsCount] = useState(experience.comments_count)
-  const [deleteCommentId, setDeleteCommentId] = useState<string | null>(null)
-
-  const fetchComments = async () => {
-    setLoadingComments(true)
-    const { data } = await supabase
-      .from('experience_comments')
-      .select('*, profiles(id, display_name, avatar_url, is_specialist, specialist_area, bio, contact, user_type, created_at)')
-      .eq('experience_id', experience.id)
-      .order('created_at', { ascending: true })
-
-    setComments((data as ExperienceComment[]) || [])
-    setLoadingComments(false)
-  }
-
-  const handleToggleComments = () => {
-    const next = !showComments
-    setShowComments(next)
-    if (next && comments.length === 0 && commentsCount > 0) {
-      fetchComments()
-    }
-  }
-
-  const handleSubmitComment = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!user || !commentInput.trim()) return
-
-    setSubmittingComment(true)
-    const { error } = await supabase.from('experience_comments').insert({
-      experience_id: experience.id,
-      user_id: user.id,
-      content: commentInput.trim()
-    })
-
-    if (error) {
-      setSubmittingComment(false)
-      toast.error('Erro ao enviar comentário. Tente novamente.')
-      return
-    }
-
-    const { count } = await supabase
-      .from('experience_comments')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-
-    if (count === 1) {
-      await awardBadge('first_comment')
-    }
-
-    setCommentInput('')
-    setSubmittingComment(false)
-    setCommentsCount((c) => c + 1)
-    fetchComments()
-  }
-
-  const handleDeleteComment = async () => {
-    if (!deleteCommentId) return
-    const { error } = await supabase.from('experience_comments').delete().eq('id', deleteCommentId)
-
-    if (error) {
-      toast.error('Erro ao excluir comentário. Tente novamente.')
-      return
-    }
-
-    setComments((prev) => prev.filter((c) => c.id !== deleteCommentId))
-    setCommentsCount((c) => Math.max(0, c - 1))
-    setDeleteCommentId(null)
-    toast.success('Comentário excluído.')
-  }
 
   return (
     <div className="bg-card rounded-xl border border-border p-5 space-y-4">
@@ -476,16 +438,16 @@ function ExperienceCard({
         <div className="flex items-center gap-4">
           <button
             onClick={onToggleLike}
-            className={`flex items-center gap-2 text-sm transition-colors ${isLiked ? 'text-red-500' : 'text-muted-foreground hover:text-red-500'
+            disabled={isLiking}
+            className={`flex items-center gap-2 text-sm transition-colors disabled:opacity-50 ${isLiked ? 'text-red-500' : 'text-muted-foreground hover:text-red-500'
               }`}
           >
             <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
             <span>{experience.likes_count}</span>
           </button>
           <button
-            onClick={handleToggleComments}
-            className={`flex items-center gap-2 text-sm transition-colors ${showComments ? 'text-primary' : 'text-muted-foreground hover:text-primary'
-              }`}
+            onClick={() => setShowComments(true)}
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             <MessageCircle className="w-4 h-4" />
             <span>{commentsCount}</span>
@@ -497,87 +459,203 @@ function ExperienceCard({
         </div>
       </div>
 
-      {/* Comments */}
       {showComments && (
-        <div className="space-y-3 pt-3 border-t border-border">
-          {loadingComments ? (
-            <div className="flex items-center justify-center py-4">
-              <Loader2 className="w-5 h-5 animate-spin text-primary" />
-            </div>
-          ) : comments.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-2">
-              Nenhum comentário ainda.
-            </p>
-          ) : (
-            comments.map((comment) => {
-              const canDeleteComment = !!user && (user.id === comment.user_id || !!profile?.is_admin)
-              return (
-                <div key={comment.id} className="flex items-start gap-2">
-                  <button
-                    onClick={() => comment.profiles && onViewProfile(comment.profiles)}
-                    disabled={!comment.profiles}
-                    className="relative w-7 h-7 rounded-full bg-muted flex items-center justify-center text-xs font-medium overflow-hidden shrink-0 disabled:cursor-default"
-                  >
-                    {comment.profiles?.avatar_url ? (
-                      <Image src={comment.profiles.avatar_url} alt={comment.profiles.display_name} fill className="object-cover" />
-                    ) : (
-                      comment.profiles?.display_name?.charAt(0) || 'U'
-                    )}
-                  </button>
-                  <div className="flex-1 min-w-0 bg-muted/50 rounded-lg px-3 py-2">
-                    <div className="flex items-center justify-between gap-2">
-                      {comment.profiles ? (
-                        <button
-                          onClick={() => onViewProfile(comment.profiles!)}
-                          className="text-xs font-medium text-foreground hover:underline"
-                        >
-                          {comment.profiles.display_name}
-                        </button>
+        <CommentsModal
+          experience={experience}
+          onClose={() => setShowComments(false)}
+          onCommentsCountChange={setCommentsCount}
+          onViewProfile={onViewProfile}
+        />
+      )}
+    </div>
+  )
+}
+
+// Painel de comentários de um depoimento — abre como uma "aba" sobre a
+// tela (padrão de rede social), busca os comentários toda vez que é
+// aberto (nunca usa cache de uma abertura anterior) e permite escrever
+// um novo comentário direto por um campo fixo na parte de baixo.
+function CommentsModal({
+  experience,
+  onClose,
+  onCommentsCountChange,
+  onViewProfile
+}: {
+  experience: Experience
+  onClose: () => void
+  onCommentsCountChange: (updater: (count: number) => number) => void
+  onViewProfile: (profile: Profile) => void
+}) {
+  const { user, profile, awardBadge } = useAuth()
+  const supabase = createClient()
+
+  const [comments, setComments] = useState<ExperienceComment[]>([])
+  const [loading, setLoading] = useState(true)
+  const [commentInput, setCommentInput] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [deleteCommentId, setDeleteCommentId] = useState<string | null>(null)
+
+  const fetchComments = useCallback(async () => {
+    setLoading(true)
+    const { data } = await supabase
+      .from('experience_comments')
+      .select('*, profiles(id, display_name, avatar_url, is_specialist, specialist_area, bio, contact, user_type, created_at)')
+      .eq('experience_id', experience.id)
+      .order('created_at', { ascending: true })
+
+    setComments((data as ExperienceComment[]) || [])
+    setLoading(false)
+  }, [supabase, experience.id])
+
+  useEffect(() => {
+    fetchComments()
+  }, [fetchComments])
+
+  const handleSubmitComment = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!user || !commentInput.trim()) return
+
+    setSubmitting(true)
+    const { error } = await supabase.from('experience_comments').insert({
+      experience_id: experience.id,
+      user_id: user.id,
+      content: commentInput.trim()
+    })
+
+    if (error) {
+      setSubmitting(false)
+      toast.error(friendlyInsertError(error, 'Erro ao enviar comentário. Tente novamente.'))
+      return
+    }
+
+    const { count } = await supabase
+      .from('experience_comments')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+
+    if (count === 1) {
+      await awardBadge('first_comment')
+    }
+
+    setCommentInput('')
+    setSubmitting(false)
+    onCommentsCountChange((c) => c + 1)
+    fetchComments()
+  }
+
+  const handleDeleteComment = async () => {
+    if (!deleteCommentId) return
+    const { data, error } = await supabase.from('experience_comments').delete().eq('id', deleteCommentId).select('id')
+
+    if (error || !data || data.length === 0) {
+      toast.error('Erro ao excluir comentário. Tente novamente.')
+      return
+    }
+
+    setComments((prev) => prev.filter((c) => c.id !== deleteCommentId))
+    onCommentsCountChange((c) => Math.max(0, c - 1))
+    setDeleteCommentId(null)
+    toast.success('Comentário excluído.')
+  }
+
+  return (
+    <>
+      <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50">
+        <div className="bg-card rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg h-[85vh] sm:h-[75vh] flex flex-col">
+          <div className="p-4 sm:p-6 border-b border-border flex items-center justify-between shrink-0">
+            <h2 className="text-lg sm:text-xl font-bold text-foreground">Comentários</h2>
+            <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3">
+            {loading ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="w-6 h-6 animate-spin text-primary" />
+              </div>
+            ) : comments.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-8">
+                Nenhum comentário ainda. Seja o primeiro a comentar!
+              </p>
+            ) : (
+              comments.map((comment) => {
+                const canDeleteComment = !!user && (user.id === comment.user_id || !!profile?.is_admin)
+                return (
+                  <div key={comment.id} className="flex items-start gap-2">
+                    <button
+                      onClick={() => comment.profiles && onViewProfile(comment.profiles)}
+                      disabled={!comment.profiles}
+                      className="relative w-7 h-7 rounded-full bg-muted flex items-center justify-center text-xs font-medium overflow-hidden shrink-0 disabled:cursor-default"
+                    >
+                      {comment.profiles?.avatar_url ? (
+                        <Image src={comment.profiles.avatar_url} alt={comment.profiles.display_name} fill className="object-cover" />
                       ) : (
-                        <span className="text-xs font-medium text-foreground">Usuário</span>
+                        comment.profiles?.display_name?.charAt(0) || 'U'
                       )}
-                      {canDeleteComment && (
-                        <button
-                          onClick={() => setDeleteCommentId(comment.id)}
-                          className="text-muted-foreground hover:text-destructive transition-colors"
-                          aria-label="Excluir comentário"
-                        >
-                          <Trash2 className="w-3 h-3" />
-                        </button>
-                      )}
+                    </button>
+                    <div className="flex-1 min-w-0 bg-muted/50 rounded-lg px-3 py-2">
+                      <div className="flex items-center justify-between gap-2">
+                        {comment.profiles ? (
+                          <button
+                            onClick={() => onViewProfile(comment.profiles!)}
+                            className="flex items-center gap-1 text-xs font-medium text-foreground hover:underline"
+                          >
+                            {comment.profiles.display_name}
+                            {comment.profiles.is_specialist && (
+                              <BadgeCheck className="w-3.5 h-3.5 text-secondary" />
+                            )}
+                          </button>
+                        ) : (
+                          <span className="text-xs font-medium text-foreground">Usuário</span>
+                        )}
+                        {canDeleteComment && (
+                          <button
+                            onClick={() => setDeleteCommentId(comment.id)}
+                            className="text-muted-foreground hover:text-destructive transition-colors"
+                            aria-label="Excluir comentário"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </button>
+                        )}
+                      </div>
+                      <p className="text-sm text-foreground mt-0.5">{comment.content}</p>
                     </div>
-                    <p className="text-sm text-foreground mt-0.5">{comment.content}</p>
                   </div>
-                </div>
-              )
-            })
-          )}
+                )
+              })
+            )}
+          </div>
 
           {user && (
-            <form onSubmit={handleSubmitComment} className="flex items-center gap-2 pt-1">
-              <input
-                type="text"
-                value={commentInput}
-                onChange={(e) => setCommentInput(e.target.value)}
-                placeholder="Escreva um comentário..."
-                className="flex-1 px-3 py-2 text-sm border border-input rounded-lg bg-background text-foreground"
-              />
-              <button
-                type="submit"
-                disabled={submittingComment || !commentInput.trim()}
-                className="p-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-50"
-                aria-label="Enviar comentário"
-              >
-                {submittingComment ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Send className="w-4 h-4" />
-                )}
-              </button>
+            <form onSubmit={handleSubmitComment} className="p-3 sm:p-4 border-t border-border shrink-0">
+              <div className="flex items-end gap-2">
+                <textarea
+                  value={commentInput}
+                  onChange={(e) => setCommentInput(e.target.value)}
+                  placeholder="Escreva um comentário..."
+                  rows={1}
+                  maxLength={COMMENT_LENGTH_LIMIT}
+                  className="flex-1 px-3 py-2 text-sm border border-input rounded-lg bg-background text-foreground resize-none"
+                />
+                <button
+                  type="submit"
+                  disabled={submitting || !commentInput.trim()}
+                  className="p-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-50 shrink-0"
+                  aria-label="Enviar comentário"
+                >
+                  {submitting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Send className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1 text-right">{commentInput.length}/{COMMENT_LENGTH_LIMIT}</p>
             </form>
           )}
         </div>
-      )}
+      </div>
 
       <AlertDialog open={!!deleteCommentId} onOpenChange={(open) => !open && setDeleteCommentId(null)}>
         <AlertDialogContent>
@@ -598,7 +676,7 @@ function ExperienceCard({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </>
   )
 }
 
@@ -656,9 +734,11 @@ function ExperienceFormModal({
               onChange={(e) => setContent(e.target.value)}
               placeholder="Conte sobre sua trajetória, desafios e conquistas..."
               rows={5}
+              maxLength={POST_LENGTH_LIMIT}
               className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground resize-none"
               required
             />
+            <p className="text-xs text-muted-foreground mt-1 text-right">{content.length}/{POST_LENGTH_LIMIT}</p>
           </div>
 
           <div className="bg-muted/50 p-4 rounded-lg text-sm text-muted-foreground">
@@ -731,7 +811,7 @@ function ForumTab({
     })
 
     if (error) {
-      toast.error('Erro ao criar tópico. Tente novamente.')
+      toast.error(friendlyInsertError(error, 'Erro ao criar tópico. Tente novamente.'))
       return
     }
 
@@ -752,10 +832,10 @@ function ForumTab({
   const handleDeleteTopic = async () => {
     if (!deleteTargetId) return
     setDeleting(true)
-    const { error } = await supabase.from('forum_topics').delete().eq('id', deleteTargetId)
+    const { data, error } = await supabase.from('forum_topics').delete().eq('id', deleteTargetId).select('id')
     setDeleting(false)
 
-    if (error) {
+    if (error || !data || data.length === 0) {
       toast.error('Erro ao excluir tópico. Tente novamente.')
       return
     }
@@ -964,9 +1044,11 @@ function TopicFormModal({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Ex: Como é a rotina de um médico?"
+              maxLength={TOPIC_TITLE_LENGTH_LIMIT}
               className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground"
               required
             />
+            <p className="text-xs text-muted-foreground mt-1 text-right">{title.length}/{TOPIC_TITLE_LENGTH_LIMIT}</p>
           </div>
 
           <div>
@@ -978,9 +1060,11 @@ function TopicFormModal({
               onChange={(e) => setContent(e.target.value)}
               placeholder="Descreva sua dúvida com mais detalhes..."
               rows={4}
+              maxLength={POST_LENGTH_LIMIT}
               className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground resize-none"
               required
             />
+            <p className="text-xs text-muted-foreground mt-1 text-right">{content.length}/{POST_LENGTH_LIMIT}</p>
           </div>
 
           <button
@@ -1024,6 +1108,8 @@ function TopicDetail({
   const [loading, setLoading] = useState(true)
   const [replyContent, setReplyContent] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [deleteReplyId, setDeleteReplyId] = useState<string | null>(null)
+  const [deletingReply, setDeletingReply] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
@@ -1059,12 +1145,11 @@ function TopicDetail({
     const { error } = await supabase.from('forum_replies').insert({
       topic_id: topic.id,
       user_id: user.id,
-      content: replyContent,
-      is_specialist_answer: profile?.is_specialist || false
+      content: replyContent
     })
 
     if (error) {
-      toast.error('Erro ao enviar resposta. Tente novamente.')
+      toast.error(friendlyInsertError(error, 'Erro ao enviar resposta. Tente novamente.'))
       setSubmitting(false)
       return
     }
@@ -1091,7 +1176,24 @@ function TopicDetail({
     setReplies((data as ForumReply[]) || [])
   }
 
+  const handleDeleteReply = async () => {
+    if (!deleteReplyId) return
+    setDeletingReply(true)
+    const { data, error } = await supabase.from('forum_replies').delete().eq('id', deleteReplyId).select('id')
+    setDeletingReply(false)
+
+    if (error || !data || data.length === 0) {
+      toast.error('Erro ao excluir resposta. Tente novamente.')
+      return
+    }
+
+    setReplies((prev) => prev.filter((r) => r.id !== deleteReplyId))
+    setDeleteReplyId(null)
+    toast.success('Resposta excluída.')
+  }
+
   return (
+    <>
     <div className="space-y-6">
       {/* Back button */}
       <div className="flex items-center justify-between">
@@ -1150,48 +1252,59 @@ function TopicDetail({
             Nenhuma resposta ainda. Seja o primeiro a responder!
           </p>
         ) : (
-          replies.map((reply) => (
-            <div key={reply.id} className={`bg-card rounded-xl border p-5 ${reply.is_specialist_answer ? 'border-secondary' : 'border-border'
-              }`}>
-              <div className="flex items-start gap-3 mb-3">
-                <button
-                  onClick={() => reply.profiles && onViewProfile(reply.profiles)}
-                  disabled={!reply.profiles}
-                  className="relative w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-medium overflow-hidden shrink-0 disabled:cursor-default"
-                >
-                  {reply.profiles?.avatar_url ? (
-                    <Image src={reply.profiles.avatar_url} alt={reply.profiles.display_name} fill className="object-cover" />
-                  ) : (
-                    reply.profiles?.display_name?.charAt(0) || 'U'
-                  )}
-                </button>
-                <div>
-                  <div className="flex items-center gap-2">
-                    {reply.profiles ? (
-                      <button
-                        onClick={() => onViewProfile(reply.profiles!)}
-                        className="font-medium text-foreground hover:underline"
-                      >
-                        {reply.profiles.display_name}
-                      </button>
-                    ) : (
-                      <span className="font-medium text-foreground">Usuário</span>
-                    )}
-                    {reply.is_specialist_answer && (
-                      <span className="flex items-center gap-1 px-2 py-0.5 bg-secondary/10 text-secondary text-xs font-medium rounded">
-                        <BadgeCheck className="w-3 h-3" />
-                        Especialista
+          replies.map((reply) => {
+            const canDeleteReply = !!user && (user.id === reply.user_id || !!profile?.is_admin)
+            return (
+              <div key={reply.id} className={`bg-card rounded-xl border p-5 ${reply.profiles?.is_specialist ? 'border-secondary' : 'border-border'
+                }`}>
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <button
+                    onClick={() => reply.profiles && onViewProfile(reply.profiles)}
+                    disabled={!reply.profiles}
+                    className="flex items-start gap-3 text-left disabled:cursor-default"
+                  >
+                    <div className="relative w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-medium overflow-hidden shrink-0">
+                      {reply.profiles?.avatar_url ? (
+                        <Image src={reply.profiles.avatar_url} alt={reply.profiles.display_name} fill className="object-cover" />
+                      ) : (
+                        reply.profiles?.display_name?.charAt(0) || 'U'
+                      )}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        {reply.profiles ? (
+                          <span className="font-medium text-foreground hover:underline">
+                            {reply.profiles.display_name}
+                          </span>
+                        ) : (
+                          <span className="font-medium text-foreground">Usuário</span>
+                        )}
+                        {reply.profiles?.is_specialist && (
+                          <span className="flex items-center gap-1 px-2 py-0.5 bg-secondary/10 text-secondary text-xs font-medium rounded">
+                            <BadgeCheck className="w-3 h-3" />
+                            Especialista
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(reply.created_at).toLocaleDateString('pt-BR')}
                       </span>
-                    )}
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    {new Date(reply.created_at).toLocaleDateString('pt-BR')}
-                  </span>
+                    </div>
+                  </button>
+                  {canDeleteReply && (
+                    <button
+                      onClick={() => setDeleteReplyId(reply.id)}
+                      className="text-muted-foreground hover:text-destructive transition-colors p-1 shrink-0"
+                      aria-label="Excluir resposta"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
+                <p className="text-foreground leading-relaxed">{reply.content}</p>
               </div>
-              <p className="text-foreground leading-relaxed">{reply.content}</p>
-            </div>
-          ))
+            )
+          })
         )}
       </div>
 
@@ -1203,8 +1316,10 @@ function TopicDetail({
             onChange={(e) => setReplyContent(e.target.value)}
             placeholder="Escreva sua resposta..."
             rows={3}
-            className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground resize-none mb-3"
+            maxLength={COMMENT_LENGTH_LIMIT}
+            className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground resize-none"
           />
+          <p className="text-xs text-muted-foreground mt-1 mb-3 text-right">{replyContent.length}/{COMMENT_LENGTH_LIMIT}</p>
           <button
             onClick={handleSubmitReply}
             disabled={submitting || !replyContent.trim()}
@@ -1225,6 +1340,28 @@ function TopicDetail({
         </div>
       )}
     </div>
+
+    <AlertDialog open={!!deleteReplyId} onOpenChange={(open) => !open && setDeleteReplyId(null)}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Excluir resposta?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Essa ação não pode ser desfeita.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={deletingReply}>Cancelar</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleDeleteReply}
+            disabled={deletingReply}
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+          >
+            Excluir
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    </>
   )
 }
 
@@ -1271,31 +1408,41 @@ function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: Profile) =
     )
   }
 
+  const isEligibleForSpecialist = profile?.user_type === 'profissional' || profile?.user_type === 'ambos'
+
   return (
     <div className="space-y-6">
       {/* Become Specialist CTA */}
       {profile && !profile.is_specialist && profile.specialist_status === 'none' && (
-        <div className="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-xl p-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center shrink-0">
-              <Award className="w-6 h-6 text-secondary" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-foreground mb-1">
-                Torne-se um Especialista Verificado
-              </h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                Compartilhe sua expertise e ajude estudantes com dúvidas sobre sua área profissional.
-              </p>
-              <button
-                onClick={() => setShowRequestForm(true)}
-                className="px-4 py-2 bg-secondary text-secondary-foreground font-medium rounded-lg hover:bg-secondary/90 transition-colors"
-              >
-                Solicitar verificação
-              </button>
+        isEligibleForSpecialist ? (
+          <div className="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-xl p-6">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center shrink-0">
+                <Award className="w-6 h-6 text-secondary" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-foreground mb-1">
+                  Torne-se um Especialista Verificado
+                </h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Compartilhe sua expertise e ajude estudantes com dúvidas sobre sua área profissional.
+                </p>
+                <button
+                  onClick={() => setShowRequestForm(true)}
+                  className="px-4 py-2 bg-secondary text-secondary-foreground font-medium rounded-lg hover:bg-secondary/90 transition-colors"
+                >
+                  Solicitar verificação
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-muted/50 rounded-xl p-4">
+            <p className="text-sm text-muted-foreground">
+              A verificação de especialista está disponível para contas do tipo &quot;Profissional&quot; ou &quot;Ambos&quot;.
+            </p>
+          </div>
+        )
       )}
 
       {profile?.specialist_status === 'pending' && (
