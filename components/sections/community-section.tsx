@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/auth-context'
 import { createClient } from '@/lib/supabase/client'
-import type { Experience, ExperienceComment, ForumTopic, Profile, CommunityTab, ForumReply } from '@/lib/types'
+import type { Experience, ExperienceComment, ForumTopic, Profile, CommunityTab, ForumReply, ReportableContentType } from '@/lib/types'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,7 +35,13 @@ import {
   GraduationCap,
   Briefcase,
   Phone,
-  Calendar
+  Calendar,
+  Pin,
+  PinOff,
+  Lock,
+  Unlock,
+  Pencil,
+  Flag
 } from 'lucide-react'
 
 // Limites de tamanho inspirados no LinkedIn (posts ~3000, comentários
@@ -51,6 +57,8 @@ const TOPIC_TITLE_LENGTH_LIMIT = 200
 // mensagem de verdade do banco em vez do toast genérico de erro.
 function friendlyInsertError(error: { message: string } | null | undefined, fallback: string) {
   if (error?.message?.includes('limite de publicações')) return error.message
+  // Filtro de conteúdo (migração 014) rejeita o insert com esta mensagem.
+  if (error?.message?.includes('Conteúdo não permitido')) return error.message
   return fallback
 }
 
@@ -59,6 +67,90 @@ const tabs: { id: CommunityTab; label: string; icon: React.ComponentType<{ class
   { id: 'forum', label: 'Fórum', icon: MessageCircle },
   { id: 'specialists', label: 'Especialistas', icon: Award },
 ]
+
+// Botão de denúncia — alimenta a fila content_reports (migração 014).
+// Não aparece para quem não está logado nem para o autor do conteúdo.
+function ReportButton({
+  contentType,
+  contentId,
+  authorId,
+  className = 'text-muted-foreground hover:text-destructive transition-colors p-1',
+  iconClassName = 'w-4 h-4'
+}: {
+  contentType: ReportableContentType
+  contentId: string
+  authorId: string
+  className?: string
+  iconClassName?: string
+}) {
+  const { user } = useAuth()
+  const supabase = createClient()
+  const [open, setOpen] = useState(false)
+  const [reason, setReason] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
+  if (!user || user.id === authorId) return null
+
+  const submit = async () => {
+    setSubmitting(true)
+    const { error } = await supabase.from('content_reports').insert({
+      reporter_id: user.id,
+      content_type: contentType,
+      content_id: contentId,
+      reason: reason.trim() || null
+    })
+    setSubmitting(false)
+    setOpen(false)
+    setReason('')
+
+    if (error) {
+      // 23505 = unique_violation → já denunciou este conteúdo antes
+      toast.error(
+        error.code === '23505'
+          ? 'Você já denunciou este conteúdo.'
+          : 'Não foi possível enviar a denúncia. Tente novamente.'
+      )
+      return
+    }
+    toast.success('Denúncia enviada. Nossa equipe vai analisar.')
+  }
+
+  return (
+    <>
+      <button onClick={() => setOpen(true)} className={className} aria-label="Denunciar">
+        <Flag className={iconClassName} />
+      </button>
+      <AlertDialog open={open} onOpenChange={(o) => !submitting && setOpen(o)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Denunciar conteúdo</AlertDialogTitle>
+            <AlertDialogDescription>
+              Conte o que há de errado (opcional). O autor não vê quem denunciou.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <textarea
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            maxLength={500}
+            rows={3}
+            placeholder="Ex: linguagem ofensiva, spam, informação falsa..."
+            className="w-full px-3 py-2 text-sm border border-input rounded-lg bg-background text-foreground resize-none"
+          />
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={submitting}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={submit}
+              disabled={submitting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Enviar denúncia
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  )
+}
 
 export function CommunitySection() {
   const [activeTab, setActiveTab] = useState<CommunityTab>('experiences')
@@ -137,10 +229,11 @@ function ExperiencesTab({
   searchQuery: string
   onViewProfile: (profile: Profile) => void
 }) {
-  const { user, profile, awardBadge } = useAuth()
+  const { user, profile, awardCountBadges } = useAuth()
   const [experiences, setExperiences] = useState<Experience[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [editingExperience, setEditingExperience] = useState<Experience | null>(null)
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set())
   const [likingIds, setLikingIds] = useState<Set<string>>(new Set())
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
@@ -260,7 +353,7 @@ function ExperiencesTab({
       user_id: user.id,
       profession: data.profession,
       content: data.content,
-      status: 'pending'
+      status: 'approved'
     })
 
     if (error) {
@@ -268,18 +361,50 @@ function ExperiencesTab({
       return
     }
 
-    const { count } = await supabase
-      .from('experiences')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id)
+    await awardCountBadges('experiences', { 1: 'first_experience' })
 
-    if (count === 1) {
-      await awardBadge('first_experience')
-    }
-
-    toast.success('Depoimento enviado! Será publicado após revisão.')
+    toast.success('Depoimento publicado!')
     setShowForm(false)
     fetchExperiences()
+  }
+
+  const handleEditExperience = async (data: { profession: string; content: string }) => {
+    if (!editingExperience) return
+
+    const { data: rows, error } = await supabase
+      .from('experiences')
+      .update({ profession: data.profession, content: data.content })
+      .eq('id', editingExperience.id)
+      .select('id')
+
+    if (error || !rows || rows.length === 0) {
+      toast.error('Não foi possível salvar as alterações. Tente novamente.')
+      return
+    }
+
+    setExperiences((prev) =>
+      prev.map((e) => (e.id === editingExperience.id ? { ...e, ...data } : e))
+    )
+    setEditingExperience(null)
+    toast.success('Depoimento atualizado.')
+  }
+
+  const handleToggleExperienceClosed = async (exp: Experience) => {
+    const { data: rows, error } = await supabase
+      .from('experiences')
+      .update({ is_closed: !exp.is_closed })
+      .eq('id', exp.id)
+      .select('id')
+
+    if (error || !rows || rows.length === 0) {
+      toast.error('Não foi possível atualizar o depoimento. Tente novamente.')
+      return
+    }
+
+    setExperiences((prev) =>
+      prev.map((e) => (e.id === exp.id ? { ...e, is_closed: !exp.is_closed } : e))
+    )
+    toast.success(exp.is_closed ? 'Comentários reabertos.' : 'Comentários encerrados.')
   }
 
   if (loading) {
@@ -319,6 +444,18 @@ function ExperiencesTab({
         />
       )}
 
+      {/* Edit Experience Modal */}
+      {editingExperience && (
+        <ExperienceFormModal
+          initial={{
+            profession: editingExperience.profession,
+            content: editingExperience.content
+          }}
+          onClose={() => setEditingExperience(null)}
+          onSubmit={handleEditExperience}
+        />
+      )}
+
       {/* Experiences List */}
       {filteredExperiences.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">
@@ -343,6 +480,9 @@ function ExperiencesTab({
               onToggleLike={() => toggleLike(exp.id)}
               canDelete={!!user && (user.id === exp.user_id || !!profile?.is_admin)}
               onDelete={() => setDeleteTargetId(exp.id)}
+              canManage={!!user && (user.id === exp.user_id || !!profile?.is_admin)}
+              onEdit={() => setEditingExperience(exp)}
+              onToggleClosed={() => handleToggleExperienceClosed(exp)}
               onViewProfile={onViewProfile}
             />
           ))}
@@ -380,6 +520,9 @@ function ExperienceCard({
   onToggleLike,
   canDelete,
   onDelete,
+  canManage,
+  onEdit,
+  onToggleClosed,
   onViewProfile
 }: {
   experience: Experience
@@ -388,6 +531,9 @@ function ExperienceCard({
   onToggleLike: () => void
   canDelete: boolean
   onDelete: () => void
+  canManage: boolean
+  onEdit: () => void
+  onToggleClosed: () => void
   onViewProfile: (profile: Profile) => void
 }) {
   const [showComments, setShowComments] = useState(false)
@@ -419,15 +565,36 @@ function ExperienceCard({
             <p className="text-sm text-muted-foreground">{experience.profession}</p>
           </div>
         </button>
-        {canDelete && (
-          <button
-            onClick={onDelete}
-            className="text-muted-foreground hover:text-destructive transition-colors p-1"
-            aria-label="Excluir depoimento"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        )}
+        <div className="flex items-center gap-1 shrink-0">
+          {canManage && (
+            <>
+              <button
+                onClick={onEdit}
+                className="text-muted-foreground hover:text-foreground transition-colors p-1"
+                aria-label="Editar depoimento"
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button
+                onClick={onToggleClosed}
+                className="text-muted-foreground hover:text-foreground transition-colors p-1"
+                aria-label={experience.is_closed ? 'Reabrir comentários' : 'Encerrar comentários'}
+              >
+                {experience.is_closed ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+              </button>
+            </>
+          )}
+          {canDelete && (
+            <button
+              onClick={onDelete}
+              className="text-muted-foreground hover:text-destructive transition-colors p-1"
+              aria-label="Excluir depoimento"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          )}
+          <ReportButton contentType="experience" contentId={experience.id} authorId={experience.user_id} />
+        </div>
       </div>
 
       {/* Content */}
@@ -451,6 +618,7 @@ function ExperienceCard({
           >
             <MessageCircle className="w-4 h-4" />
             <span>{commentsCount}</span>
+            {experience.is_closed && <Lock className="w-3 h-3" aria-label="Comentários encerrados" />}
           </button>
         </div>
         <div className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -486,7 +654,7 @@ function CommentsModal({
   onCommentsCountChange: (updater: (count: number) => number) => void
   onViewProfile: (profile: Profile) => void
 }) {
-  const { user, profile, awardBadge } = useAuth()
+  const { user, profile, awardCountBadges } = useAuth()
   const supabase = createClient()
 
   const [comments, setComments] = useState<ExperienceComment[]>([])
@@ -513,7 +681,7 @@ function CommentsModal({
 
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!user || !commentInput.trim()) return
+    if (!user || !commentInput.trim() || experience.is_closed) return
 
     setSubmitting(true)
     const { error } = await supabase.from('experience_comments').insert({
@@ -528,14 +696,7 @@ function CommentsModal({
       return
     }
 
-    const { count } = await supabase
-      .from('experience_comments')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-
-    if (count === 1) {
-      await awardBadge('first_comment')
-    }
+    await awardCountBadges('experience_comments', { 1: 'first_comment' })
 
     setCommentInput('')
     setSubmitting(false)
@@ -609,15 +770,24 @@ function CommentsModal({
                         ) : (
                           <span className="text-xs font-medium text-foreground">Usuário</span>
                         )}
-                        {canDeleteComment && (
-                          <button
-                            onClick={() => setDeleteCommentId(comment.id)}
+                        <div className="flex items-center gap-1 shrink-0">
+                          {canDeleteComment && (
+                            <button
+                              onClick={() => setDeleteCommentId(comment.id)}
+                              className="text-muted-foreground hover:text-destructive transition-colors"
+                              aria-label="Excluir comentário"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          )}
+                          <ReportButton
+                            contentType="experience_comment"
+                            contentId={comment.id}
+                            authorId={comment.user_id}
                             className="text-muted-foreground hover:text-destructive transition-colors"
-                            aria-label="Excluir comentário"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </button>
-                        )}
+                            iconClassName="w-3 h-3"
+                          />
+                        </div>
                       </div>
                       <p className="text-sm text-foreground mt-0.5">{comment.content}</p>
                     </div>
@@ -627,7 +797,11 @@ function CommentsModal({
             )}
           </div>
 
-          {user && (
+          {experience.is_closed ? (
+            <div className="p-4 border-t border-border shrink-0 text-sm text-muted-foreground text-center">
+              Os comentários deste depoimento foram encerrados.
+            </div>
+          ) : user && (
             <form onSubmit={handleSubmitComment} className="p-3 sm:p-4 border-t border-border shrink-0">
               <div className="flex items-end gap-2">
                 <textarea
@@ -682,13 +856,16 @@ function CommentsModal({
 
 function ExperienceFormModal({
   onClose,
-  onSubmit
+  onSubmit,
+  initial
 }: {
   onClose: () => void
   onSubmit: (data: { profession: string; content: string }) => void
+  initial?: { profession: string; content: string }
 }) {
-  const [profession, setProfession] = useState('')
-  const [content, setContent] = useState('')
+  const isEdit = !!initial
+  const [profession, setProfession] = useState(initial?.profession ?? '')
+  const [content, setContent] = useState(initial?.content ?? '')
   const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -704,7 +881,9 @@ function ExperienceFormModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
       <div className="bg-card rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-border flex items-center justify-between">
-          <h2 className="text-xl font-bold text-foreground">Compartilhar Experiência</h2>
+          <h2 className="text-xl font-bold text-foreground">
+            {isEdit ? 'Editar depoimento' : 'Compartilhar Experiência'}
+          </h2>
           <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
             <X className="w-5 h-5" />
           </button>
@@ -741,9 +920,11 @@ function ExperienceFormModal({
             <p className="text-xs text-muted-foreground mt-1 text-right">{content.length}/{POST_LENGTH_LIMIT}</p>
           </div>
 
-          <div className="bg-muted/50 p-4 rounded-lg text-sm text-muted-foreground">
-            <p>Seu depoimento será revisado antes de ser publicado.</p>
-          </div>
+          {!isEdit && (
+            <div className="bg-muted/50 p-4 rounded-lg text-sm text-muted-foreground">
+              <p>Seu depoimento fica visível para toda a comunidade assim que você publicar. Conteúdo ofensivo ou spam pode ser removido.</p>
+            </div>
+          )}
 
           <button
             type="submit"
@@ -753,12 +934,12 @@ function ExperienceFormModal({
             {submitting ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Enviando...
+                {isEdit ? 'Salvando...' : 'Enviando...'}
               </>
             ) : (
               <>
                 <Send className="w-5 h-5" />
-                Enviar depoimento
+                {isEdit ? 'Salvar alterações' : 'Enviar depoimento'}
               </>
             )}
           </button>
@@ -776,10 +957,11 @@ function ForumTab({
   searchQuery: string
   onViewProfile: (profile: Profile) => void
 }) {
-  const { user, profile, awardBadge } = useAuth()
+  const { user, profile, awardCountBadges } = useAuth()
   const [topics, setTopics] = useState<ForumTopic[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [editingTopic, setEditingTopic] = useState<ForumTopic | null>(null)
   const [selectedTopic, setSelectedTopic] = useState<ForumTopic | null>(null)
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
   const [deleting, setDeleting] = useState(false)
@@ -815,14 +997,7 @@ function ForumTab({
       return
     }
 
-    const { count } = await supabase
-      .from('forum_topics')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-
-    if (count === 1) {
-      await awardBadge('first_topic')
-    }
+    await awardCountBadges('forum_topics', { 1: 'first_topic' })
 
     toast.success('Tópico criado com sucesso!')
     setShowForm(false)
@@ -848,6 +1023,73 @@ function ForumTab({
     toast.success('Tópico excluído.')
   }
 
+  const isAdmin = !!profile?.is_admin
+
+  const handleEditTopic = async (data: { title: string; content: string }) => {
+    if (!editingTopic) return
+
+    const { data: rows, error } = await supabase
+      .from('forum_topics')
+      .update({ title: data.title, content: data.content })
+      .eq('id', editingTopic.id)
+      .select('id')
+
+    if (error || !rows || rows.length === 0) {
+      toast.error('Não foi possível salvar as alterações. Tente novamente.')
+      return
+    }
+
+    setTopics((prev) => prev.map((t) => (t.id === editingTopic.id ? { ...t, ...data } : t)))
+    setSelectedTopic((prev) => (prev && prev.id === editingTopic.id ? { ...prev, ...data } : prev))
+    setEditingTopic(null)
+    toast.success('Tópico atualizado.')
+  }
+
+  // Fixar é exclusivo de admin (policy da migração 011); fechar/editar o
+  // autor também pode (migração 013). Se o UPDATE não afetar nenhuma linha
+  // (sem permissão), tratamos como erro em vez de falso sucesso.
+  const updateTopicFlags = async (
+    topic: ForumTopic,
+    changes: Partial<Pick<ForumTopic, 'is_pinned' | 'is_closed'>>,
+    successMessage: string
+  ) => {
+    const { data, error } = await supabase
+      .from('forum_topics')
+      .update(changes)
+      .eq('id', topic.id)
+      .select('id')
+
+    if (error || !data || data.length === 0) {
+      toast.error('Não foi possível atualizar o tópico. Tente novamente.')
+      return
+    }
+
+    setTopics((prev) => {
+      const next = prev.map((t) => (t.id === topic.id ? { ...t, ...changes } : t))
+      // Espelha a ordenação da consulta: fixados primeiro, depois mais recentes.
+      return next.sort((a, b) => {
+        if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      })
+    })
+    setSelectedTopic((prev) => (prev && prev.id === topic.id ? { ...prev, ...changes } : prev))
+    toast.success(successMessage)
+  }
+
+  const handleTogglePin = (topic: ForumTopic) =>
+    updateTopicFlags(
+      topic,
+      { is_pinned: !topic.is_pinned },
+      topic.is_pinned ? 'Tópico desafixado.' : 'Tópico fixado.'
+    )
+
+  const handleToggleClose = (topic: ForumTopic) =>
+    updateTopicFlags(
+      topic,
+      { is_closed: !topic.is_closed },
+      topic.is_closed ? 'Tópico reaberto.' : 'Tópico fechado.'
+    )
+
   const deleteDialog = (
     <AlertDialog open={!!deleteTargetId} onOpenChange={(open) => !open && setDeleteTargetId(null)}>
       <AlertDialogContent>
@@ -871,20 +1113,35 @@ function ForumTab({
     </AlertDialog>
   )
 
+  const editTopicModal = editingTopic && (
+    <TopicFormModal
+      initial={{ title: editingTopic.title, content: editingTopic.content }}
+      onClose={() => setEditingTopic(null)}
+      onSubmit={handleEditTopic}
+    />
+  )
+
   if (selectedTopic) {
+    const canManageTopic = !!user && (user.id === selectedTopic.user_id || isAdmin)
     return (
       <>
         <TopicDetail
           topic={selectedTopic}
-          canDelete={!!user && (user.id === selectedTopic.user_id || !!profile?.is_admin)}
+          canDelete={canManageTopic}
           onDelete={() => setDeleteTargetId(selectedTopic.id)}
           onViewProfile={onViewProfile}
+          canPin={isAdmin}
+          canManage={canManageTopic}
+          onEdit={() => setEditingTopic(selectedTopic)}
+          onTogglePin={() => handleTogglePin(selectedTopic)}
+          onToggleClose={() => handleToggleClose(selectedTopic)}
           onBack={() => {
             setSelectedTopic(null)
             fetchTopics()
           }}
         />
         {deleteDialog}
+        {editTopicModal}
       </>
     )
   }
@@ -917,6 +1174,9 @@ function ForumTab({
         />
       )}
 
+      {/* Edit Topic Modal */}
+      {editTopicModal}
+
       {/* Topics List */}
       {filteredTopics.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">
@@ -937,8 +1197,13 @@ function ForumTab({
               key={topic.id}
               topic={topic}
               onClick={() => setSelectedTopic(topic)}
-              canDelete={!!user && (user.id === topic.user_id || !!profile?.is_admin)}
+              canDelete={!!user && (user.id === topic.user_id || isAdmin)}
               onDelete={() => setDeleteTargetId(topic.id)}
+              canPin={isAdmin}
+              canManage={!!user && (user.id === topic.user_id || isAdmin)}
+              onEdit={() => setEditingTopic(topic)}
+              onTogglePin={() => handleTogglePin(topic)}
+              onToggleClose={() => handleToggleClose(topic)}
             />
           ))}
         </div>
@@ -953,22 +1218,39 @@ function TopicCard({
   topic,
   onClick,
   canDelete,
-  onDelete
+  onDelete,
+  canPin,
+  canManage,
+  onEdit,
+  onTogglePin,
+  onToggleClose
 }: {
   topic: ForumTopic
   onClick: () => void
   canDelete: boolean
   onDelete: () => void
+  canPin: boolean
+  canManage: boolean
+  onEdit: () => void
+  onTogglePin: () => void
+  onToggleClose: () => void
 }) {
   return (
     <div className="w-full bg-card rounded-xl border border-border p-4 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between gap-4">
         <button onClick={onClick} className="flex-1 min-w-0 text-left">
-          {topic.is_pinned && (
+          {(topic.is_pinned || topic.is_closed) && (
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-2 py-0.5 bg-accent/20 text-accent text-xs font-medium rounded">
-                Fixado
-              </span>
+              {topic.is_pinned && (
+                <span className="px-2 py-0.5 bg-accent/20 text-accent text-xs font-medium rounded">
+                  Fixado
+                </span>
+              )}
+              {topic.is_closed && (
+                <span className="px-2 py-0.5 bg-muted text-muted-foreground text-xs font-medium rounded">
+                  Fechado
+                </span>
+              )}
             </div>
           )}
           <h3 className="font-semibold text-foreground truncate">{topic.title}</h3>
@@ -986,6 +1268,33 @@ function TopicCard({
           </div>
         </button>
         <div className="flex items-center gap-1 shrink-0">
+          {canManage && (
+            <>
+              <button
+                onClick={onEdit}
+                className="text-muted-foreground hover:text-foreground transition-colors p-1"
+                aria-label="Editar tópico"
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button
+                onClick={onToggleClose}
+                className="text-muted-foreground hover:text-foreground transition-colors p-1"
+                aria-label={topic.is_closed ? 'Reabrir tópico' : 'Fechar tópico'}
+              >
+                {topic.is_closed ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+              </button>
+            </>
+          )}
+          {canPin && (
+            <button
+              onClick={onTogglePin}
+              className="text-muted-foreground hover:text-accent transition-colors p-1"
+              aria-label={topic.is_pinned ? 'Desafixar tópico' : 'Fixar tópico'}
+            >
+              {topic.is_pinned ? <PinOff className="w-4 h-4" /> : <Pin className="w-4 h-4" />}
+            </button>
+          )}
           {canDelete && (
             <button
               onClick={onDelete}
@@ -1006,13 +1315,16 @@ function TopicCard({
 
 function TopicFormModal({
   onClose,
-  onSubmit
+  onSubmit,
+  initial
 }: {
   onClose: () => void
   onSubmit: (data: { title: string; content: string }) => void
+  initial?: { title: string; content: string }
 }) {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const isEdit = !!initial
+  const [title, setTitle] = useState(initial?.title ?? '')
+  const [content, setContent] = useState(initial?.content ?? '')
   const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -1028,7 +1340,7 @@ function TopicFormModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
       <div className="bg-card rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-border flex items-center justify-between">
-          <h2 className="text-xl font-bold text-foreground">Novo Tópico</h2>
+          <h2 className="text-xl font-bold text-foreground">{isEdit ? 'Editar tópico' : 'Novo Tópico'}</h2>
           <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
             <X className="w-5 h-5" />
           </button>
@@ -1075,12 +1387,12 @@ function TopicFormModal({
             {submitting ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Publicando...
+                {isEdit ? 'Salvando...' : 'Publicando...'}
               </>
             ) : (
               <>
                 <Send className="w-5 h-5" />
-                Publicar pergunta
+                {isEdit ? 'Salvar alterações' : 'Publicar pergunta'}
               </>
             )}
           </button>
@@ -1095,15 +1407,25 @@ function TopicDetail({
   onBack,
   canDelete,
   onDelete,
-  onViewProfile
+  onViewProfile,
+  canPin,
+  canManage,
+  onEdit,
+  onTogglePin,
+  onToggleClose
 }: {
   topic: ForumTopic
   onBack: () => void
   canDelete: boolean
   onDelete: () => void
   onViewProfile: (profile: Profile) => void
+  canPin: boolean
+  canManage: boolean
+  onEdit: () => void
+  onTogglePin: () => void
+  onToggleClose: () => void
 }) {
-  const { user, profile, awardBadge } = useAuth()
+  const { user, profile, awardCountBadges } = useAuth()
   const [replies, setReplies] = useState<ForumReply[]>([])
   const [loading, setLoading] = useState(true)
   const [replyContent, setReplyContent] = useState('')
@@ -1154,14 +1476,7 @@ function TopicDetail({
       return
     }
 
-    const { count } = await supabase
-      .from('forum_replies')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-
-    if (count === 1) {
-      await awardBadge('first_reply')
-    }
+    await awardCountBadges('forum_replies', { 1: 'first_reply' })
 
     setReplyContent('')
     setSubmitting(false)
@@ -1204,19 +1519,63 @@ function TopicDetail({
           <ChevronRight className="w-4 h-4 rotate-180" />
           Voltar para o fórum
         </button>
-        {canDelete && (
-          <button
-            onClick={onDelete}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-destructive transition-colors"
-          >
-            <Trash2 className="w-4 h-4" />
-            Excluir tópico
-          </button>
-        )}
+        <div className="flex items-center gap-4">
+          {canManage && (
+            <>
+              <button
+                onClick={onEdit}
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Pencil className="w-4 h-4" />
+                Editar
+              </button>
+              <button
+                onClick={onToggleClose}
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {topic.is_closed ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+                {topic.is_closed ? 'Reabrir' : 'Fechar'}
+              </button>
+            </>
+          )}
+          {canPin && (
+            <button
+              onClick={onTogglePin}
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors"
+            >
+              {topic.is_pinned ? <PinOff className="w-4 h-4" /> : <Pin className="w-4 h-4" />}
+              {topic.is_pinned ? 'Desafixar' : 'Fixar'}
+            </button>
+          )}
+          {canDelete && (
+            <button
+              onClick={onDelete}
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-destructive transition-colors"
+            >
+              <Trash2 className="w-4 h-4" />
+              Excluir tópico
+            </button>
+          )}
+          <ReportButton contentType="forum_topic" contentId={topic.id} authorId={topic.user_id} />
+        </div>
       </div>
 
       {/* Topic */}
       <div className="bg-card rounded-xl border border-border p-6">
+        {(topic.is_pinned || topic.is_closed) && (
+          <div className="flex items-center gap-2 mb-2">
+            {topic.is_pinned && (
+              <span className="px-2 py-0.5 bg-accent/20 text-accent text-xs font-medium rounded">
+                Fixado
+              </span>
+            )}
+            {topic.is_closed && (
+              <span className="px-2 py-0.5 bg-muted text-muted-foreground text-xs font-medium rounded">
+                Fechado
+              </span>
+            )}
+          </div>
+        )}
         <h1 className="text-xl font-bold text-foreground mb-3">{topic.title}</h1>
         <p className="text-foreground leading-relaxed">{topic.content}</p>
         <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border text-sm text-muted-foreground">
@@ -1291,15 +1650,18 @@ function TopicDetail({
                       </span>
                     </div>
                   </button>
-                  {canDeleteReply && (
-                    <button
-                      onClick={() => setDeleteReplyId(reply.id)}
-                      className="text-muted-foreground hover:text-destructive transition-colors p-1 shrink-0"
-                      aria-label="Excluir resposta"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  )}
+                  <div className="flex items-center gap-1 shrink-0">
+                    {canDeleteReply && (
+                      <button
+                        onClick={() => setDeleteReplyId(reply.id)}
+                        className="text-muted-foreground hover:text-destructive transition-colors p-1"
+                        aria-label="Excluir resposta"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                    <ReportButton contentType="forum_reply" contentId={reply.id} authorId={reply.user_id} />
+                  </div>
                 </div>
                 <p className="text-foreground leading-relaxed">{reply.content}</p>
               </div>
@@ -1337,6 +1699,12 @@ function TopicDetail({
               </>
             )}
           </button>
+        </div>
+      )}
+
+      {topic.is_closed && (
+        <div className="bg-muted/50 rounded-xl border border-border p-4 text-sm text-muted-foreground text-center">
+          Este tópico está fechado para novas respostas.
         </div>
       )}
     </div>
