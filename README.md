@@ -14,9 +14,10 @@ O objetivo é reduzir a indecisão e a ansiedade ligadas à escolha profissional
 - **Teste vocacional RIASEC** (modelo de Holland — 6 perfis: Realista, Investigativo, Artístico, Social, Empreendedor, Convencional), com ranking dos três perfis dominantes e histórico de tentativas.
 - **Guia de carreiras**: profissões, formas de ingresso no ensino superior (ENEM, SISU, PROUNI, FIES, vestibular) e diretório de universidades do Vale do Paranhana/RS — com busca textual e filtro por área/tipo RIASEC.
 - **Comunidade**:
-  - *Depoimentos* de profissionais, com curtidas e comentários.
-  - *Fórum* de discussão com tópicos e respostas.
+  - *Depoimentos* de profissionais, com curtidas e comentários. O autor pode editar o próprio depoimento e encerrar seus comentários.
+  - *Fórum* de discussão com tópicos e respostas. O autor edita e fecha os próprios tópicos; o admin também fixa e modera qualquer conteúdo.
   - *Especialistas verificados*: profissionais ou contas "ambos" podem solicitar verificação;
+  - *Moderação*: conteúdo publica na hora (pós-moderação), passa por um filtro automático de termos ofensivos/spam no banco e pode ser denunciado para revisão.
 - **Perfil**: foto (upload real), bio, contato e perfil público (visível ao clicar no nome/foto de qualquer usuário em depoimentos, fórum ou na lista de especialistas).
 - **Gamificação**: badges por marcos de uso (primeiro teste, primeiro depoimento, primeiro tópico etc.), sem ranking público.
 
