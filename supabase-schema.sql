@@ -66,9 +66,14 @@ begin
   new.is_admin := old.is_admin;
   new.is_specialist := old.is_specialist;
 
-  if new.specialist_status is distinct from old.specialist_status
-     and new.specialist_status <> 'pending' then
-    new.specialist_status := old.specialist_status;
+  -- specialist_status: usuário comum só pode solicitar ('pending'), e
+  -- só se for profissional ou ambos (estudante não solicita).
+  if new.specialist_status is distinct from old.specialist_status then
+    if new.specialist_status <> 'pending' then
+      new.specialist_status := old.specialist_status;
+    elsif new.user_type not in ('profissional', 'ambos') then
+      new.specialist_status := old.specialist_status;
+    end if;
   end if;
 
   return new;
