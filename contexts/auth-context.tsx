@@ -19,6 +19,7 @@ interface AuthContextType {
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: Error | null }>
   saveTestResult: (scores: Record<RIASECType, number>, answers: number[]) => Promise<{ error: Error | null }>
   awardBadge: (badgeCode: string) => Promise<void>
+  awardCountBadges: (table: string, thresholds: Record<number, string>) => Promise<void>
 }
 
 interface SignUpMetadata {
@@ -193,18 +194,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
 
     if (!error) {
-    // ✅ Contar diretamente no banco — fonte de verdade
+      await awardCountBadges('test_results', { 1: 'first_test', 3: 'test_master' })
+      await refreshProfile()
+    }
+
+    return { error: error ? new Error(error.message) : null }
+  }
+
+  // Concede badges "primeira vez" a partir da contagem real no banco (fonte de
+  // verdade). thresholds mapeia total de registros do usuário → código do badge,
+  // ex.: { 1: 'first_topic' } ou { 1: 'first_test', 3: 'test_master' }.
+  // Se a contagem falhar, nenhum badge é concedido (silencioso, como antes).
+  const awardCountBadges = async (table: string, thresholds: Record<number, string>) => {
+    if (!user) return
+
     const { count } = await supabase
-      .from('test_results')
+      .from(table)
       .select('*', { count: 'exact', head: true })
       .eq('user_id', user.id)
 
-    if (count === 1) await awardBadge('first_test')
-    if (count === 3) await awardBadge('test_master')
+    if (typeof count !== 'number') return
 
-    await refreshProfile()
-  }
-    return { error: error ? new Error(error.message) : null }
+    for (const [threshold, badgeCode] of Object.entries(thresholds)) {
+      if (count === Number(threshold)) await awardBadge(badgeCode)
+    }
   }
 
  const awardBadge = async (badgeCode: string) => {
@@ -249,7 +262,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         refreshProfile,
         updateProfile,
         saveTestResult,
-        awardBadge
+        awardBadge,
+        awardCountBadges
       }}
     >
       {children}
