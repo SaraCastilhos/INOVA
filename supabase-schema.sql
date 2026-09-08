@@ -356,6 +356,14 @@ create policy "Anyone can view replies" on public.forum_replies
 create policy "Authenticated users can create replies" on public.forum_replies
   for insert with check (auth.uid() = user_id);
 
+create policy "Users can delete own replies" on public.forum_replies
+  for delete using (auth.uid() = user_id);
+
+create policy "Admins can delete any reply" on public.forum_replies
+  for delete using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
 -- Update replies count trigger (security definer pelo mesmo motivo do
 -- trigger de likes/comentários acima)
 create or replace function update_topic_replies_count()
