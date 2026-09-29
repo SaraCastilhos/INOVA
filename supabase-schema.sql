@@ -130,6 +130,12 @@ create table if not exists public.test_results (
   secondary_type text,
   tertiary_type text,
   answers integer[],
+  -- Qual instrumento/versão gerou este resultado (migração 015). O app grava
+  -- 'onet-mini-ip' / a versão do JSON versionado. Resultados anteriores à
+  -- adaptação do O*NET Mini-IP ficam como 'riasec-legacy-24' / '0' e não são
+  -- comparáveis com os novos (escala e nº de itens diferentes).
+  instrument_slug text not null default 'riasec-legacy-24',
+  instrument_version text not null default '0',
   created_at timestamptz not null default now()
 );
 
