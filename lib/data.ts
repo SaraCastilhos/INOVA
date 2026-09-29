@@ -1,4 +1,8 @@
-import type { Profissao, FormaIngresso, Universidade, RIASECQuestion } from './types'
+import type { FormaIngresso, Universidade, RIASECQuestion } from './types'
+
+// O guia de profissões vive em data/professions.json (conteúdo curado,
+// versionado). Reexportado aqui para manter os imports existentes estáveis.
+export { PROFISSOES, AREAS, guiaAtualizadoEm } from './professions'
 
 export const RIASEC_QUESTIONS: RIASECQuestion[] = [
   // Realista (R)
@@ -36,32 +40,6 @@ export const RIASEC_QUESTIONS: RIASECQuestion[] = [
   { id: 22, tipo: 'C', texto: 'Prefiro trabalhos com instruções detalhadas e rotinas.' },
   { id: 23, tipo: 'C', texto: 'Tenho habilidade para trabalhar com números e dados.' },
   { id: 24, tipo: 'C', texto: 'Me sinto confortável em ambientes estruturados.' },
-]
-
-export const PROFISSOES: Profissao[] = [
-  // Realista
-  { id: '1', nome: 'Engenheiro Civil', tipo: 'R', salario: 'R$ 8.000 - 15.000', descricao: 'Projeta e gerencia obras de construção.', areas: ['construção', 'infraestrutura'] },
-  { id: '2', nome: 'Mecânico Industrial', tipo: 'R', salario: 'R$ 3.500 - 7.000', descricao: 'Realiza manutenção de máquinas e equipamentos.', areas: ['indústria', 'manutenção'] },
-  
-  // Investigativo
-  { id: '3', nome: 'Cientista de Dados', tipo: 'I', salario: 'R$ 7.000 - 20.000', descricao: 'Analisa dados para decisões estratégicas.', areas: ['tecnologia', 'análise'] },
-  { id: '4', nome: 'Pesquisador Científico', tipo: 'I', salario: 'R$ 5.000 - 12.000', descricao: 'Desenvolve pesquisas em laboratórios e universidades.', areas: ['pesquisa', 'ciência'] },
-  
-  // Artístico
-  { id: '5', nome: 'Designer Gráfico', tipo: 'A', salario: 'R$ 3.500 - 10.000', descricao: 'Cria identidades visuais e materiais gráficos.', areas: ['design', 'comunicação'] },
-  { id: '6', nome: 'Arquiteto', tipo: 'A', salario: 'R$ 5.000 - 15.000', descricao: 'Projeta espaços e edifícios com estética e funcionalidade.', areas: ['arquitetura', 'design'] },
-  
-  // Social
-  { id: '7', nome: 'Psicólogo', tipo: 'S', salario: 'R$ 3.500 - 12.000', descricao: 'Auxilia pessoas em questões emocionais e comportamentais.', areas: ['saúde mental', 'terapia'] },
-  { id: '8', nome: 'Professor', tipo: 'S', salario: 'R$ 2.500 - 8.000', descricao: 'Educa e orienta estudantes em diversas áreas.', areas: ['educação', 'ensino'] },
-  
-  // Empreendedor
-  { id: '9', nome: 'Administrador de Empresas', tipo: 'E', salario: 'R$ 4.000 - 15.000', descricao: 'Gerencia recursos e processos organizacionais.', areas: ['gestão', 'negócios'] },
-  { id: '10', nome: 'Gerente de Vendas', tipo: 'E', salario: 'R$ 5.000 - 20.000', descricao: 'Lidera equipes comerciais e estratégias de vendas.', areas: ['vendas', 'liderança'] },
-  
-  // Convencional
-  { id: '11', nome: 'Contador', tipo: 'C', salario: 'R$ 4.000 - 12.000', descricao: 'Gerencia finanças e obrigações fiscais.', areas: ['finanças', 'contabilidade'] },
-  { id: '12', nome: 'Analista de Sistemas', tipo: 'C', salario: 'R$ 5.000 - 15.000', descricao: 'Desenvolve e mantém sistemas de informação.', areas: ['tecnologia', 'sistemas'] },
 ]
 
 export const FORMAS_INGRESSO: FormaIngresso[] = [
