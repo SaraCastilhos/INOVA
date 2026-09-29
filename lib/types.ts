@@ -125,13 +125,75 @@ export interface UserBadge {
   badges?: Badge
 }
 
+// Áreas de atuação do guia de profissões — taxonomia fechada (alinhada às
+// grandes áreas OCDE/CINE usadas pelo MEC). Um valor por profissão.
+export const AREAS_PROFISSIONAIS = [
+  'Agrárias e Meio Ambiente',
+  'Artes, Design e Cultura',
+  'Ciências Biológicas',
+  'Ciências Exatas e da Terra',
+  'Comunicação e Informação',
+  'Construção e Infraestrutura',
+  'Educação',
+  'Gestão e Negócios',
+  'Indústria e Produção',
+  'Saúde e Bem-estar',
+  'Serviços Sociais e Jurídicos',
+  'Tecnologia da Informação',
+] as const
+
+export type AreaProfissional = (typeof AREAS_PROFISSIONAIS)[number]
+
+export type FormacaoRequerida =
+  | 'fundamental'
+  | 'medio'
+  | 'tecnico'
+  | 'superior'
+  | 'superior-conselho'
+
+export const FORMACAO_LABELS: Record<FormacaoRequerida, string> = {
+  fundamental: 'Ensino fundamental',
+  medio: 'Ensino médio',
+  tecnico: 'Curso técnico',
+  superior: 'Ensino superior',
+  'superior-conselho': 'Ensino superior + registro em conselho',
+}
+
+// Referência de onde um dado foi extraído. Toda profissão publicada precisa
+// de pelo menos uma. `acesso_em` é a data em que a fonte foi consultada.
+export interface FonteReferencia {
+  titulo: string
+  url: string
+  acesso_em: string // AAAA-MM-DD
+}
+
+export interface SalarioInfo {
+  media: number // salário médio mensal (a fonte publica "salário médio")
+  p25: number // 1º quartil
+  p75: number // 3º quartil
+  moeda: 'BRL'
+  fonte: string
+  referencia: string // ex.: "2025-08/2026-07"
+}
+
 export interface Profissao {
-  id: string
+  slug: string
   nome: string
-  tipo: RIASECType
-  salario: string
+  cbo_code: string // ex.: "2124-05"
+  area: AreaProfissional
   descricao: string
-  areas: string[]
+  atividades: string[]
+  habilidades: string[]
+  formacao_requerida: FormacaoRequerida
+  regulamentada: boolean
+  conselho: string | null
+  riasec_code: string // 1 a 3 letras RIASEC, ex.: "IC" (fonte: O*NET)
+  riasec_primary: RIASECType // = riasec_code[0]; mantém o filtro atual
+  salario: SalarioInfo
+  fontes: FonteReferencia[]
+  status: 'rascunho' | 'publicado'
+  atualizado_em: string // AAAA-MM-DD
+  revisado_por: string
 }
 
 export interface FormaIngresso {

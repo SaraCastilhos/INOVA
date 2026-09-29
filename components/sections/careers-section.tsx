@@ -1,17 +1,38 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES } from '@/lib/data'
-import { RIASEC_INFO, type RIASECType } from '@/lib/types'
-import { Briefcase, GraduationCap, Building2, ExternalLink, MapPin, Filter, X, Search } from 'lucide-react'
+import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES, AREAS, guiaAtualizadoEm } from '@/lib/data'
+import { RIASEC_INFO, FORMACAO_LABELS, type RIASECType } from '@/lib/types'
+import {
+  Briefcase,
+  GraduationCap,
+  Building2,
+  ExternalLink,
+  MapPin,
+  Filter,
+  X,
+  Search,
+  Wrench,
+  Sparkles,
+  FileText,
+  CalendarClock,
+  Lock,
+} from 'lucide-react'
 
 type Tab = 'profissoes' | 'ingresso' | 'universidades'
 
-const TODAS_AREAS = Array.from(new Set(PROFISSOES.flatMap((p) => p.areas))).sort()
+const fmtBRL = (n: number) =>
+  n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
+
+const fmtData = (iso: string) => {
+  const [y, m, d] = iso.split('-')
+  return d && m && y ? `${d}/${m}/${y}` : iso
+}
 
 export function CareersSection() {
   const { testResults } = useAuth()
@@ -21,6 +42,7 @@ export function CareersSection() {
   const [searchQuery, setSearchQuery] = useState('')
 
   const lastTest = testResults?.[0]
+  const jaFezTeste = Boolean(lastTest)
   const userTopTypes: RIASECType[] = lastTest
     ? ([lastTest.primary_type, lastTest.secondary_type, lastTest.tertiary_type].filter(Boolean) as RIASECType[])
     : []
@@ -40,14 +62,15 @@ export function CareersSection() {
   }
 
   const filteredProfissoes = PROFISSOES.filter((p) => {
-    const matchesTipo = selectedFilter === 'todos' || p.tipo === selectedFilter
-    const matchesArea = areaFilter === 'todas' || p.areas.includes(areaFilter)
+    const matchesTipo = selectedFilter === 'todos' || p.riasec_primary === selectedFilter
+    const matchesArea = areaFilter === 'todas' || p.area === areaFilter
     const query = searchQuery.trim().toLowerCase()
     const matchesSearch =
       !query ||
       p.nome.toLowerCase().includes(query) ||
       p.descricao.toLowerCase().includes(query) ||
-      p.areas.some((area) => area.toLowerCase().includes(query))
+      p.area.toLowerCase().includes(query) ||
+      p.atividades.some((a) => a.toLowerCase().includes(query))
     return matchesTipo && matchesArea && matchesSearch
   })
 
@@ -78,7 +101,7 @@ export function CareersSection() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar por profissão, descrição ou área..."
+              placeholder="Buscar por profissão, descrição ou atividade..."
               className="w-full pl-10 pr-4 py-2.5 border border-input rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
@@ -106,9 +129,16 @@ export function CareersSection() {
                       return (
                         <button
                           key={tipo}
-                          onClick={() => setSelectedFilter(tipo)}
+                          onClick={() => jaFezTeste && setSelectedFilter(tipo)}
+                          disabled={!jaFezTeste}
                           className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-1 ${
-                            selectedFilter === tipo ? 'text-white' : isUserType ? 'ring-2 ring-offset-2' : 'opacity-70 hover:opacity-100'
+                            !jaFezTeste
+                              ? 'opacity-40 cursor-not-allowed'
+                              : selectedFilter === tipo
+                                ? 'text-white'
+                                : isUserType
+                                  ? 'ring-2 ring-offset-2'
+                                  : 'opacity-70 hover:opacity-100'
                           }`}
                           style={{
                             backgroundColor: selectedFilter === tipo ? RIASEC_INFO[tipo].cor : `${RIASEC_INFO[tipo].cor}30`,
@@ -121,6 +151,12 @@ export function CareersSection() {
                       )
                     })}
                   </div>
+                  {!jaFezTeste && (
+                    <p className="flex items-center gap-1.5 text-xs text-muted-foreground mt-2">
+                      <Lock className="h-3 w-3" />
+                      Faça o teste vocacional para filtrar por compatibilidade com o seu perfil.
+                    </p>
+                  )}
                 </div>
 
                 <div className="w-full sm:w-auto">
@@ -129,13 +165,13 @@ export function CareersSection() {
                     <span className="text-sm font-medium text-foreground">Área de atuação:</span>
                   </div>
                   <Select value={areaFilter} onValueChange={setAreaFilter}>
-                    <SelectTrigger className="w-full sm:w-48 capitalize">
+                    <SelectTrigger className="w-full sm:w-56">
                       <SelectValue placeholder="Todas as áreas" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="todas">Todas as áreas</SelectItem>
-                      {TODAS_AREAS.map((area) => (
-                        <SelectItem key={area} value={area} className="capitalize">
+                      {AREAS.map((area) => (
+                        <SelectItem key={area} value={area}>
                           {area}
                         </SelectItem>
                       ))}
@@ -157,30 +193,98 @@ export function CareersSection() {
           </Card>
 
           {/* Professions List */}
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 lg:grid-cols-2">
             {filteredProfissoes.map((profissao) => (
-              <Card key={profissao.id} className="card-hover">
-                <CardContent className="pt-6">
-                  <div className="flex items-start justify-between mb-3">
+              <Card key={profissao.slug} className="card-hover">
+                <CardContent className="pt-6 space-y-4">
+                  <div className="flex items-start justify-between gap-3">
                     <div>
                       <h3 className="font-semibold text-foreground">{profissao.nome}</h3>
-                      <p className="text-sm text-secondary font-medium">{profissao.salario}</p>
+                      <p className="text-xs text-muted-foreground">
+                        CBO {profissao.cbo_code} · {profissao.area}
+                      </p>
                     </div>
                     <div
-                      className="px-2 py-1 rounded-full text-xs font-bold text-white"
-                      style={{ backgroundColor: RIASEC_INFO[profissao.tipo].cor }}
+                      className="shrink-0 px-2 py-1 rounded-full text-xs font-bold text-white"
+                      style={{ backgroundColor: RIASEC_INFO[profissao.riasec_primary].cor }}
+                      title={`Perfil RIASEC: ${profissao.riasec_code}`}
                     >
-                      {profissao.tipo}
+                      {profissao.riasec_code}
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{profissao.descricao}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {profissao.areas.map((area) => (
-                      <span key={area} className="px-2 py-0.5 rounded-full text-xs bg-muted text-muted-foreground">
-                        {area}
+
+                  <p className="text-sm text-muted-foreground">{profissao.descricao}</p>
+
+                  <div>
+                    <p className="text-sm font-medium text-secondary">
+                      {fmtBRL(profissao.salario.media)}
+                      <span className="text-xs text-muted-foreground font-normal">
+                        {' '}(média; faixa {fmtBRL(profissao.salario.p25)}–{fmtBRL(profissao.salario.p75)})
                       </span>
-                    ))}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Fonte: {profissao.salario.fonte} · ref. {profissao.salario.referencia}
+                    </p>
                   </div>
+
+                  <div>
+                    <h4 className="flex items-center gap-1.5 text-xs font-semibold text-foreground mb-1">
+                      <Wrench className="h-3.5 w-3.5" /> Atividades típicas
+                    </h4>
+                    <ul className="space-y-1">
+                      {profissao.atividades.map((a) => (
+                        <li key={a} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <span className="text-primary">-</span>
+                          {a}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="flex items-center gap-1.5 text-xs font-semibold text-foreground mb-2">
+                      <Sparkles className="h-3.5 w-3.5" /> Habilidades
+                    </h4>
+                    <div className="flex flex-wrap gap-1">
+                      {profissao.habilidades.map((h) => (
+                        <span key={h} className="px-2 py-0.5 rounded-full text-xs bg-muted text-muted-foreground">
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <GraduationCap className="h-3.5 w-3.5" />
+                    {FORMACAO_LABELS[profissao.formacao_requerida]}
+                    {profissao.regulamentada && profissao.conselho && (
+                      <span>· registro no {profissao.conselho}</span>
+                    )}
+                  </div>
+
+                  <details className="text-xs">
+                    <summary className="flex items-center gap-1.5 cursor-pointer text-muted-foreground hover:text-foreground">
+                      <FileText className="h-3.5 w-3.5" /> Fontes ({profissao.fontes.length}) · atualizado em{' '}
+                      {fmtData(profissao.atualizado_em)}
+                    </summary>
+                    <ul className="mt-2 space-y-1">
+                      {profissao.fontes.map((f) => (
+                        <li key={f.url}>
+                          <a
+                            href={f.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-start gap-1 text-primary hover:underline"
+                          >
+                            <ExternalLink className="h-3 w-3 mt-0.5 shrink-0" />
+                            <span>
+                              {f.titulo} <span className="text-muted-foreground">(acesso em {fmtData(f.acesso_em)})</span>
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                 </CardContent>
               </Card>
             ))}
@@ -195,6 +299,19 @@ export function CareersSection() {
               </CardContent>
             </Card>
           )}
+
+          {/* Footer: rastreabilidade (RN07) */}
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5">
+              <CalendarClock className="h-3.5 w-3.5" />
+              {guiaAtualizadoEm
+                ? `Guia atualizado em ${fmtData(guiaAtualizadoEm)}`
+                : 'Guia em construção'}
+            </span>
+            <Link href="/metodologia" className="text-primary hover:underline">
+              Metodologia e fontes
+            </Link>
+          </div>
         </div>
       )}
 

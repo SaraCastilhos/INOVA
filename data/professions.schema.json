@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Guia de profissões INOVA — lista de fichas",
+  "type": "array",
+  "items": { "$ref": "#/definitions/profissao" },
+  "definitions": {
+    "profissao": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slug",
+        "nome",
+        "cbo_code",
+        "area",
+        "descricao",
+        "atividades",
+        "habilidades",
+        "formacao_requerida",
+        "regulamentada",
+        "conselho",
+        "riasec_code",
+        "riasec_primary",
+        "salario",
+        "fontes",
+        "status",
+        "atualizado_em",
+        "revisado_por"
+      ],
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Identificador único em kebab-case, derivado do nome."
+        },
+        "nome": { "type": "string", "minLength": 3 },
+        "cbo_code": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}$",
+          "description": "Código CBO no formato 0000-00 (fonte: cbo.mte.gov.br)."
+        },
+        "area": {
+          "type": "string",
+          "enum": [
+            "Agrárias e Meio Ambiente",
+            "Artes, Design e Cultura",
+            "Ciências Biológicas",
+            "Ciências Exatas e da Terra",
+            "Comunicação e Informação",
+            "Construção e Infraestrutura",
+            "Educação",
+            "Gestão e Negócios",
+            "Indústria e Produção",
+            "Saúde e Bem-estar",
+            "Serviços Sociais e Jurídicos",
+            "Tecnologia da Informação"
+          ]
+        },
+        "descricao": {
+          "type": "string",
+          "minLength": 60,
+          "description": "2 a 4 frases, resumidas da descrição sumária da CBO."
+        },
+        "atividades": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 8 },
+          "description": "Atividades típicas, extraídas das áreas de atividade da CBO."
+        },
+        "habilidades": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 4 },
+          "description": "Competências pessoais/técnicas (CBO e/ou O*NET)."
+        },
+        "formacao_requerida": {
+          "type": "string",
+          "enum": ["fundamental", "medio", "tecnico", "superior", "superior-conselho"]
+        },
+        "regulamentada": { "type": "boolean" },
+        "conselho": {
+          "type": ["string", "null"],
+          "description": "Sigla do conselho (ex.: CREA, CRP). null quando não regulamentada."
+        },
+        "riasec_code": {
+          "type": "string",
+          "pattern": "^[RIASEC]{1,3}$",
+          "description": "1 a 3 letras RIASEC em ordem de dominância (fonte: O*NET)."
+        },
+        "riasec_primary": { "type": "string", "enum": ["R", "I", "A", "S", "E", "C"] },
+        "salario": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["media", "p25", "p75", "moeda", "fonte", "referencia"],
+          "properties": {
+            "media": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Salário médio mensal, conforme publicado pela fonte."
+            },
+            "p25": { "type": "number", "exclusiveMinimum": 0, "description": "1º quartil." },
+            "p75": { "type": "number", "exclusiveMinimum": 0, "description": "3º quartil." },
+            "moeda": { "type": "string", "const": "BRL" },
+            "fonte": { "type": "string", "minLength": 4 },
+            "referencia": {
+              "type": "string",
+              "description": "Período de referência dos dados, ex.: 2025-08/2026-07."
+            }
+          }
+        },
+        "fontes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["titulo", "url", "acesso_em"],
+            "properties": {
+              "titulo": { "type": "string", "minLength": 4 },
+              "url": { "type": "string", "pattern": "^https?://" },
+              "acesso_em": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+            }
+          }
+        },
+        "status": { "type": "string", "enum": ["rascunho", "publicado"] },
+        "atualizado_em": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "revisado_por": { "type": "string", "minLength": 2 }
+      }
+    }
+  }
+}

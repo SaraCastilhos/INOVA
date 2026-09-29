@@ -1,0 +1,358 @@
+[
+  {
+    "slug": "analista-de-desenvolvimento-de-sistemas",
+    "nome": "Analista de desenvolvimento de sistemas",
+    "cbo_code": "2124-05",
+    "area": "Tecnologia da Informação",
+    "descricao": "Desenvolve e implanta sistemas informatizados, dimensionando requisitos e funcionalidades, especificando a arquitetura, escolhendo ferramentas de desenvolvimento e codificando aplicativos. Administra o ambiente informatizado, presta suporte técnico ao cliente e elabora documentação técnica. Estabelece padrões, coordena projetos e pesquisa novas tecnologias em informática.",
+    "atividades": [
+      "Projetar e desenvolver sistemas de tecnologia da informação",
+      "Elaborar o planejamento e a execução de testes",
+      "Implantar sistemas, instalando aplicativos e configurando software e sistemas operacionais",
+      "Realizar a manutenção de sistemas e atender chamados e incidentes",
+      "Prestar suporte técnico ao cliente e ao usuário",
+      "Elaborar documentação e manuais do sistema",
+      "Definir padrões de interface com o usuário e para o ambiente de TI",
+      "Pesquisar inovações e participar de fóruns de discussão em tecnologia da informação"
+    ],
+    "habilidades": [
+      "Raciocínio lógico e abstração",
+      "Capacidade de análise e de síntese",
+      "Criatividade na resolução de problemas",
+      "Iniciativa e autonomia",
+      "Comunicação com clientes e com a equipe",
+      "Conhecimento de algoritmos, estrutura de dados e linguagens de programação",
+      "Domínio de engenharia de software"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "IC",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 8432.01,
+      "p25": 4473.0,
+      "p75": 11219.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2124-05 — Analista de desenvolvimento de sistemas (Classificação Brasileira de Ocupações, família 2124, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/212405-analista-de-desenvolvimento-de-sistemas",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "O*NET-SOC 15-1252.00 — Software Developers: perfil de interesses (Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/15-1252.00",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "Analista de Desenvolvimento de Sistemas — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 136.804 vínculos)",
+        "url": "https://www.salario.com.br/profissao/analista-de-desenvolvimento-de-sistemas-cbo-212405/",
+        "acesso_em": "2026-09-09"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-09-09",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "tecnico-em-manutencao-de-maquinas",
+    "nome": "Técnico em manutenção de máquinas",
+    "cbo_code": "3144-10",
+    "area": "Indústria e Produção",
+    "descricao": "Planeja, executa e controla a manutenção mecânica de máquinas, sistemas e instrumentos industriais, mantendo-os em condições plenas de funcionamento. Realiza testes e ensaios, calibra instrumentos, diagnostica falhas e propõe melhorias no uso dos equipamentos. Presta assessoria técnica às equipes de operação e elabora procedimentos e treinamentos de manutenção.",
+    "atividades": [
+      "Planejar a manutenção de máquinas, sistemas e instrumentos industriais",
+      "Executar e controlar a manutenção mecânica de máquinas industriais",
+      "Realizar testes e ensaios em equipamentos e sistemas",
+      "Calibrar instrumentos e equipamentos",
+      "Diagnosticar falhas e propor melhorias nas condições de uso das máquinas",
+      "Prestar assessoria técnica às equipes de operação",
+      "Elaborar procedimentos técnicos e administrativos de manutenção",
+      "Ministrar treinamentos sobre operação e manutenção de equipamentos"
+    ],
+    "habilidades": [
+      "Leitura e interpretação de desenhos técnicos e manuais",
+      "Diagnóstico de falhas mecânicas, elétricas e hidráulicas",
+      "Uso de instrumentos de medição e calibração",
+      "Raciocínio lógico e resolução de problemas",
+      "Organização e método de trabalho",
+      "Atenção às normas de segurança do trabalho",
+      "Habilidade manual e coordenação motora"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "RCI",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 3519.6,
+      "p25": 2291.0,
+      "p75": 4167.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3144-10 — Técnico em manutenção de máquinas (Classificação Brasileira de Ocupações, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/314410-tecnico-em-manutencao-de-maquinas",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "O*NET-SOC 49-9041.00 — Industrial Machinery Mechanics: perfil de interesses (Realistic, Conventional, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/49-9041.00",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "Técnico em Manutenção de Máquinas — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 21.477 vínculos)",
+        "url": "https://www.salario.com.br/profissao/tecnico-em-manutencao-de-maquinas-cbo-314410/",
+        "acesso_em": "2026-09-09"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-09-09",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "modelista-de-calcados",
+    "nome": "Modelista de calçados",
+    "cbo_code": "3188-15",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Transforma o projeto do designer em moldes e protótipos de calçados, definindo a modelagem das peças e acompanhando o desenvolvimento das amostras. Pesquisa tendências de mercado, estilos e materiais, consulta boletins técnicos e coleta informações em feiras do setor. Elabora a ficha técnica com o consumo de materiais e ajusta a modelagem durante a produção.",
+    "atividades": [
+      "Interpretar o projeto do designer e definir a modelagem do calçado",
+      "Confeccionar os moldes (matrizes) das peças do calçado",
+      "Desenvolver e ajustar protótipos e pilotos",
+      "Pesquisar tendências de mercado, estilos e materiais",
+      "Consultar boletins técnicos e coletar informações em feiras do setor",
+      "Acompanhar a produção da amostra e corrigir a modelagem",
+      "Elaborar a ficha técnica com o consumo de materiais"
+    ],
+    "habilidades": [
+      "Visão espacial e senso estético",
+      "Desenho técnico e modelagem, manual e em CAD",
+      "Conhecimento de couro, materiais e componentes de calçado",
+      "Criatividade aplicada ao produto",
+      "Atenção a detalhes e precisão dimensional",
+      "Acompanhamento de tendências de moda",
+      "Comunicação com as equipes de criação e de produção"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "ARI",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 4471.12,
+      "p25": 2851.0,
+      "p75": 5948.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3188-15 — Modelista de calçados (Classificação Brasileira de Ocupações, família 3188, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/318815-modelista-de-calcados",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "O*NET-SOC 27-1021.00 — Commercial and Industrial Designers: perfil de interesses (Artistic, Realistic, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/27-1021.00",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "Modelista de Calçados — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 675 vínculos)",
+        "url": "https://www.salario.com.br/profissao/modelista-de-calcados-cbo-318815/",
+        "acesso_em": "2026-09-09"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-09-09",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "professor-dos-anos-iniciais-do-ensino-fundamental",
+    "nome": "Professor dos anos iniciais do ensino fundamental",
+    "cbo_code": "2312-10",
+    "area": "Educação",
+    "descricao": "Ministra aulas nas primeiras séries do ensino fundamental, trabalhando a alfabetização e as noções iniciais de linguagem, matemática, ciências e integração social. Planeja o curso conforme as diretrizes educacionais, avalia a aprendizagem e acompanha estudantes com dificuldades. Participa da elaboração do projeto pedagógico da escola e comunica-se com as famílias.",
+    "atividades": [
+      "Planejar aulas e conteúdos conforme as diretrizes curriculares",
+      "Ministrar aulas para turmas dos anos iniciais do ensino fundamental",
+      "Alfabetizar e desenvolver leitura, escrita e raciocínio matemático",
+      "Avaliar a aprendizagem e registrar o desempenho dos estudantes",
+      "Acompanhar e orientar estudantes com dificuldades de adaptação ou de aprendizagem",
+      "Participar da elaboração do projeto político-pedagógico da escola",
+      "Comunicar-se com as famílias sobre o desenvolvimento das crianças",
+      "Organizar atividades culturais e eventos escolares"
+    ],
+    "habilidades": [
+      "Estratégias de ensino e didática",
+      "Comunicação oral e escuta ativa",
+      "Gestão de sala de aula e mediação de conflitos",
+      "Pensamento crítico e planejamento",
+      "Empatia e sensibilidade para lidar com crianças",
+      "Domínio da língua portuguesa e da matemática básica",
+      "Uso de recursos e plataformas educacionais"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "S",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 3406.44,
+      "p25": 2142.0,
+      "p75": 3965.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2312-10 — Professor de nível superior do ensino fundamental (primeira a quarta série) (Classificação Brasileira de Ocupações, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/231210-professor-de-nivel-superior-do-ensino-fundamental-primeira-a-quarta-serie",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "O*NET-SOC 25-2021.00 — Elementary School Teachers, Except Special Education: perfil de interesses (Social)",
+        "url": "https://www.onetonline.org/link/summary/25-2021.00",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "Professor de Nível Superior do Ensino Fundamental (1ª a 4ª série) — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 44.298 vínculos)",
+        "url": "https://www.salario.com.br/profissao/professor-de-nivel-superior-do-ensino-fundamental-primeira-a-quarta-serie-cbo-231210/",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "Piso Salarial Nacional do Magistério 2026: R$ 5.130,63 para jornada de 40h (Portaria MEC nº 82, de 29/01/2026)",
+        "url": "https://www.gov.br/mec/pt-br/assuntos/noticias/2026/janeiro/piso-nacional-do-magisterio-e-fixado-em-r-5-1-mil",
+        "acesso_em": "2026-09-09"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-09-09",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "administrador",
+    "nome": "Administrador",
+    "cbo_code": "2521-05",
+    "area": "Gestão e Negócios",
+    "descricao": "Planeja, organiza, dirige e controla as atividades de organizações públicas ou privadas nas áreas de pessoas, finanças, materiais, patrimônio, informações e tecnologia. Elabora o planejamento organizacional, implementa programas e projetos e promove estudos de racionalização de processos. Controla o desempenho por meio de indicadores e presta consultoria administrativa.",
+    "atividades": [
+      "Elaborar o planejamento organizacional e definir metas",
+      "Organizar a estrutura, os processos e os fluxos de trabalho",
+      "Administrar recursos humanos, financeiros, materiais e patrimoniais",
+      "Implementar programas e projetos",
+      "Promover estudos de racionalização e melhoria de processos",
+      "Controlar e avaliar o desempenho organizacional por indicadores",
+      "Prestar consultoria administrativa a organizações e pessoas"
+    ],
+    "habilidades": [
+      "Visão sistêmica da organização",
+      "Liderança e coordenação de equipes",
+      "Tomada de decisão e gestão de recursos",
+      "Negociação e comunicação",
+      "Análise de dados e de indicadores de desempenho",
+      "Planejamento e organização",
+      "Gestão de tempo e de prioridades sob pressão de metas"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRA",
+    "riasec_code": "EC",
+    "riasec_primary": "E",
+    "salario": {
+      "media": 5088.68,
+      "p25": 2891.0,
+      "p75": 6000.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2521-05 — Administrador (Classificação Brasileira de Ocupações, família 2521, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/252105-administrador",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "O*NET-SOC 11-1021.00 — General and Operations Managers: perfil de interesses (Enterprising, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/11-1021.00",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "Administrador — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 145.373 vínculos)",
+        "url": "https://www.salario.com.br/profissao/administrador-cbo-252105/",
+        "acesso_em": "2026-09-09"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-09-09",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "contador",
+    "nome": "Contador",
+    "cbo_code": "2522-10",
+    "area": "Gestão e Negócios",
+    "descricao": "Registra os atos e fatos contábeis, escritura os livros e elabora as demonstrações contábeis da organização. Apura e administra os tributos, legaliza empresas junto aos órgãos competentes e atende à fiscalização. Realiza contabilidade de custos e gerencial e presta consultoria contábil e tributária para apoiar decisões. O exercício da profissão exige registro no CRC.",
+    "atividades": [
+      "Registrar os atos e fatos contábeis e escriturar os livros",
+      "Elaborar demonstrações contábeis, como balanço patrimonial e DRE",
+      "Apurar e administrar os tributos da empresa",
+      "Legalizar empresas junto aos órgãos competentes",
+      "Realizar contabilidade de custos e contabilidade gerencial",
+      "Atender à fiscalização e prestar consultoria contábil e tributária",
+      "Elaborar relatórios e pareceres para apoiar decisões"
+    ],
+    "habilidades": [
+      "Rigor com as normas e a legislação contábil e tributária",
+      "Organização e precisão no tratamento de dados",
+      "Raciocínio lógico-matemático",
+      "Análise e interpretação de demonstrações financeiras",
+      "Ética e responsabilidade profissional",
+      "Uso de sistemas e planilhas contábeis",
+      "Atenção a prazos e a obrigações acessórias"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRC",
+    "riasec_code": "CEI",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 5547.23,
+      "p25": 3361.0,
+      "p75": 6149.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2522-10 — Contador (Classificação Brasileira de Ocupações, família 2522, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/252210-contador",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "O*NET-SOC 13-2011.00 — Accountants and Auditors: perfil de interesses (Conventional, Enterprising, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/13-2011.00",
+        "acesso_em": "2026-09-09"
+      },
+      {
+        "titulo": "Contador — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 81.929 vínculos)",
+        "url": "https://www.salario.com.br/profissao/contador-cbo-252210/",
+        "acesso_em": "2026-09-09"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-09-09",
+    "revisado_por": "Sara Castilhos"
+  }
+]
