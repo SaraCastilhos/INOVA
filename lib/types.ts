@@ -29,6 +29,11 @@ export interface TestResult {
   secondary_type: RIASECType | null
   tertiary_type: RIASECType | null
   answers: number[] | null
+  // Qual instrumento e versão geraram este resultado (migração 015). Resultados
+  // anteriores à adaptação do O*NET Mini-IP ficam como 'riasec-legacy-24' / '0'
+  // e não são comparáveis com os novos (escala e nº de itens diferentes).
+  instrument_slug: string
+  instrument_version: string
   created_at: string
 }
 
@@ -220,6 +225,58 @@ export interface RIASECQuestion {
   id: number
   tipo: RIASECType
   texto: string
+}
+
+// ---- Instrumento de avaliação (teste vocacional) ----
+// Conteúdo curado e versionado em data/instruments/. O formato é garantido por
+// scripts/validate-instruments.mjs e documentado em
+// data/instruments/onet-mini-ip.schema.json.
+
+export interface EscalaOpcao {
+  valor: number
+  rotulo: string
+  rotulo_en: string
+}
+
+export interface InstrumentoItem {
+  posicao: number
+  tipo: RIASECType
+  texto: string // tradução pt-BR (rascunho até revisão por juízes)
+  texto_original: string // texto verbatim da fonte, para conferência
+}
+
+export interface Instrumento {
+  slug: string
+  version: string
+  nome: string
+  nome_curto: string
+  modelo: 'RIASEC'
+  status: 'rascunho' | 'publicado'
+  atualizado_em: string // AAAA-MM-DD
+  revisado_por: string
+  origem: {
+    instrumento: string
+    forma: string
+    autores: string
+    publicado_por: string
+    licenca: string
+    traducao_status: string
+  }
+  fontes: FonteReferencia[]
+  escala: {
+    tipo: string
+    min: number
+    max: number
+    instrucao: string
+    opcoes: EscalaOpcao[]
+  }
+  pontuacao: {
+    metodo: 'soma'
+    itens_por_tipo: number
+    min_por_tipo: number
+    max_por_tipo: number
+  }
+  itens: InstrumentoItem[]
 }
 
 export const RIASEC_INFO: Record<RIASECType, { nome: string; descricao: string; cor: string }> = {

@@ -1,0 +1,81 @@
+{
+  "slug": "onet-mini-ip",
+  "version": "mini-ip-ptbr-0.1",
+  "nome": "Inventário de Interesses Profissionais",
+  "nome_curto": "Teste de Interesses",
+  "modelo": "RIASEC",
+  "status": "rascunho",
+  "atualizado_em": "2026-09-10",
+  "revisado_por": "",
+  "origem": {
+    "instrumento": "O*NET Mini Interest Profiler (Mini-IP)",
+    "forma": "30 itens, 5 por tipo RIASEC — versão computadorizada, escala de 5 pontos (0 a 4)",
+    "autores": "Rounds, J., Wee, C. J., Cao, M., Song, C. & Lewis, P. (2016)",
+    "publicado_por": "National Center for O*NET Development — U.S. Department of Labor, Employment and Training Administration",
+    "licenca": "Ferramenta pública das O*NET Career Exploration Tools, distribuída sem custo de licença pelo Departamento do Trabalho dos EUA. Não existe versão oficial em português.",
+    "traducao_status": "Tradução pt-BR feita pela equipe INOVA (adaptação não oficial). RASCUNHO — pendente de revisão por juízes especialistas antes de virar \"publicado\"."
+  },
+  "fontes": [
+    {
+      "titulo": "Development of an O*NET Mini Interest Profiler (Mini-IP) for Mobile Devices: Psychometric Characteristics (Rounds et al., 2016)",
+      "url": "https://www.onetcenter.org/dl_files/Mini-IP.pdf",
+      "acesso_em": "2026-09-10"
+    },
+    {
+      "titulo": "O*NET Resource Center — O*NET Mini Interest Profiler",
+      "url": "https://www.onetcenter.org/reports/Mini-IP.html",
+      "acesso_em": "2026-09-10"
+    }
+  ],
+  "escala": {
+    "tipo": "likert5",
+    "min": 0,
+    "max": 4,
+    "instrucao": "Para cada atividade, indique o quanto você gostaria de fazê-la. Não pense na escolaridade necessária nem no quanto se ganha.",
+    "opcoes": [
+      { "valor": 0, "rotulo": "Não gosto nada", "rotulo_en": "Strongly dislike" },
+      { "valor": 1, "rotulo": "Não gosto", "rotulo_en": "Dislike" },
+      { "valor": 2, "rotulo": "Tenho dúvida", "rotulo_en": "Unsure" },
+      { "valor": 3, "rotulo": "Gosto", "rotulo_en": "Like" },
+      { "valor": 4, "rotulo": "Gosto muito", "rotulo_en": "Strongly like" }
+    ]
+  },
+  "pontuacao": {
+    "metodo": "soma",
+    "itens_por_tipo": 5,
+    "min_por_tipo": 0,
+    "max_por_tipo": 20
+  },
+  "itens": [
+    { "posicao": 1, "tipo": "R", "texto": "Construir armários de cozinha", "texto_original": "Build kitchen cabinets" },
+    { "posicao": 2, "tipo": "I", "texto": "Desenvolver um novo medicamento", "texto_original": "Develop a new medicine" },
+    { "posicao": 3, "tipo": "A", "texto": "Escrever livros ou peças de teatro", "texto_original": "Write books or plays" },
+    { "posicao": 4, "tipo": "S", "texto": "Ajudar pessoas com problemas pessoais ou emocionais", "texto_original": "Help people with personal or emotional problems" },
+    { "posicao": 5, "tipo": "E", "texto": "Gerenciar um setor dentro de uma grande empresa", "texto_original": "Manage a department within a large company" },
+    { "posicao": 6, "tipo": "C", "texto": "Instalar programas nos computadores de uma grande rede", "texto_original": "Install software across computers on a large network" },
+    { "posicao": 7, "tipo": "R", "texto": "Consertar eletrodomésticos", "texto_original": "Repair household appliances" },
+    { "posicao": 8, "tipo": "I", "texto": "Estudar formas de reduzir a poluição da água", "texto_original": "Study ways to reduce water pollution" },
+    { "posicao": 9, "tipo": "A", "texto": "Compor ou fazer arranjos de músicas", "texto_original": "Compose or arrange music" },
+    { "posicao": 10, "tipo": "S", "texto": "Dar orientação de carreira para as pessoas", "texto_original": "Give career guidance to people" },
+    { "posicao": 11, "tipo": "E", "texto": "Abrir o próprio negócio", "texto_original": "Start your own business" },
+    { "posicao": 12, "tipo": "C", "texto": "Operar uma calculadora", "texto_original": "Operate a calculator" },
+    { "posicao": 13, "tipo": "R", "texto": "Montar peças eletrônicas", "texto_original": "Assemble electronic parts" },
+    { "posicao": 14, "tipo": "I", "texto": "Realizar experimentos químicos", "texto_original": "Conduct chemical experiments" },
+    { "posicao": 15, "tipo": "A", "texto": "Criar efeitos especiais para filmes", "texto_original": "Create special effects for movies" },
+    { "posicao": 16, "tipo": "S", "texto": "Realizar sessões de terapia de reabilitação", "texto_original": "Perform rehabilitation therapy" },
+    { "posicao": 17, "tipo": "E", "texto": "Negociar contratos comerciais", "texto_original": "Negotiate business contracts" },
+    { "posicao": 18, "tipo": "C", "texto": "Manter registros de envio e recebimento de mercadorias", "texto_original": "Keep shipping and receiving records" },
+    { "posicao": 19, "tipo": "R", "texto": "Dirigir um caminhão para entregar encomendas em empresas e residências", "texto_original": "Drive a truck to deliver packages to offices and homes" },
+    { "posicao": 20, "tipo": "I", "texto": "Examinar amostras de sangue no microscópio", "texto_original": "Examine blood samples using a microscope" },
+    { "posicao": 21, "tipo": "A", "texto": "Pintar cenários para peças de teatro", "texto_original": "Paint sets for plays" },
+    { "posicao": 22, "tipo": "S", "texto": "Fazer trabalho voluntário em uma organização sem fins lucrativos", "texto_original": "Do volunteer work at a non-profit organization" },
+    { "posicao": 23, "tipo": "E", "texto": "Divulgar e lançar uma nova linha de roupas", "texto_original": "Market a new line of clothing" },
+    { "posicao": 24, "tipo": "C", "texto": "Fazer o inventário de estoque usando um coletor de dados portátil", "texto_original": "Inventory supplies using a hand-held computer" },
+    { "posicao": 25, "tipo": "R", "texto": "Inspecionar a qualidade de peças antes do envio", "texto_original": "Test the quality of parts before shipment" },
+    { "posicao": 26, "tipo": "I", "texto": "Desenvolver uma forma de prever melhor o tempo (previsão do tempo)", "texto_original": "Develop a way to better predict the weather" },
+    { "posicao": 27, "tipo": "A", "texto": "Escrever roteiros para filmes ou programas de TV", "texto_original": "Write scripts for movies or television shows" },
+    { "posicao": 28, "tipo": "S", "texto": "Dar aula para uma turma do ensino médio", "texto_original": "Teach a high-school class" },
+    { "posicao": 29, "tipo": "E", "texto": "Vender mercadorias em uma loja de departamentos", "texto_original": "Sell merchandise at a department store" },
+    { "posicao": 30, "tipo": "C", "texto": "Carimbar, separar e distribuir a correspondência de uma organização", "texto_original": "Stamp, sort, and distribute mail for an organization" }
+  ]
+}

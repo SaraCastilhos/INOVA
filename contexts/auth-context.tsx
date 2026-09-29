@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, useCallback, type React
 import { createClient } from '@/lib/supabase/client'
 import type { User, Session } from '@supabase/supabase-js'
 import type { Profile, TestResult, UserBadge, RIASECType } from '@/lib/types'
+import { INSTRUMENT_SLUG, INSTRUMENT_VERSION } from '@/lib/instruments'
 
 interface AuthContextType {
   user: User | null
@@ -178,6 +179,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const saveTestResult = async (scores: Record<RIASECType, number>, answers: number[]) => {
     if (!user) return { error: new Error('Not authenticated') }
 
+    // scores chega de lib/instruments.pontuar() já na ordem R,I,A,S,E,C, então
+    // o desempate deste sort segue a mesma ordem RIASEC usada lá.
     const sortedTypes = (Object.entries(scores) as [RIASECType, number][])
       .sort((a, b) => b[1] - a[1])
       .map(([type]) => type)
@@ -190,7 +193,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         primary_type: sortedTypes[0],
         secondary_type: sortedTypes[1] || null,
         tertiary_type: sortedTypes[2] || null,
-        answers
+        answers,
+        instrument_slug: INSTRUMENT_SLUG,
+        instrument_version: INSTRUMENT_VERSION
       })
 
     if (!error) {

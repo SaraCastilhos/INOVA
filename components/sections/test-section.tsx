@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { toast } from 'sonner'
 import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { RIASEC_QUESTIONS } from '@/lib/data'
+import { INSTRUMENTO, ITENS, maxPorTipo, pontuar, respostasParaVetor } from '@/lib/instruments'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
 import { AlertTriangle, ChevronLeft, ChevronRight, CheckCircle, Target, ArrowRight, Loader2 } from 'lucide-react'
 import type { Section } from '@/components/bottom-navigation'
@@ -20,17 +21,19 @@ export function TestSection({ onNavigate }: TestSectionProps) {
   const { saveTestResult } = useAuth()
   const [phase, setPhase] = useState<TestPhase>('intro')
   const [currentQuestion, setCurrentQuestion] = useState(0)
+  // respostas: posicao do item -> valor escolhido (0..escala.max)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [saving, setSaving] = useState(false)
   const [topTypes, setTopTypes] = useState<RIASECType[]>([])
   const [scores, setScores] = useState<Record<RIASECType, number>>({ R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 })
+  const [poucoDiferenciado, setPoucoDiferenciado] = useState(false)
 
-  const handleAnswer = (questionId: number, value: number) => {
-    setAnswers(prev => ({ ...prev, [questionId]: value }))
+  const handleAnswer = (posicao: number, valor: number) => {
+    setAnswers(prev => ({ ...prev, [posicao]: valor }))
   }
 
   const goToNext = () => {
-    if (currentQuestion < RIASEC_QUESTIONS.length - 1) {
+    if (currentQuestion < ITENS.length - 1) {
       setCurrentQuestion(prev => prev + 1)
     }
   }
@@ -43,20 +46,10 @@ export function TestSection({ onNavigate }: TestSectionProps) {
 
   const calculateResult = async () => {
     setSaving(true)
-    const pontuacoes: Record<RIASECType, number> = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 }
+    const resultado = pontuar(answers)
+    const answersArray = respostasParaVetor(answers)
 
-    RIASEC_QUESTIONS.forEach(question => {
-      const answer = answers[question.id] || 0
-      pontuacoes[question.tipo] += answer
-    })
-
-    const sortedTypes = (Object.entries(pontuacoes) as [RIASECType, number][])
-      .sort(([, a], [, b]) => b - a)
-      .map(([type]) => type)
-
-    const answersArray = RIASEC_QUESTIONS.map(q => answers[q.id] || 0)
-
-    const { error } = await saveTestResult(pontuacoes, answersArray)
+    const { error } = await saveTestResult(resultado.scores, answersArray)
     setSaving(false)
 
     if (error) {
@@ -64,8 +57,9 @@ export function TestSection({ onNavigate }: TestSectionProps) {
       return
     }
 
-    setScores(pontuacoes)
-    setTopTypes(sortedTypes.slice(0, 3))
+    setScores(resultado.scores)
+    setTopTypes(resultado.top3)
+    setPoucoDiferenciado(resultado.poucoDiferenciado)
     setPhase('result')
   }
 
@@ -73,13 +67,14 @@ export function TestSection({ onNavigate }: TestSectionProps) {
     setAnswers({})
     setCurrentQuestion(0)
     setTopTypes([])
+    setPoucoDiferenciado(false)
     setPhase('questions')
   }
 
-  const progress = (Object.keys(answers).length / RIASEC_QUESTIONS.length) * 100
-  const currentQ = RIASEC_QUESTIONS[currentQuestion]
-  const isAnswered = answers[currentQ?.id] !== undefined
-  const allAnswered = Object.keys(answers).length === RIASEC_QUESTIONS.length
+  const progress = (Object.keys(answers).length / ITENS.length) * 100
+  const currentQ = ITENS[currentQuestion]
+  const isAnswered = currentQ ? answers[currentQ.posicao] !== undefined : false
+  const allAnswered = Object.keys(answers).length === ITENS.length
 
   if (phase === 'intro') {
     return (
@@ -89,9 +84,9 @@ export function TestSection({ onNavigate }: TestSectionProps) {
             <div className="mx-auto p-4 rounded-full bg-primary/10 w-fit mb-4">
               <Target className="h-12 w-12 text-primary" />
             </div>
-            <CardTitle className="text-2xl text-foreground">Teste RIASEC</CardTitle>
+            <CardTitle className="text-2xl text-foreground">Teste de Interesses RIASEC</CardTitle>
             <CardDescription className="text-base">
-              Descubra seu perfil profissional baseado no modelo de John Holland
+              Baseado no modelo de John Holland (RIASEC), adaptado do O*NET Mini Interest Profiler
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -116,18 +111,32 @@ export function TestSection({ onNavigate }: TestSectionProps) {
             <div className="bg-muted rounded-xl p-4 space-y-2">
               <h3 className="font-semibold text-foreground">Como funciona:</h3>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>- 24 afirmações sobre preferências profissionais</li>
-                <li>- Responda de 1 (discordo) a 5 (concordo totalmente)</li>
+                <li>- {ITENS.length} atividades de trabalho</li>
+                <li>- Para cada uma, diga o quanto gostaria de fazê-la (de &ldquo;{INSTRUMENTO.escala.opcoes[0].rotulo}&rdquo; a &ldquo;{INSTRUMENTO.escala.opcoes[INSTRUMENTO.escala.opcoes.length - 1].rotulo}&rdquo;)</li>
                 <li>- Tempo estimado: 5-10 minutos</li>
                 <li>- Resultado imediato com seu perfil</li>
               </ul>
             </div>
 
+            {INSTRUMENTO.status === 'rascunho' && (
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted border border-border">
+                <AlertTriangle className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-muted-foreground">
+                  Esta é uma versão em construção do questionário: a adaptação dos itens para o
+                  português ainda está em revisão por especialistas.{' '}
+                  <Link href="/metodologia#teste" className="text-primary hover:underline">
+                    Saiba como funciona
+                  </Link>
+                </p>
+              </div>
+            )}
+
             <div className="flex items-start gap-3 p-4 rounded-xl bg-accent/10 border border-accent/30">
               <AlertTriangle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
               <p className="text-sm text-foreground">
-                <strong>Aviso importante:</strong> O teste RIASEC é uma ferramenta de autoconhecimento. 
-                Este instrumento <strong>NÃO substitui</strong> a avaliação de um psicólogo ou orientador profissional habilitado (CFP).
+                <strong>Aviso importante:</strong> este é um questionário de interesses para
+                autoconhecimento. Ele <strong>NÃO substitui</strong> a avaliação de um psicólogo
+                ou orientador profissional habilitado (CFP).
               </p>
             </div>
 
@@ -150,7 +159,7 @@ export function TestSection({ onNavigate }: TestSectionProps) {
         {/* Progress Bar */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-muted-foreground">
-            <span>Pergunta {currentQuestion + 1} de {RIASEC_QUESTIONS.length}</span>
+            <span>Pergunta {currentQuestion + 1} de {ITENS.length}</span>
             <span>{Math.round(progress)}% concluído</span>
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -164,41 +173,30 @@ export function TestSection({ onNavigate }: TestSectionProps) {
         {/* Question Card */}
         <Card>
           <CardContent className="pt-6">
+            <p className="text-sm text-muted-foreground mb-2 text-center">
+              {INSTRUMENTO.escala.instrucao}
+            </p>
             <p className="text-lg font-medium text-foreground mb-6 text-center">
               {currentQ.texto}
             </p>
 
             <div className="space-y-3">
-              {[1, 2, 3, 4, 5].map((value) => {
-                const labels = [
-                  'Discordo totalmente',
-                  'Discordo',
-                  'Neutro',
-                  'Concordo',
-                  'Concordo totalmente'
-                ]
-                const isSelected = answers[currentQ.id] === value
+              {INSTRUMENTO.escala.opcoes.map((opcao) => {
+                const isSelected = answers[currentQ.posicao] === opcao.valor
 
                 return (
                   <button
-                    key={value}
-                    onClick={() => handleAnswer(currentQ.id, value)}
+                    key={opcao.valor}
+                    onClick={() => handleAnswer(currentQ.posicao, opcao.valor)}
                     className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
                       isSelected
                         ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/50 hover:bg-muted/50'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                        isSelected ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-                      }`}>
-                        {value}
-                      </div>
-                      <span className={`text-sm ${isSelected ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
-                        {labels[value - 1]}
-                      </span>
-                    </div>
+                    <span className={`text-sm ${isSelected ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+                      {opcao.rotulo}
+                    </span>
                     {isSelected && <CheckCircle className="h-5 w-5 text-primary" />}
                   </button>
                 )
@@ -219,7 +217,7 @@ export function TestSection({ onNavigate }: TestSectionProps) {
             Anterior
           </Button>
 
-          {currentQuestion < RIASEC_QUESTIONS.length - 1 ? (
+          {currentQuestion < ITENS.length - 1 ? (
             <Button
               className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
               onClick={goToNext}
@@ -251,14 +249,14 @@ export function TestSection({ onNavigate }: TestSectionProps) {
 
         {/* Quick navigation dots */}
         <div className="flex flex-wrap justify-center gap-1">
-          {RIASEC_QUESTIONS.map((q, index) => (
+          {ITENS.map((item, index) => (
             <button
-              key={q.id}
+              key={item.posicao}
               onClick={() => setCurrentQuestion(index)}
               className={`w-3 h-3 rounded-full transition-all ${
                 index === currentQuestion
                   ? 'bg-primary scale-125'
-                  : answers[q.id]
+                  : answers[item.posicao] !== undefined
                   ? 'bg-primary/40'
                   : 'bg-muted'
               }`}
@@ -284,6 +282,17 @@ export function TestSection({ onNavigate }: TestSectionProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {poucoDiferenciado && (
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted border border-border">
+                <AlertTriangle className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-muted-foreground">
+                  Suas pontuações ficaram próximas umas das outras. Isso é comum e indica um
+                  perfil pouco diferenciado — nesse caso, leia os tipos abaixo como pistas, não
+                  como uma resposta fechada.
+                </p>
+              </div>
+            )}
+
             {/* Top 3 Types */}
             <div className="space-y-4">
               <h3 className="font-semibold text-center text-foreground">Seus tipos predominantes:</h3>
@@ -335,13 +344,13 @@ export function TestSection({ onNavigate }: TestSectionProps) {
                       <span className="font-medium text-foreground">
                         {tipo} - {RIASEC_INFO[tipo].nome}
                       </span>
-                      <span className="text-muted-foreground">{pontuacao}/20</span>
+                      <span className="text-muted-foreground">{pontuacao}/{maxPorTipo}</span>
                     </div>
                     <div className="h-3 bg-muted rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full transition-all"
                         style={{
-                          width: `${(pontuacao / 20) * 100}%`,
+                          width: `${(pontuacao / maxPorTipo) * 100}%`,
                           backgroundColor: RIASEC_INFO[tipo].cor
                         }}
                       />
@@ -368,8 +377,8 @@ export function TestSection({ onNavigate }: TestSectionProps) {
             <div className="flex items-start gap-3 p-4 rounded-xl bg-accent/10 border border-accent/30">
               <AlertTriangle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
               <p className="text-xs text-muted-foreground">
-                O teste RIASEC é uma ferramenta de autoconhecimento. Este instrumento não substitui a avaliação 
-                de um psicólogo ou orientador profissional habilitado (CFP).
+                Este é um questionário de interesses para autoconhecimento. Ele não substitui a
+                avaliação de um psicólogo ou orientador profissional habilitado (CFP).
               </p>
             </div>
           </CardContent>
