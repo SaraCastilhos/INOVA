@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Instrumento de avaliação INOVA (teste vocacional)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "version",
+    "nome",
+    "nome_curto",
+    "modelo",
+    "status",
+    "atualizado_em",
+    "revisado_por",
+    "origem",
+    "fontes",
+    "escala",
+    "pontuacao",
+    "itens"
+  ],
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "version": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Muda a cada alteração de conteúdo. Convenção: <instrumento>-<idioma>-<n.n>; sufixo enquanto rascunho, sem sufixo quando publicado."
+    },
+    "nome": { "type": "string", "minLength": 3 },
+    "nome_curto": { "type": "string", "minLength": 3 },
+    "modelo": { "type": "string", "const": "RIASEC" },
+    "status": { "type": "string", "enum": ["rascunho", "publicado"] },
+    "atualizado_em": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "revisado_por": {
+      "type": "string",
+      "description": "Obrigatório quando status = publicado (nomes dos juízes / responsável). Vazio enquanto rascunho."
+    },
+    "origem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instrumento",
+        "forma",
+        "autores",
+        "publicado_por",
+        "licenca",
+        "traducao_status"
+      ],
+      "properties": {
+        "instrumento": { "type": "string", "minLength": 4 },
+        "forma": { "type": "string", "minLength": 4 },
+        "autores": { "type": "string", "minLength": 4 },
+        "publicado_por": { "type": "string", "minLength": 4 },
+        "licenca": { "type": "string", "minLength": 10 },
+        "traducao_status": { "type": "string", "minLength": 10 }
+      }
+    },
+    "fontes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["titulo", "url", "acesso_em"],
+        "properties": {
+          "titulo": { "type": "string", "minLength": 4 },
+          "url": { "type": "string", "pattern": "^https?://" },
+          "acesso_em": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+        }
+      }
+    },
+    "escala": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tipo", "min", "max", "instrucao", "opcoes"],
+      "properties": {
+        "tipo": { "type": "string", "minLength": 3 },
+        "min": { "type": "integer" },
+        "max": { "type": "integer" },
+        "instrucao": { "type": "string", "minLength": 10 },
+        "opcoes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["valor", "rotulo", "rotulo_en"],
+            "properties": {
+              "valor": { "type": "integer" },
+              "rotulo": { "type": "string", "minLength": 1 },
+              "rotulo_en": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "pontuacao": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["metodo", "itens_por_tipo", "min_por_tipo", "max_por_tipo"],
+      "properties": {
+        "metodo": { "type": "string", "enum": ["soma"] },
+        "itens_por_tipo": { "type": "integer", "exclusiveMinimum": 0 },
+        "min_por_tipo": { "type": "integer", "minimum": 0 },
+        "max_por_tipo": { "type": "integer", "exclusiveMinimum": 0 }
+      }
+    },
+    "itens": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["posicao", "tipo", "texto", "texto_original"],
+        "properties": {
+          "posicao": { "type": "integer", "exclusiveMinimum": 0 },
+          "tipo": { "type": "string", "enum": ["R", "I", "A", "S", "E", "C"] },
+          "texto": { "type": "string", "minLength": 3 },
+          "texto_original": { "type": "string", "minLength": 3 }
+        }
+      }
+    }
+  }
+}

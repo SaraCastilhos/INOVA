@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import type { Profile } from '@/lib/types'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
+import { isResultadoDeOutraVersao, maxPorTipoDoResultado } from '@/lib/instruments'
 import {
   User,
   Calendar,
@@ -65,6 +66,8 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
   const topTypes: RIASECType[] = lastTest
     ? ([lastTest.primary_type, lastTest.secondary_type, lastTest.tertiary_type].filter(Boolean) as RIASECType[])
     : []
+  const lastTestMax = lastTest ? maxPorTipoDoResultado(lastTest) : 0
+  const lastTestOutraVersao = lastTest ? isResultadoDeOutraVersao(lastTest) : false
 
   const handleSignOut = async () => {
     await signOut()
@@ -142,6 +145,13 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
         <CardContent>
           {lastTest ? (
             <div className="space-y-4">
+              {lastTestOutraVersao && (
+                <p className="text-sm text-muted-foreground p-3 rounded-lg bg-muted">
+                  Este resultado foi gerado por uma versão anterior do teste, com outras
+                  perguntas. Refaça o teste para ver seu perfil na versão atual.
+                </p>
+              )}
+
               {/* Top Types */}
               <div className="flex flex-wrap gap-2">
                 {topTypes.map((tipo, index) => (
@@ -166,13 +176,13 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
                         <span className="font-medium text-foreground">
                           {tipo} - {RIASEC_INFO[tipo].nome}
                         </span>
-                        <span className="text-muted-foreground">{pontuacao}/20</span>
+                        <span className="text-muted-foreground">{pontuacao}/{lastTestMax}</span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all"
                           style={{
-                            width: `${(pontuacao / 20) * 100}%`,
+                            width: `${(pontuacao / lastTestMax) * 100}%`,
                             backgroundColor: RIASEC_INFO[tipo].cor
                           }}
                         />
@@ -227,6 +237,7 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
                     </p>
                     <p className="text-sm text-muted-foreground">
                       {formatDate(teste.created_at)}
+                      {isResultadoDeOutraVersao(teste) && ' · versão anterior do teste'}
                     </p>
                   </div>
                   {index === 0 && (

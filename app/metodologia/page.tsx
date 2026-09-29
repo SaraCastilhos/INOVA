@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft } from 'lucide-react'
 import { guiaAtualizadoEm, PROFISSOES } from '@/lib/data'
+import { INSTRUMENTO, ITENS } from '@/lib/instruments'
 
 export const metadata = {
   title: 'Metodologia e Fontes - INOVA',
@@ -124,6 +125,51 @@ export default function MetodologiaPage() {
             <li>
               O guia é uma ferramenta informativa e complementar. Ele não substitui
               a orientação de um psicólogo ou orientador profissional.
+            </li>
+          </ul>
+
+          <h2 id="teste">O teste vocacional</h2>
+          <p>
+            O teste de interesses é uma adaptação para o português do{' '}
+            <a
+              href={INSTRUMENTO.fontes[0].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              {INSTRUMENTO.origem.instrumento}
+            </a>
+            , instrumento público do Departamento do Trabalho dos Estados Unidos
+            baseado no modelo RIASEC de John Holland ({INSTRUMENTO.origem.autores}).
+            São {ITENS.length} atividades de trabalho, {INSTRUMENTO.pontuacao.itens_por_tipo}{' '}
+            por tipo, e para cada uma você indica o quanto gostaria de fazê-la, numa
+            escala de {INSTRUMENTO.escala.opcoes.length} pontos. A pontuação de cada tipo é
+            a soma das respostas (de {INSTRUMENTO.pontuacao.min_por_tipo} a{' '}
+            {INSTRUMENTO.pontuacao.max_por_tipo}), e o resultado mostra os três tipos
+            com maior pontuação.
+          </p>
+          <ul>
+            <li>
+              Não existe versão oficial do instrumento em português. A tradução
+              foi feita pela equipe do INOVA
+              {INSTRUMENTO.status === 'rascunho'
+                ? ' e ainda está em revisão por especialistas.'
+                : ` e revisada por ${INSTRUMENTO.revisado_por}.`}
+            </li>
+            <li>
+              Cada resultado é salvo junto com a versão do questionário que o gerou
+              (atual: {INSTRUMENTO.version}). Resultados de
+              versões diferentes não são comparados entre si.
+            </li>
+            <li>
+              Quando as pontuações ficam muito próximas, o resultado avisa que o
+              perfil é pouco diferenciado e deve ser lido como pista, não como
+              resposta fechada.
+            </li>
+            <li>
+              É um questionário de interesses para autoconhecimento. Não mede
+              aptidão e não substitui a avaliação de um psicólogo ou orientador
+              profissional habilitado.
             </li>
           </ul>
 

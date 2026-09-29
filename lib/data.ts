@@ -4,6 +4,11 @@ import type { FormaIngresso, Universidade, RIASECQuestion } from './types'
 // versionado). Reexportado aqui para manter os imports existentes estáveis.
 export { PROFISSOES, AREAS, guiaAtualizadoEm } from './professions'
 
+// LEGADO — não é mais usado pelo app. O teste vocacional passou a usar o
+// instrumento versionado em data/instruments/ (adaptação do O*NET Mini-IP), via
+// lib/instruments.ts. Este array de 24 itens (escala 1–5) é o questionário
+// caseiro que gerou os resultados marcados como 'riasec-legacy-24' no banco
+// (migração 015). Mantido só como referência de proveniência desses resultados.
 export const RIASEC_QUESTIONS: RIASECQuestion[] = [
   // Realista (R)
   { id: 1, tipo: 'R', texto: 'Gosto de trabalhar com ferramentas e equipamentos manuais.' },
