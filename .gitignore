@@ -1,23 +1,14 @@
-# v0 sandbox internal files
-__v0_runtime_loader.js
-__v0_devtools.tsx
-__v0_jsx-dev-runtime.ts
-.snowflake/
-.v0-trash/
-.vercel/
-next.user-config.*
-
-# Environment variables
-.env.local
-
-# Common ignores
-node_modules
+# Dependências e build (gerados pelo npm / Next.js)
+node_modules/
 .next/
-.DS_Store
 next-env.d.ts
-
-# TypeScript incremental build cache
 *.tsbuildinfo
+
+# Variáveis de ambiente (chaves do Supabase) — nunca versionar
+.env*
+
+# Vercel CLI (criada se usar `vercel link`; guarda IDs do projeto)
+.vercel/
 
 # Anotações da pesquisa (TCC) — mantidas só localmente
 pesquisa/
