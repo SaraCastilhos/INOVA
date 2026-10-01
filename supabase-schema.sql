@@ -573,7 +573,7 @@ create trigger trg_content_filter
 -- DENÚNCIAS DE CONTEÚDO — migração 014
 -- ================================================
 -- Fila para o admin triar (enquanto não há painel, ver
--- supabase-admin-helpers.sql).
+-- banco/admin-helpers.sql).
 create table if not exists public.content_reports (
   id uuid primary key default uuid_generate_v4(),
   reporter_id uuid references public.profiles(id) on delete cascade not null,
