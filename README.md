@@ -42,7 +42,8 @@ lib/            tipos, carregamento do conteúdo de data/, pontuação do teste,
                 (ingresso, universidades) e clientes Supabase
 scripts/        validadores do conteúdo de data/
 hooks/          hooks utilitários
-supabase-*.sql  schema do banco, migrações numeradas e consultas de apoio ao admin
+banco/          migrações numeradas (histórico) e consultas de apoio ao admin
+supabase-schema.sql  schema completo e atual do banco
 ```
 
 ## Como rodar localmente
@@ -55,9 +56,9 @@ Requer Node.js 20+ e um projeto Supabase.
 
 ## Banco de dados
 
-- **Instalação nova:** rode `supabase-schema.sql` no SQL Editor do Supabase. Ele já consolida todas as migrações.
-- **Banco existente:** aplique, em ordem, as migrações `supabase-migration-NNN-*.sql` que ainda não rodaram. Todas são idempotentes e explicam o motivo no cabeçalho.
-- `supabase-admin-helpers.sql` não é migração: são consultas prontas para moderação manual (aprovar especialistas, ler denúncias, manter a lista de termos bloqueados), já que ainda não há painel administrativo.
+- **`supabase-schema.sql`** (na raiz) é a fonte da verdade: o estado atual completo do banco. Numa **instalação nova**, basta rodá-lo no SQL Editor do Supabase — ele já consolida todas as migrações.
+- **`banco/migracoes/`** guarda o histórico: cada mudança feita no banco de produção, numerada (`NNN-*.sql`), com o motivo explicado no cabeçalho. Num **banco existente**, aplique em ordem as que ainda não rodaram (todas são idempotentes). Toda mudança nova vira uma migração aqui **e** é consolidada no schema.
+- `banco/admin-helpers.sql` não é migração: são consultas prontas para moderação manual (aprovar especialistas, ler denúncias, manter a lista de termos bloqueados), já que ainda não há painel administrativo.
 
 ## Conteúdo curado (guia e teste)
 
