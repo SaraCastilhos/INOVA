@@ -20,8 +20,4 @@ next-env.d.ts
 *.tsbuildinfo
 
 # Anotações da pesquisa (TCC) — mantidas só localmente
-cadernoDeCampo.md
-contexto.md
-dossiê.md
-requisitos.md
-RELATORIO-melhorias-*.md
+pesquisa/
