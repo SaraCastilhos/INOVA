@@ -35,13 +35,13 @@ O objetivo é reduzir a indecisão e a ansiedade ligadas à escolha profissional
 
 ```
 app/            rotas (App Router): landing, autenticação, termos/privacidade, metodologia
-components/     seções da SPA (início, teste, carreiras, comunidade, perfil) e componentes de UI
+components/     seções da SPA (início, teste, carreiras, comunidade, perfil); ui/ guarda só
+                os componentes shadcn/ui em uso — gere novos com `npx shadcn add <nome>`
 contexts/       AuthProvider — sessão, perfil, testes e badges do usuário logado
 data/           conteúdo curado e versionado: guia de profissões e instrumento do teste (JSON + schema)
 lib/            tipos, carregamento do conteúdo de data/, pontuação do teste, dados estáticos
                 (ingresso, universidades) e clientes Supabase
 scripts/        validadores do conteúdo de data/
-hooks/          hooks utilitários
 banco/          migrações numeradas (histórico) e consultas de apoio ao admin
 supabase-schema.sql  schema completo e atual do banco
 ```
