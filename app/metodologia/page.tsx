@@ -106,8 +106,11 @@ export default function MetodologiaPage() {
           <p>
             O conteúdo é versionado no repositório do projeto. Uma ficha passa por
             um validador automático que exige todos os campos obrigatórios, salário
-            numérico coerente (1º quartil ≤ média ≤ 3º quartil), pelo menos três
-            atividades, três habilidades e uma fonte com URL e data de acesso. Só
+            numérico coerente (1º quartil ≤ 3º quartil), pelo menos três
+            atividades, três habilidades e uma fonte com URL e data de acesso. Em
+            profissões remuneradas majoritariamente por comissão, a média pode
+            legitimamente cair fora da faixa entre os quartis — isso é preservado
+            como está na fonte, não corrigido. Só
             então ela recebe o status &quot;publicado&quot; e aparece no guia;
             enquanto isso não acontece, fica como rascunho e não é exibida.
           </p>

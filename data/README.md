@@ -30,7 +30,7 @@ cada commit.
 - `formacao_requerida` ∈ `fundamental | medio | tecnico | superior | superior-conselho`.
 - `regulamentada: true` exige `conselho` preenchido; `false` exige `conselho: null`.
 - `riasec_code`: 1 a 3 letras entre `R I A S E C`. `riasec_primary` = 1ª letra.
-- `salario`: `p25 <= media <= p75`, todos > 0, `moeda: "BRL"`, com `fonte` e `referencia`.
+- `salario`: `p25 <= p75` e todos > 0, `moeda: "BRL"`, com `fonte` e `referencia`. A `media` **não** precisa cair entre `p25` e `p75` — em profissões remuneradas majoritariamente por comissão (ex.: representante comercial, corretor de imóveis), a distribuição real de salário é assimétrica e a média pode ficar fora da faixa dos quartis. Isso é um dado real, não um erro de digitação.
 - `fontes`: 1+ item, cada um com `titulo`, `url` (http/https) e `acesso_em` (`AAAA-MM-DD`).
 - `status` ∈ `rascunho | publicado`. **Só `publicado` aparece no guia.**
 
