@@ -101,10 +101,14 @@ function validateFicha(p, slugsSeen) {
     if (!isPosNum(s.media)) at('salario.media precisa ser número > 0')
     if (!isPosNum(s.p25)) at('salario.p25 precisa ser número > 0')
     if (!isPosNum(s.p75)) at('salario.p75 precisa ser número > 0')
-    if (isPosNum(s.p25) && isPosNum(s.media) && isPosNum(s.p75)) {
-      if (!(s.p25 <= s.media && s.media <= s.p75)) {
-        at(`salario: precisa valer p25 <= media <= p75 (recebido ${s.p25} / ${s.media} / ${s.p75})`)
-      }
+    // Só exigimos p25 <= p75 (os quartis, por definição, não podem estar
+    // invertidos). NÃO exigimos p25 <= media <= p75: em distribuições
+    // assimétricas — comum em profissões remuneradas por comissão, com poucos
+    // ganhos muito altos puxando a média — a média pode legitimamente cair
+    // fora da faixa entre o 1º e o 3º quartil. Já observado em dados reais
+    // (ex.: representante comercial autônomo, CAGED ago/2025-jul/2026).
+    if (isPosNum(s.p25) && isPosNum(s.p75) && !(s.p25 <= s.p75)) {
+      at(`salario: p25 (${s.p25}) não pode ser maior que p75 (${s.p75})`)
     }
     if (s.moeda !== 'BRL') at('salario.moeda precisa ser "BRL"')
     if (!isStr(s.fonte, 4)) at('salario.fonte ausente')

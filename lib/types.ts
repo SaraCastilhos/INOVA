@@ -173,7 +173,9 @@ export interface FonteReferencia {
 }
 
 export interface SalarioInfo {
-  media: number // salário médio mensal (a fonte publica "salário médio")
+  media: number // salário médio mensal (a fonte publica "salário médio"); em
+  // profissões com remuneração majoritariamente por comissão, pode cair fora
+  // da faixa p25-p75 (distribuição assimétrica) — isso é esperado
   p25: number // 1º quartil
   p75: number // 3º quartil
   moeda: 'BRL'
