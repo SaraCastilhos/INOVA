@@ -1095,5 +1095,738 @@
     "status": "publicado",
     "atualizado_em": "2026-10-04",
     "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "fotografo",
+    "nome": "Fotógrafo",
+    "cbo_code": "2618-05",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Cria imagens fotográficas de acontecimentos, pessoas, paisagens, objetos e outros temas, em preto e branco ou coloridas, usando câmeras e equipamentos de iluminação. Escolhe o tema da fotografia ou atende a demandas de clientes segundo objetivos artísticos, jornalísticos, comerciais, industriais ou científicos. Opera programas de tratamento de imagens para o resultado final.",
+    "atividades": [
+      "Escolher equipamentos conforme a intenção, a área de atuação e as circunstâncias do trabalho",
+      "Operar câmera fotográfica, acessórios e equipamentos de iluminação",
+      "Calibrar e monitorar equipamentos de medição de luz",
+      "Definir o enquadramento, a composição e o momento da captura da imagem",
+      "Atender a demandas de clientes segundo objetivos artísticos, jornalísticos, comerciais ou científicos",
+      "Operar programas de tratamento e edição de imagens"
+    ],
+    "habilidades": [
+      "Senso estético e composição visual",
+      "Domínio técnico de câmera, luz e enquadramento",
+      "Edição digital de imagens",
+      "Atenção a detalhes",
+      "Comunicação com clientes e modelos",
+      "Agilidade para captar o momento certo"
+    ],
+    "formacao_requerida": "medio",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "RA",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 2246.0,
+      "p25": 1621.0,
+      "p75": 2080.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2618-05 — Fotógrafo (Classificação Brasileira de Ocupações, família 2618, MTE)",
+        "url": "https://codigocbo.com.br/cbo-261805-fotografo",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 27-4021.00 — Photographers: perfil de interesses (Realistic, Artistic)",
+        "url": "https://www.onetonline.org/link/summary/27-4021.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Fotógrafo — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 3.595 vínculos)",
+        "url": "https://www.salario.com.br/profissao/fotografo-cbo-261805/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "estilista-de-moda",
+    "nome": "Estilista de moda",
+    "cbo_code": "2624-25",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Concebe, desenvolve e coordena projetos de novas linhas de produtos de moda — estilos, formas, texturas, materiais e cores — para a produção de tecidos, roupas, calçados e acessórios, considerando a identidade da marca, requisitos técnicos e econômicos de produção, estética e tendências.",
+    "atividades": [
+      "Pesquisar temáticas e tendências de moda",
+      "Avaliar ideias e conceitos propostos para a coleção",
+      "Definir estilos, formas, texturas, materiais e cores dos produtos",
+      "Elaborar desenhos técnicos e protótipos das peças",
+      "Definir processos de produção e os materiais a serem utilizados",
+      "Registrar as etapas do processo criativo",
+      "Coordenar e supervisionar etapas do processo produtivo"
+    ],
+    "habilidades": [
+      "Criatividade e repertório visual",
+      "Desenho técnico de moda, manual e em CAD",
+      "Conhecimento de tecidos, materiais e processos produtivos",
+      "Acompanhamento de tendências de mercado",
+      "Comunicação com equipes de produção",
+      "Capacidade de adaptar conceitos à identidade da marca"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "ARE",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 4341.95,
+      "p25": 2375.0,
+      "p75": 5150.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2624-25 — Estilista de moda / Desenhista industrial de produto de moda (Classificação Brasileira de Ocupações, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/262425-estilista-de-moda",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 27-1022.00 — Fashion Designers: perfil de interesses (Artistic, Realistic, Enterprising)",
+        "url": "https://www.onetonline.org/link/summary/27-1022.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Estilista de Moda — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 3.037 vínculos)",
+        "url": "https://www.salario.com.br/profissao/estilista-de-moda-cbo-262425/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "farmaceutico",
+    "nome": "Farmacêutico",
+    "cbo_code": "2234-05",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Realiza a dispensação de medicamentos e produtos farmacêuticos, orientando pacientes sobre seu uso correto. Pode produzir esses produtos em escala magistral ou industrial e realiza o controle de qualidade, armazenamento, distribuição e transporte. Desenvolve produtos farmacêuticos, pode coordenar políticas de assistência farmacêutica e realiza análises clínicas, toxicológicas e microbiológicas. O exercício da profissão exige registro no CRF.",
+    "atividades": [
+      "Dispensar medicamentos e produtos farmacêuticos, orientando o paciente sobre seu uso",
+      "Produzir medicamentos em escala magistral ou industrial",
+      "Realizar o controle de qualidade de produtos farmacêuticos",
+      "Gerenciar o armazenamento, a distribuição e o transporte de medicamentos",
+      "Realizar análises clínicas, toxicológicas e microbiológicas",
+      "Coordenar políticas de assistência farmacêutica",
+      "Atuar na regulação e fiscalização de estabelecimentos farmacêuticos"
+    ],
+    "habilidades": [
+      "Conhecimento técnico-científico de farmacologia e química",
+      "Rigor com normas de qualidade e segurança",
+      "Comunicação clara com pacientes sobre o uso de medicamentos",
+      "Atenção a detalhes e a interações medicamentosas",
+      "Capacidade de análise clínica e laboratorial",
+      "Responsabilidade e ética profissional"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRF",
+    "riasec_code": "ISC",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 4597.42,
+      "p25": 3831.0,
+      "p75": 5105.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2234-05 — Farmacêutico (Classificação Brasileira de Ocupações, família 2234, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/223405-farmaceutico",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 29-1051.00 — Pharmacists: perfil de interesses (Investigative, Social, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/29-1051.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Farmacêutico — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 109.904 vínculos)",
+        "url": "https://www.salario.com.br/profissao/farmaceutico-cbo-223405/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "eletricista-de-instalacoes",
+    "nome": "Eletricista de instalações",
+    "cbo_code": "7156-10",
+    "area": "Construção e Infraestrutura",
+    "descricao": "Planeja serviços elétricos e realiza instalações de distribuição de alta e baixa tensão em residências, estabelecimentos industriais, comerciais e de serviços. Monta e repara instalações elétricas e equipamentos auxiliares, seguindo normas técnicas e de segurança. A ocupação exige curso de qualificação profissional, com certificação em normas de segurança elétrica (NR-10) para atividades de maior risco.",
+    "atividades": [
+      "Planejar e executar instalações elétricas prediais e industriais",
+      "Montar e reparar instalações elétricas e equipamentos auxiliares",
+      "Realizar a distribuição de energia de alta e baixa tensão",
+      "Fazer a manutenção preventiva e corretiva de redes elétricas",
+      "Ler e interpretar projetos e diagramas elétricos",
+      "Aplicar normas de segurança do trabalho em instalações elétricas (NR-10)"
+    ],
+    "habilidades": [
+      "Leitura de projetos e diagramas elétricos",
+      "Conhecimento de normas técnicas e de segurança elétrica",
+      "Destreza manual e uso de ferramentas e instrumentos de medição",
+      "Raciocínio lógico para diagnóstico de falhas",
+      "Atenção a riscos e a normas de segurança",
+      "Organização e método de trabalho"
+    ],
+    "formacao_requerida": "fundamental",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "RC",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 2712.45,
+      "p25": 2325.0,
+      "p75": 3000.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 7156-10 — Eletricista de instalações (edifícios) (Classificação Brasileira de Ocupações, MTE)",
+        "url": "https://codigocbo.com.br/cbo-715610-eletricista-de-instalacoes-edificios",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 47-2111.00 — Electricians: perfil de interesses (Realistic, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/47-2111.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Eletricista de Instalações (Edifícios) — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 28.483 vínculos)",
+        "url": "https://www.salario.com.br/profissao/eletricista-de-instalacoes-edificios-cbo-715610/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "economista",
+    "nome": "Economista",
+    "cbo_code": "2512-05",
+    "area": "Gestão e Negócios",
+    "descricao": "Analisa o ambiente econômico, desenvolve e executa pesquisas econômicas e projetos de viabilidade de mercado. Participa do planejamento estratégico e de curto prazo de organizações, avalia políticas de impacto coletivo para governos, ONGs e empresas, e administra programação econômico-financeira. Pode atuar em mercados interno e externo, examinar finanças corporativas e exercer mediação, perícia e arbitragem. O exercício da profissão exige registro no CORECON.",
+    "atividades": [
+      "Analisar o ambiente e as tendências econômicas",
+      "Desenvolver e executar pesquisas econômicas e de mercado",
+      "Elaborar projetos de viabilidade econômica e financeira",
+      "Participar do planejamento estratégico de organizações",
+      "Avaliar políticas públicas e seu impacto econômico",
+      "Administrar a programação econômico-financeira de projetos",
+      "Examinar finanças corporativas e atuar em mercados interno e externo"
+    ],
+    "habilidades": [
+      "Raciocínio analítico e estatístico",
+      "Interpretação de indicadores e cenários econômicos",
+      "Comunicação de análises complexas para públicos variados",
+      "Planejamento estratégico",
+      "Conhecimento de políticas públicas e de mercado",
+      "Rigor metodológico em pesquisa"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CORECON",
+    "riasec_code": "ICE",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 9210.05,
+      "p25": 4000.0,
+      "p75": 11507.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2512-05 — Economista (Classificação Brasileira de Ocupações, família 2512, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/251205-economista",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 19-3011.00 — Economists: perfil de interesses (Investigative, Conventional, Enterprising)",
+        "url": "https://www.onetonline.org/link/summary/19-3011.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Economista — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 2.012 vínculos)",
+        "url": "https://www.salario.com.br/profissao/economista-cbo-251205/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "bibliotecario",
+    "nome": "Bibliotecário",
+    "cbo_code": "2612-05",
+    "area": "Comunicação e Informação",
+    "descricao": "Disponibiliza informação em qualquer suporte e gerencia unidades como bibliotecas, centros de documentação e sistemas de informação. Trata tecnicamente e desenvolve recursos informacionais, dissemina informação para facilitar o acesso e a geração de conhecimento, desenvolve estudos e pesquisas, realiza difusão cultural e ações educativas. Pode prestar serviços de assessoria e consultoria. O exercício da profissão exige registro no CRB.",
+    "atividades": [
+      "Organizar e tratar tecnicamente acervos e recursos informacionais",
+      "Gerenciar bibliotecas, centros de documentação e sistemas de informação",
+      "Disseminar informação para facilitar o acesso ao conhecimento",
+      "Desenvolver estudos, pesquisas e ações educativas",
+      "Realizar atividades de difusão cultural",
+      "Prestar serviços de assessoria e consultoria em gestão da informação"
+    ],
+    "habilidades": [
+      "Organização e classificação da informação",
+      "Pesquisa e curadoria de conteúdo",
+      "Comunicação e mediação com usuários",
+      "Conhecimento de sistemas e bases de dados",
+      "Atenção a detalhes e método",
+      "Capacidade de ensino e orientação de usuários"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRB",
+    "riasec_code": "CSI",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 4188.14,
+      "p25": 2500.0,
+      "p75": 4746.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2612-05 — Bibliotecário (Classificação Brasileira de Ocupações, família 2612, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/261205-bibliotecario",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 25-4022.00 — Librarians and Media Collections Specialists: perfil de interesses (Conventional, Social, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/25-4022.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Bibliotecário — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 1.982 vínculos)",
+        "url": "https://www.salario.com.br/profissao/bibliotecario-cbo-261205/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "nutricionista",
+    "nome": "Nutricionista",
+    "cbo_code": "2237-10",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Presta assistência nutricional a indivíduos e coletividades, sadios ou enfermos, elaborando e avaliando planos alimentares. Planeja, organiza e avalia unidades de alimentação e nutrição, efetua o controle higiênico-sanitário e participa de programas de educação nutricional. Pode atuar em nutrição clínica, auditoria e consultoria, e ministrar cursos. O exercício da profissão exige registro no CRN.",
+    "atividades": [
+      "Elaborar, implantar e avaliar planos alimentares para indivíduos e coletividades",
+      "Prestar assistência nutricional e dietoterápica em todos os ciclos da vida",
+      "Planejar, gerenciar e avaliar Unidades de Alimentação e Nutrição",
+      "Efetuar o controle higiênico-sanitário de alimentos",
+      "Planejar e executar ações de educação nutricional",
+      "Prestar auditoria, consultoria e assessoria em nutrição e dietética",
+      "Realizar e divulgar pesquisas na área de nutrição"
+    ],
+    "habilidades": [
+      "Conhecimento técnico-científico de nutrição e dietética",
+      "Capacidade de avaliação clínica e elaboração de planos alimentares",
+      "Comunicação e orientação de pacientes",
+      "Planejamento e gestão de unidades de alimentação",
+      "Atenção a normas sanitárias",
+      "Empatia e escuta para adesão do paciente ao tratamento"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRN",
+    "riasec_code": "SI",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 3954.89,
+      "p25": 3064.0,
+      "p75": 4515.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2237-10 — Nutricionista (Classificação Brasileira de Ocupações, família 2237, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/223710-nutricionista",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 29-1031.00 — Dietitians and Nutritionists: perfil de interesses (Social, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/29-1031.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Nutricionista — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 35.975 vínculos)",
+        "url": "https://www.salario.com.br/profissao/nutricionista-cbo-223710/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "musico-interprete-instrumentista",
+    "nome": "Músico intérprete instrumentista",
+    "cbo_code": "2627-10",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Interpreta músicas por meio de instrumentos ou voz, em público, em estúdios de gravação ou em plataformas digitais, aperfeiçoando e atualizando as qualidades técnicas de execução e interpretação. Estuda e ensaia peças musicais, individualmente ou em grupo, pesquisa e cria propostas no campo musical, aplicando conhecimentos de harmonia, melodia e ritmo em função do estilo e do instrumento. O exercício profissional remunerado exige registro na Ordem dos Músicos do Brasil (OMB).",
+    "atividades": [
+      "Tocar instrumento, como solista ou em formações musicais, em público ou em estúdio",
+      "Estudar a composição musical e ensaiar a peça, individualmente ou em grupo",
+      "Interpretar ou adaptar a música aplicando conhecimentos de harmonia, melodia e ritmo",
+      "Pesquisar e criar propostas no campo musical",
+      "Aperfeiçoar e atualizar as qualidades técnicas de execução e interpretação",
+      "Apresentar-se em rádio, TV, plataformas digitais e espetáculos ao vivo"
+    ],
+    "habilidades": [
+      "Domínio técnico do instrumento ou da voz",
+      "Senso rítmico e melódico",
+      "Interpretação e expressividade artística",
+      "Disciplina de estudo e ensaio",
+      "Capacidade de trabalhar em grupo (bandas, orquestras, coros)",
+      "Resiliência diante da instabilidade de renda da carreira artística"
+    ],
+    "formacao_requerida": "medio",
+    "regulamentada": true,
+    "conselho": "OMB",
+    "riasec_code": "AE",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 3972.14,
+      "p25": 2102.0,
+      "p75": 5148.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2627-10 — Músico intérprete instrumentista (Classificação Brasileira de Ocupações, família 2627, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/262710-musico-interprete-instrumentista",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 27-2042.00 — Musicians and Singers: perfil de interesses (Artistic, Enterprising)",
+        "url": "https://www.onetonline.org/link/summary/27-2042.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Músico Intérprete Instrumentista — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 701 vínculos)",
+        "url": "https://www.salario.com.br/profissao/musico-interprete-instrumentista-cbo-262710/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "cabeleireiro",
+    "nome": "Cabeleireiro",
+    "cbo_code": "5161-10",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Realiza processos de tratamento e embelezamento dos cabelos, executando lavagem, hidratação, corte, penteado, coloração ou descoloração, ondulação ou alisamento. Prepara o espaço de trabalho e seleciona produtos, equipamentos e instrumentos, realiza ou orienta procedimentos de higienização e assepsia das instalações e instrumentos, e controla o estoque de produtos.",
+    "atividades": [
+      "Realizar corte, penteado e finalização de cabelos",
+      "Executar coloração, descoloração, ondulação ou alisamento capilar",
+      "Realizar hidratação e outros tratamentos capilares",
+      "Selecionar produtos e equipamentos adequados a cada procedimento",
+      "Higienizar e esterilizar instalações e instrumentos de trabalho",
+      "Orientar o cliente sobre cuidados e produtos para manutenção do resultado",
+      "Controlar o estoque de produtos e materiais"
+    ],
+    "habilidades": [
+      "Destreza manual e coordenação motora fina",
+      "Senso estético e criatividade visual",
+      "Conhecimento de produtos e técnicas químicas capilares",
+      "Comunicação e atendimento ao cliente",
+      "Higiene e cuidado com normas sanitárias",
+      "Resistência física para longos períodos em pé"
+    ],
+    "formacao_requerida": "medio",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "RCS",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 1872.9,
+      "p25": 1621.0,
+      "p75": 1950.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 5161-10 — Cabeleireiro (Classificação Brasileira de Ocupações, família 5161, MTE)",
+        "url": "https://cargos.com.br/cargo/cabeleireiro/",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 39-5012.00 — Hairdressers, Hairstylists, and Cosmetologists: perfil de interesses (Realistic, Conventional, Social)",
+        "url": "https://www.onetonline.org/link/summary/39-5012.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Cabeleireiro — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 8.146 vínculos)",
+        "url": "https://www.salario.com.br/profissao/cabeleireiro-cbo-516110/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "diretor-de-arte-publicidade",
+    "nome": "Diretor de arte (publicidade)",
+    "cbo_code": "2531-25",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Planeja, gerencia e avalia a concepção artística de campanhas publicitárias e ações de merchandising para marcas, produtos e serviços em diferentes plataformas, considerando objetivos do cliente, concorrência, público-alvo, orçamento e tendências de mercado. Contribui na concepção do leiaute da campanha, cria peças publicitárias e desenvolve a parte visual e gráfica das ações.",
+    "atividades": [
+      "Estruturar a estratégia visual do projeto publicitário",
+      "Definir o conceito criativo de campanhas e peças publicitárias",
+      "Desenvolver o leiaute e a parte visual e gráfica das peças",
+      "Criar ações de merchandising e campanhas promocionais",
+      "Apresentar propostas visuais para aprovação do cliente",
+      "Gerenciar equipes de criação e cronogramas de produção"
+    ],
+    "habilidades": [
+      "Senso estético e direção visual",
+      "Liderança de equipes criativas",
+      "Domínio de softwares de design e editoração",
+      "Comunicação de conceitos criativos a clientes",
+      "Gestão de prazos e orçamento de campanhas",
+      "Acompanhamento de tendências visuais e de mercado"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "AE",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 2796.06,
+      "p25": 1707.0,
+      "p75": 4717.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2531-25 — Diretor de arte (publicidade) (Classificação Brasileira de Ocupações, família 2531, MTE)",
+        "url": "https://codigocbo.com.br/cbo-253125-diretor-de-arte-publicidade",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 27-1011.00 — Art Directors: perfil de interesses (Artistic, Enterprising)",
+        "url": "https://www.onetonline.org/link/summary/27-1011.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Diretor de Arte (Publicidade) — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 3.824 vínculos)",
+        "url": "https://www.mercadometro.com.br/painel/Quanto-ganha-Diretor-de-arte-(publicidade)-(CBO-253125)-em-Sao-Paulo-SP---Mercadometro.html",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "publicitario",
+    "nome": "Publicitário",
+    "cbo_code": "2531-15",
+    "area": "Gestão e Negócios",
+    "descricao": "Estrutura estratégias de projetos publicitários, pesquisando o quadro econômico, político, social e cultural e analisando o mercado. Planeja, executa e avalia campanhas e peças publicitárias para diferentes públicos e objetivos, gerenciando recursos materiais, financeiros e as equipes de criação e execução. Seleciona e contrata prestadores de serviço, negocia e coordena a compra de espaços publicitários.",
+    "atividades": [
+      "Pesquisar o quadro econômico, político, social e cultural para fundamentar campanhas",
+      "Planejar, executar e avaliar campanhas e peças publicitárias",
+      "Gerenciar recursos materiais, financeiros e equipes de criação e execução",
+      "Selecionar e contratar prestadores de serviço para as campanhas",
+      "Negociar e coordenar a compra de espaços publicitários",
+      "Implantar ações de relações públicas e assessoria de imprensa"
+    ],
+    "habilidades": [
+      "Visão estratégica de comunicação e mercado",
+      "Negociação e gestão de fornecedores",
+      "Liderança de equipes multidisciplinares",
+      "Comunicação persuasiva",
+      "Gestão de orçamento e cronograma de campanhas",
+      "Capacidade de análise de tendências de consumo"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "ECA",
+    "riasec_primary": "E",
+    "salario": {
+      "media": 4180.25,
+      "p25": 2046.0,
+      "p75": 5000.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2531-15 — Publicitário (Classificação Brasileira de Ocupações, família 2531, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo/253115-publicitario",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 11-2011.00 — Advertising and Promotions Managers: perfil de interesses (Enterprising, Conventional, Artistic)",
+        "url": "https://www.onetonline.org/link/summary/11-2011.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Publicitário — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 13.076 vínculos)",
+        "url": "https://www.salario.com.br/profissao/agente-publicitario-cbo-253115/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "corretor-de-seguros",
+    "nome": "Corretor de seguros",
+    "cbo_code": "3545-05",
+    "area": "Gestão e Negócios",
+    "descricao": "Vende apólices de seguros de vida, automóvel, previdência privada, incêndio, riscos marítimos e outros ramos, relacionando-se com a companhia seguradora e prestando assistência ao segurado. Representa o segurado junto à seguradora, planeja a comercialização de apólices para empresas e indivíduos e emprega técnicas de vendas e rotinas informatizadas. O exercício da profissão exige habilitação e registro na SUSEP. Parte da remuneração da categoria vem de comissões sobre as apólices vendidas; os valores abaixo refletem apenas vínculos CLT com salário fixo.",
+    "atividades": [
+      "Comercializar apólices de seguros de vida, automóvel, previdência e outros ramos",
+      "Representar o segurado junto à companhia seguradora",
+      "Prestar assistência ao segurado, inclusive em caso de sinistro",
+      "Identificar as necessidades do cliente e personalizar a oferta de seguros",
+      "Negociar taxas e comissões com empresas seguradoras",
+      "Manter relacionamento com seguradoras e operacionalizar rotinas informatizadas"
+    ],
+    "habilidades": [
+      "Comunicação e persuasão",
+      "Negociação",
+      "Conhecimento de produtos e do mercado de seguros",
+      "Organização e gestão de carteira de clientes",
+      "Atenção à documentação e a aspectos contratuais",
+      "Proatividade e trabalho orientado a metas e comissões"
+    ],
+    "formacao_requerida": "medio",
+    "regulamentada": true,
+    "conselho": "SUSEP",
+    "riasec_code": "ECS",
+    "riasec_primary": "E",
+    "salario": {
+      "media": 2136.41,
+      "p25": 1621.0,
+      "p75": 2090.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE) — apenas vínculos CLT, sem comissões",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3545-05 — Corretor de seguros (Classificação Brasileira de Ocupações, família 3545, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/354505-corretor-de-seguros",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 41-3021.00 — Insurance Sales Agents: perfil de interesses (Enterprising, Conventional, Social)",
+        "url": "https://www.onetonline.org/link/summary/41-3021.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Corretor de Seguros — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 1.797 vínculos CLT; não inclui comissões)",
+        "url": "https://www.salario.com.br/profissao/corretor-de-seguros-cbo-354505/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "secretaria-executiva",
+    "nome": "Secretária(o) executiva(o)",
+    "cbo_code": "2523-05",
+    "area": "Gestão e Negócios",
+    "descricao": "Presta assessoria direta a executivos, administrando agendas, organizando reuniões e viagens, e gerenciando a comunicação interna e externa. Redige e revisa documentos e correspondências, traduz informações quando necessário, organiza arquivos e coordena o fluxo de informações entre setores. Pode supervisionar equipes de apoio administrativo. A profissão é regulamentada pela Lei nº 7.377/1985, que exige formação específica em Secretariado.",
+    "atividades": [
+      "Administrar a agenda e organizar reuniões e viagens de executivos",
+      "Redigir, revisar e traduzir documentos e correspondências",
+      "Gerenciar a comunicação interna e externa do executivo ou da área",
+      "Organizar arquivos e coordenar o fluxo de informações entre setores",
+      "Preparar relatórios, atas e apresentações",
+      "Supervisionar equipes de apoio administrativo, quando aplicável"
+    ],
+    "habilidades": [
+      "Organização e gestão de prioridades",
+      "Comunicação escrita e oral",
+      "Discrição e confidencialidade",
+      "Domínio de ferramentas de escritório e agendamento",
+      "Proatividade na resolução de problemas do dia a dia",
+      "Relacionamento interpessoal com diferentes níveis hierárquicos"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "CES",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 2889.77,
+      "p25": 1621.0,
+      "p75": 2669.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2523-05 — Secretária(o) executiva(o) (Classificação Brasileira de Ocupações, família 2523, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo/252305-secretaria-o-executiva-o",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 43-6011.00 — Executive Secretaries and Executive Administrative Assistants: perfil de interesses (Conventional, Enterprising, Social)",
+        "url": "https://www.onetonline.org/link/summary/43-6011.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Secretária Executiva — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 66.817 vínculos)",
+        "url": "https://www.salario.com.br/profissao/secretaria-executiva-cbo-252305/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
   }
 ]
