@@ -2283,7 +2283,7 @@
     "nome": "Desenhista de desenho animado",
     "cbo_code": "3184-10",
     "area": "Artes, Design e Cultura",
-    "descricao": "Elabora desenhos artísticos e animações para ilustração de folhetos, catálogos, documentação técnica, jogos, filmes e peças publicitárias, impressos ou eletrônicos. Usa computadores, periféricos e programas de desenho, tratamento de imagens e editoração gráfica para criar e dar acabamento final às peças.",
+    "descricao": "Elabora desenhos artísticos e animações para ilustração de folhetos, catálogos, documentação técnica, jogos, filmes e peças publicitárias, impressos ou eletrônicos. Usa computadores, periféricos e programas de desenho, tratamento de imagens e editoração gráfica para criar e dar acabamento final às peças. A ocupação exige ensino médio completo e curso básico de desenho profissional (geralmente até 200h).",
     "atividades": [
       "Elaborar desenhos e animações para produtos e serviços diversos",
       "Interpretar solicitações de desenho e briefings criativos",
@@ -2300,7 +2300,7 @@
       "Organização para cumprir prazos de produção",
       "Comunicação com diretores e equipes de criação"
     ],
-    "formacao_requerida": "tecnico",
+    "formacao_requerida": "medio",
     "regulamentada": false,
     "conselho": null,
     "riasec_code": "AR",
@@ -2315,9 +2315,9 @@
     },
     "fontes": [
       {
-        "titulo": "CBO 3184-10 — Desenhista de desenho animado (Classificação Brasileira de Ocupações, família 3184, MTE)",
-        "url": "https://www.salario.com.br/profissao/desenhista-de-desenho-animado-cbo-318410/",
-        "acesso_em": "2026-10-05"
+        "titulo": "CBO 3184-10 — Desenhista técnico (ilustrações artísticas), sinônimo \"Desenhista de desenho animado\" (Classificação Brasileira de Ocupações, família 3184, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/318410-desenhista-tecnico-ilustracoes-artisticas",
+        "acesso_em": "2026-10-06"
       },
       {
         "titulo": "O*NET-SOC 27-1014.00 — Special Effects Artists and Animators: perfil de interesses (Artistic, Realistic)",
@@ -2331,7 +2331,7 @@
       }
     ],
     "status": "publicado",
-    "atualizado_em": "2026-10-05",
+    "atualizado_em": "2026-10-06",
     "revisado_por": "Sara Castilhos"
   },
   {
