@@ -2221,5 +2221,285 @@
     "status": "publicado",
     "atualizado_em": "2026-10-05",
     "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "artista-artes-visuais",
+    "nome": "Artista (artes visuais)",
+    "cbo_code": "2624-05",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Concebe e desenvolve obras de arte e projetos de design, podendo também elaborar e executar projetos de restauração e conservação preventiva de bens culturais móveis e integrados. Realiza pesquisas, elabora propostas e divulga suas obras, produtos e serviços para galerias, museus, agências de propaganda e escritórios de assessoria artística.",
+    "atividades": [
+      "Conceber e desenvolver obras de arte visual (pintura, escultura, instalação e outras técnicas)",
+      "Pesquisar materiais, técnicas e referências para a obra",
+      "Elaborar propostas de projetos artísticos para galerias, museus e instituições culturais",
+      "Executar projetos de restauração e conservação preventiva de bens culturais, quando aplicável",
+      "Divulgar e apresentar obras, produtos e serviços ao público e a potenciais clientes",
+      "Avaliar fatores ambientais, espaciais, culturais e econômicos do projeto"
+    ],
+    "habilidades": [
+      "Criatividade e repertório visual",
+      "Domínio de técnicas e materiais artísticos",
+      "Capacidade de pesquisa e experimentação",
+      "Autonomia e disciplina de trabalho",
+      "Comunicação da proposta artística ao público e a clientes",
+      "Resiliência diante da instabilidade de renda da carreira artística"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "AR",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 3450.42,
+      "p25": 1750.0,
+      "p75": 3426.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2624-05 — Artista (artes visuais) (Classificação Brasileira de Ocupações, família 2624, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/262405-artista-artes-visuais",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 27-1013.00 — Fine Artists, Including Painters, Sculptors, and Illustrators: perfil de interesses (Artistic, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/27-1013.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Artista (Artes Visuais) — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 1.582 vínculos)",
+        "url": "https://www.salario.com.br/profissao/artista-artes-visuais-cbo-262405/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "desenhista-de-desenho-animado",
+    "nome": "Desenhista de desenho animado",
+    "cbo_code": "3184-10",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Elabora desenhos artísticos e animações para ilustração de folhetos, catálogos, documentação técnica, jogos, filmes e peças publicitárias, impressos ou eletrônicos. Usa computadores, periféricos e programas de desenho, tratamento de imagens e editoração gráfica para criar e dar acabamento final às peças.",
+    "atividades": [
+      "Elaborar desenhos e animações para produtos e serviços diversos",
+      "Interpretar solicitações de desenho e briefings criativos",
+      "Dar acabamento final aos desenhos e animações",
+      "Submeter desenhos e animações à aprovação do cliente ou diretor",
+      "Atender às normas técnicas de representação gráfica e animação",
+      "Operar softwares de desenho, tratamento de imagem e editoração gráfica"
+    ],
+    "habilidades": [
+      "Desenho artístico e domínio de softwares de animação",
+      "Senso de movimento, tempo e narrativa visual",
+      "Criatividade e atenção a detalhes",
+      "Capacidade de interpretar briefings e adaptar o estilo ao projeto",
+      "Organização para cumprir prazos de produção",
+      "Comunicação com diretores e equipes de criação"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "AR",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 4012.83,
+      "p25": 1958.0,
+      "p75": 4769.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3184-10 — Desenhista de desenho animado (Classificação Brasileira de Ocupações, família 3184, MTE)",
+        "url": "https://www.salario.com.br/profissao/desenhista-de-desenho-animado-cbo-318410/",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 27-1014.00 — Special Effects Artists and Animators: perfil de interesses (Artistic, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/27-1014.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Desenhista de Desenho Animado — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 203 vínculos)",
+        "url": "https://www.salario.com.br/profissao/desenhista-de-desenho-animado-cbo-318410/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "cenografo-de-eventos",
+    "nome": "Cenógrafo de eventos",
+    "cbo_code": "2623-15",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Formula o conceito artístico da cenografia, pesquisando a obra, seu contexto histórico e o perfil do evento, para criar ambientes e atmosferas que valorizam a concepção cênica. Elabora o projeto cenográfico a partir de estudos preliminares do espaço, da viabilidade de materiais e do ajuste com as equipes artística, técnica e de produção.",
+    "atividades": [
+      "Pesquisar o contexto, o tema e o público do evento para formular o conceito cenográfico",
+      "Elaborar o projeto cenográfico a partir de estudos preliminares do espaço",
+      "Definir materiais, estruturas e elementos cênicos viáveis para o projeto",
+      "Ajustar o projeto com as equipes artística, técnica e de produção",
+      "Acompanhar a montagem e a desmontagem do cenário",
+      "Avaliar a viabilidade orçamentária e de prazos do projeto"
+    ],
+    "habilidades": [
+      "Criatividade e visão espacial",
+      "Conhecimento de materiais, estruturas e técnicas de montagem",
+      "Pesquisa histórica e cultural aplicada ao projeto",
+      "Comunicação com equipes artísticas, técnicas e de produção",
+      "Gestão de prazos e orçamento",
+      "Adaptabilidade a diferentes tipos de evento"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "A",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 3061.66,
+      "p25": 1908.0,
+      "p75": 3500.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2623-15 — Cenógrafo de eventos (Classificação Brasileira de Ocupações, família 2623, MTE)",
+        "url": "https://cargos.com.br/cargo/cenografo-de-eventos/",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 27-1027.00 — Set and Exhibit Designers: perfil de interesses (Artistic)",
+        "url": "https://www.onetonline.org/link/summary/27-1027.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Cenógrafo de Eventos — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 254 vínculos)",
+        "url": "https://www.salario.com.br/profissao/cenografo-de-eventos-cbo-262315/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "maquiador",
+    "nome": "Maquiador",
+    "cbo_code": "5161-25",
+    "area": "Artes, Design e Cultura",
+    "descricao": "Cria e realiza maquiagens de embelezamento e de caracterização artística, considerando tendências da moda e as necessidades do cliente ou da produção. Seleciona, prepara e cuida do local e dos materiais de trabalho, atuando em eventos sociais, produções de moda, televisão, cinema e teatro.",
+    "atividades": [
+      "Criar e realizar maquiagens sociais e de caracterização artística",
+      "Selecionar produtos e técnicas conforme o tipo de pele e o objetivo da maquiagem",
+      "Preparar e cuidar do local e dos materiais de trabalho",
+      "Acompanhar tendências de moda, beleza e caracterização",
+      "Higienizar materiais e seguir normas sanitárias",
+      "Adaptar a maquiagem a diferentes tipos de iluminação e registro (foto, vídeo, palco)"
+    ],
+    "habilidades": [
+      "Senso estético e técnica de maquiagem",
+      "Destreza manual e atenção a detalhes",
+      "Conhecimento de produtos e tipos de pele",
+      "Criatividade para caracterização artística",
+      "Comunicação e atendimento ao cliente",
+      "Capacidade de trabalhar sob pressão de tempo em eventos e produções"
+    ],
+    "formacao_requerida": "medio",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "AR",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 2557.68,
+      "p25": 1727.0,
+      "p75": 2564.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 5161-25 — Maquiador (Classificação Brasileira de Ocupações, família 5161, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/516125-maquiador",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 39-5091.00 — Makeup Artists, Theatrical and Performance: perfil de interesses (Artistic, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/39-5091.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Maquiador — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 808 vínculos)",
+        "url": "https://www.salario.com.br/profissao/maquiador-cbo-516125/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "chefe-de-cozinha",
+    "nome": "Chefe de cozinha",
+    "cbo_code": "2711-05",
+    "area": "Gestão e Negócios",
+    "descricao": "Cria e elabora pratos e cardápios, atuando direta e indiretamente na preparação dos alimentos em restaurantes, confeitarias e outros estabelecimentos. Gerencia a equipe de cozinha (brigada), planeja as rotinas de trabalho, define o cardápio e as fichas técnicas das receitas, e pode gerenciar estoques e capacitar funcionários.",
+    "atividades": [
+      "Definir o cardápio e elaborar fichas técnicas das receitas",
+      "Chefiar e organizar as atividades da cozinha",
+      "Administrar a equipe de cozinha, selecionando e distribuindo tarefas",
+      "Orientar processos de preparo e finalização dos pratos",
+      "Gerenciar estoques e pedidos de insumos",
+      "Supervisionar o desempenho da equipe e promover capacitação"
+    ],
+    "habilidades": [
+      "Criatividade culinária e domínio de técnicas de cocção",
+      "Liderança e gestão de equipe",
+      "Planejamento de cardápio e controle de custos",
+      "Organização sob pressão de tempo",
+      "Conhecimento de normas sanitárias e de segurança alimentar",
+      "Capacidade de treinar e desenvolver a equipe"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "ERC",
+    "riasec_primary": "E",
+    "salario": {
+      "media": 2955.76,
+      "p25": 2100.0,
+      "p75": 3371.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2711-05 — Chefe de cozinha (Classificação Brasileira de Ocupações, família 2711, MTE)",
+        "url": "https://codigocbo.com.br/cbo-271105-chefe-de-cozinha",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 35-1011.00 — Chefs and Head Cooks: perfil de interesses (Enterprising, Realistic, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/35-1011.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Chefe de Cozinha — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 28.140 vínculos)",
+        "url": "https://www.salario.com.br/profissao/chefe-de-cozinha-cbo-271105/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
   }
 ]
