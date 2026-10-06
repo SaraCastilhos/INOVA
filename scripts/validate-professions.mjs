@@ -42,7 +42,7 @@ const isStr = (v, min = 1) => typeof v === 'string' && v.trim().length >= min
 const isPosNum = (v) => typeof v === 'number' && Number.isFinite(v) && v > 0
 
 /** @returns {string[]} lista de erros da ficha (vazia = ok) */
-function validateFicha(p, slugsSeen) {
+function validateFicha(p, slugsSeen, cbosSeen) {
   const e = []
   const at = (msg) => e.push(msg)
 
@@ -57,20 +57,34 @@ function validateFicha(p, slugsSeen) {
   if (!isStr(p.nome, 3)) at('nome ausente ou muito curto')
   if (!isStr(p.cbo_code) || !/^\d{4}-\d{2}$/.test(p.cbo_code || '')) {
     at('cbo_code ausente ou fora do formato 0000-00')
+  } else if (cbosSeen.has(p.cbo_code)) {
+    at(`cbo_code duplicado: "${p.cbo_code}" (já usado por "${cbosSeen.get(p.cbo_code)}")`)
+  } else {
+    cbosSeen.set(p.cbo_code, p.nome)
   }
   if (!AREAS.includes(p.area)) at(`area inválida: ${JSON.stringify(p.area)} (use uma da taxonomia)`)
   if (!isStr(p.descricao, 60)) at('descricao ausente ou com menos de 60 caracteres')
 
   if (!Array.isArray(p.atividades) || p.atividades.length < 3) {
     at('atividades: mínimo de 3 itens')
-  } else if (!p.atividades.every((s) => isStr(s, 8))) {
-    at('atividades: cada item precisa ter ao menos 8 caracteres')
+  } else {
+    if (!p.atividades.every((s) => isStr(s, 8))) {
+      at('atividades: cada item precisa ter ao menos 8 caracteres')
+    }
+    if (new Set(p.atividades).size !== p.atividades.length) {
+      at('atividades: há item repetido na lista')
+    }
   }
 
   if (!Array.isArray(p.habilidades) || p.habilidades.length < 3) {
     at('habilidades: mínimo de 3 itens')
-  } else if (!p.habilidades.every((s) => isStr(s, 4))) {
-    at('habilidades: cada item precisa ter ao menos 4 caracteres')
+  } else {
+    if (!p.habilidades.every((s) => isStr(s, 4))) {
+      at('habilidades: cada item precisa ter ao menos 4 caracteres')
+    }
+    if (new Set(p.habilidades).size !== p.habilidades.length) {
+      at('habilidades: há item repetido na lista')
+    }
   }
 
   if (!FORMACOES.includes(p.formacao_requerida)) {
@@ -123,6 +137,13 @@ function validateFicha(p, slugsSeen) {
       if (!isUrl(f?.url)) at(`fontes[${i}].url inválida`)
       if (!isDate(f?.acesso_em)) at(`fontes[${i}].acesso_em precisa ser AAAA-MM-DD`)
     })
+    // URL repetida em duas fontes "diferentes" é sinal de cópia-e-cola (uma
+    // delas não aponta pra fonte que diz citar) — e quebra a key do React no
+    // card (fontes renderizadas com key={f.url}), gerando aviso no console.
+    const urls = p.fontes.map((f) => f?.url).filter(Boolean)
+    if (new Set(urls).size !== urls.length) {
+      at('fontes: duas fontes apontam para a mesma URL (verifique se uma delas foi citada errada)')
+    }
   }
 
   if (!STATUS.includes(p.status)) at(`status inválido: ${JSON.stringify(p.status)}`)
@@ -155,11 +176,12 @@ async function main() {
   }
 
   const slugsSeen = new Set()
+  const cbosSeen = new Map()
   let totalErros = 0
   let publicadas = 0
 
   data.forEach((ficha, i) => {
-    const erros = validateFicha(ficha, slugsSeen)
+    const erros = validateFicha(ficha, slugsSeen, cbosSeen)
     const rotulo = ficha?.slug || ficha?.nome || `#${i}`
     if (ficha?.status === 'publicado') publicadas++
     if (erros.length) {
