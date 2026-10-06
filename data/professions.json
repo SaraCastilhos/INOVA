@@ -2501,5 +2501,453 @@
     "status": "publicado",
     "atualizado_em": "2026-10-05",
     "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "medico-clinico-geral",
+    "nome": "Médico clínico geral",
+    "cbo_code": "2251-25",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Atende pacientes com diversas condições médicas, realizando diagnósticos e tratamentos clínicos iniciais, com foco em medicina interna. Investiga sintomas, solicita e interpreta exames complementares, prescreve tratamentos e encaminha para especialistas quando necessário. O exercício da profissão exige graduação em Medicina e registro no CRM; muitas atuações exigem também residência ou título de especialista.",
+    "atividades": [
+      "Atender pacientes e investigar sintomas e histórico clínico",
+      "Solicitar e interpretar exames complementares",
+      "Diagnosticar condições médicas e prescrever tratamentos",
+      "Encaminhar pacientes a especialistas quando necessário",
+      "Acompanhar a evolução clínica e ajustar o tratamento",
+      "Orientar pacientes sobre prevenção e cuidados de saúde"
+    ],
+    "habilidades": [
+      "Raciocínio clínico e diagnóstico",
+      "Conhecimento técnico-científico amplo em medicina interna",
+      "Comunicação empática com pacientes",
+      "Tomada de decisão sob pressão",
+      "Atenção a detalhes e precisão em prescrições",
+      "Capacidade de atualização científica contínua"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRM",
+    "riasec_code": "ISR",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 10174.32,
+      "p25": 5497.0,
+      "p75": 13097.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2251-25 — Médico clínico (Classificação Brasileira de Ocupações, família 2251, MTE)",
+        "url": "https://codigocbo.com.br/cbo-225125-medico-clinico",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 29-1216.00 — General Internal Medicine Physicians: perfil de interesses (Investigative, Social, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/29-1216.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Médico Clínico — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 16.429 vínculos)",
+        "url": "https://www.salario.com.br/profissao/medico-clinico-cbo-225125/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "psicologo-clinico",
+    "nome": "Psicólogo clínico",
+    "cbo_code": "2515-10",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Estuda, avalia e trata o desenvolvimento emocional e os processos mentais de indivíduos, grupos e instituições, realizando diagnóstico, prognóstico e tratamento psicológico em consultórios, clínicas e outros serviços. Aplica métodos psicoterápicos para promover saúde mental, autonomia e qualidade de vida, e pode atuar em equipes multidisciplinares, ensino e pesquisa. O exercício da profissão exige registro no CRP.",
+    "atividades": [
+      "Realizar diagnóstico, prognóstico e tratamento psicológico",
+      "Prestar atendimento psicoterápico individual, a grupos ou famílias",
+      "Acompanhar a evolução do tratamento e seus impactos",
+      "Participar de equipes multidisciplinares de saúde",
+      "Desenvolver pesquisas e atividades de ensino em psicologia",
+      "Realizar acolhimento, orientação e aconselhamento psicológico"
+    ],
+    "habilidades": [
+      "Escuta ativa e empatia",
+      "Raciocínio clínico e análise comportamental",
+      "Sigilo e ética profissional",
+      "Comunicação terapêutica",
+      "Paciência e regulação emocional própria",
+      "Conhecimento de teorias e técnicas psicoterápicas"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRP",
+    "riasec_code": "SI",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 3802.98,
+      "p25": 2727.0,
+      "p75": 4410.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2515-10 — Psicólogo clínico (Classificação Brasileira de Ocupações, família 2515, MTE)",
+        "url": "https://codigocbo.com.br/cbo-251510-psicologo-clinico",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 19-3033.00 — Clinical and Counseling Psychologists: perfil de interesses (Social, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/19-3033.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Psicólogo Clínico — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 14.511 vínculos)",
+        "url": "https://www.salario.com.br/profissao/psicologo-clinico-cbo-251510/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "engenheiro-civil",
+    "nome": "Engenheiro civil",
+    "cbo_code": "2142-05",
+    "area": "Construção e Infraestrutura",
+    "descricao": "Elabora projetos de engenharia civil, planejando empreendimentos, realizando levantamentos técnicos e estudos de viabilidade técnica, econômica e ambiental. Controla a qualidade do empreendimento, analisando ensaios de materiais e documentação técnica, e coordena a operação e manutenção de obras. Pode prestar consultoria e assessoria técnica. O exercício da profissão exige registro no CREA.",
+    "atividades": [
+      "Planejar empreendimentos e realizar levantamentos e investigações técnicas",
+      "Elaborar estudos de viabilidade técnica, econômica e ambiental",
+      "Dimensionar e detalhar projetos de engenharia civil",
+      "Elaborar cronogramas físico e financeiro da obra",
+      "Controlar a qualidade do empreendimento e a documentação técnica",
+      "Coordenar a operação, manutenção e os recursos humanos da obra"
+    ],
+    "habilidades": [
+      "Raciocínio lógico-matemático e visão técnica",
+      "Conhecimento de normas técnicas e de materiais de construção",
+      "Planejamento e gestão de obras e equipes",
+      "Uso de softwares de projeto e cálculo estrutural",
+      "Atenção a segurança e a normas ambientais",
+      "Capacidade de propor soluções técnicas e econômicas"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CREA",
+    "riasec_code": "RIC",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 9808.94,
+      "p25": 5500.0,
+      "p75": 12903.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2142-05 — Engenheiro civil (Classificação Brasileira de Ocupações, família 2142, MTE)",
+        "url": "https://codigocbo.com.br/cbo-214205-engenheiro-civil",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 17-2051.00 — Civil Engineers: perfil de interesses (Realistic, Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/17-2051.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Engenheiro Civil — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 25.932 vínculos)",
+        "url": "https://www.salario.com.br/profissao/engenheiro-civil-cbo-214205/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "cientista-de-dados",
+    "nome": "Cientista de dados",
+    "cbo_code": "2112-20",
+    "area": "Tecnologia da Informação",
+    "descricao": "Desenha amostras, analisa e processa dados, planejando atividades de pesquisa a partir do cenário e das regras de negócio da organização. Desenvolve metodologias de análise de dados, criando, validando e documentando modelos estatísticos, matemáticos e computacionais. Cria bancos de dados, constrói instrumentos de coleta e desenvolve sistemas de codificação, comunicando e interpretando os resultados das análises.",
+    "atividades": [
+      "Desenhar amostras e planejar atividades de pesquisa de dados",
+      "Desenvolver e validar modelos estatísticos, matemáticos e computacionais",
+      "Analisar e processar grandes volumes de dados",
+      "Criar bancos de dados e instrumentos de coleta",
+      "Construir visualizações e relatórios de resultados",
+      "Comunicar e interpretar resultados das análises para a organização"
+    ],
+    "habilidades": [
+      "Raciocínio estatístico e matemático",
+      "Programação para análise de dados (Python, R e similares)",
+      "Pensamento crítico e resolução de problemas",
+      "Comunicação de resultados técnicos para públicos não técnicos",
+      "Conhecimento de negócio da organização",
+      "Curiosidade e aprendizado contínuo de novas ferramentas"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "IC",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 10233.15,
+      "p25": 5225.0,
+      "p75": 13279.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2112-20 — Cientista de dados (Classificação Brasileira de Ocupações, família 2112, MTE)",
+        "url": "https://cargos.com.br/cargo/cientista-de-dados-data-scientist/",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 15-2051.00 — Data Scientists: perfil de interesses (Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/15-2051.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Cientista de Dados (Data Scientist) — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 2.241 vínculos)",
+        "url": "https://www.salario.com.br/profissao/cientista-de-dados-data-scientist/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "tecnico-em-contabilidade",
+    "nome": "Técnico em contabilidade",
+    "cbo_code": "3511-05",
+    "area": "Gestão e Negócios",
+    "descricao": "Executa atividades de contabilidade geral, contabilidade de custos e contabilidade gerencial, além do controle patrimonial de empresas e instituições, atuando sob supervisão de um Contador ou chefe de contabilidade. Constitui e regulariza empresas, identifica documentos e informações, atende à fiscalização e presta consultoria empresarial básica. O registro do técnico em contabilidade no CRC foi encerrado para novos profissionais em 2015; hoje a atuação plena e independente exige o bacharelado de Contador.",
+    "atividades": [
+      "Executar a contabilidade geral e de custos",
+      "Efetuar a contabilidade gerencial e o controle patrimonial",
+      "Constituir e regularizar empresas junto a órgãos competentes",
+      "Atender à fiscalização e prestar consultoria empresarial básica",
+      "Administrar o departamento pessoal",
+      "Organizar documentos e informações contábeis"
+    ],
+    "habilidades": [
+      "Organização e precisão no tratamento de dados",
+      "Raciocínio lógico-matemático",
+      "Conhecimento de normas e legislação contábil básica",
+      "Uso de sistemas e planilhas contábeis",
+      "Atenção a prazos e obrigações acessórias",
+      "Capacidade de trabalhar sob supervisão de um Contador"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "CE",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 4249.95,
+      "p25": 3000.0,
+      "p75": 4947.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3511-05 — Técnico de contabilidade (Classificação Brasileira de Ocupações, família 3511, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/351105-tecnico-de-contabilidade",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 43-3031.00 — Bookkeeping, Accounting, and Auditing Clerks: perfil de interesses (Conventional, Enterprising)",
+        "url": "https://www.onetonline.org/link/summary/43-3031.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Técnico de Contabilidade — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 4.090 vínculos)",
+        "url": "https://www.salario.com.br/profissao/tecnico-de-contabilidade-cbo-351105/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "assistente-administrativo",
+    "nome": "Assistente administrativo",
+    "cbo_code": "4110-10",
+    "area": "Gestão e Negócios",
+    "descricao": "Executa serviços de apoio nas áreas de recursos humanos, administração, finanças e logística, atendendo fornecedores e clientes e fornecendo e recebendo informações sobre produtos e serviços. Trata de documentos variados, mantém arquivos físicos e eletrônicos, confere documentos contábeis e financeiros, e presta apoio administrativo a diferentes setores.",
+    "atividades": [
+      "Executar serviços de apoio administrativo em RH, finanças e logística",
+      "Atender fornecedores e clientes, fornecendo e recebendo informações",
+      "Tratar e organizar documentos variados",
+      "Manter sistemas de arquivo físico e eletrônico",
+      "Conferir documentos contábeis e financeiros",
+      "Prestar apoio administrativo a diferentes setores da empresa"
+    ],
+    "habilidades": [
+      "Organização e atenção a detalhes",
+      "Comunicação com clientes e fornecedores",
+      "Domínio de ferramentas de escritório",
+      "Capacidade de seguir procedimentos e rotinas",
+      "Proatividade na resolução de pendências administrativas",
+      "Trabalho em equipe"
+    ],
+    "formacao_requerida": "medio",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "C",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 2456.44,
+      "p25": 1850.0,
+      "p75": 2700.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 4110-10 — Assistente administrativo (Classificação Brasileira de Ocupações, família 4110, MTE)",
+        "url": "https://codigocbo.com.br/cbo-411010-assistente-administrativo",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 43-9061.00 — Office Clerks, General: perfil de interesses (Conventional)",
+        "url": "https://www.onetonline.org/link/summary/43-9061.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Assistente Administrativo — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 1.185.247 vínculos)",
+        "url": "https://www.salario.com.br/profissao/assistente-administrativo-cbo-411010/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "estatistico",
+    "nome": "Estatístico",
+    "cbo_code": "2112-05",
+    "area": "Ciências Exatas e da Terra",
+    "descricao": "Planeja e executa pesquisas estatísticas, desenhando amostras e definindo metodologias de coleta e análise de dados. Desenvolve e valida modelos estatísticos e matemáticos, analisa e interpreta resultados e comunica conclusões para apoiar decisões em áreas como saúde, economia, indústria e ciências sociais.",
+    "atividades": [
+      "Desenhar amostras e planejar pesquisas estatísticas",
+      "Definir metodologias de coleta e análise de dados",
+      "Desenvolver e validar modelos estatísticos e matemáticos",
+      "Analisar e interpretar resultados de pesquisas e experimentos",
+      "Elaborar relatórios técnicos com as conclusões das análises",
+      "Assessorar áreas técnicas e de gestão na tomada de decisões baseada em dados"
+    ],
+    "habilidades": [
+      "Raciocínio matemático e estatístico avançado",
+      "Programação para análise de dados",
+      "Pensamento crítico e rigor metodológico",
+      "Comunicação de resultados técnicos",
+      "Capacidade de planejamento de pesquisa",
+      "Atenção a detalhes na validação de modelos"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "IC",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 8611.6,
+      "p25": 4705.0,
+      "p75": 10264.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2112-05 — Estatístico (Classificação Brasileira de Ocupações, família 2112, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/211205-estatistico",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 15-2041.00 — Statisticians: perfil de interesses (Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/15-2041.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Estatístico — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 1.638 vínculos)",
+        "url": "https://www.salario.com.br/profissao/estatistico-cbo-211205/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "tecnico-em-secretariado",
+    "nome": "Técnico em secretariado",
+    "cbo_code": "3515-05",
+    "area": "Gestão e Negócios",
+    "descricao": "Realiza atividades secretariais de apoio ao gestor, auxiliando no cumprimento de seus compromissos. Elabora, confere e revisa textos e documentos, organiza as atividades gerais da área, executa controle de estoque e cadastro de clientes e fornecedores, e organiza o arquivo de documentos e outros serviços administrativos.",
+    "atividades": [
+      "Elaborar, conferir e revisar textos e documentos",
+      "Organizar e priorizar as atividades gerais da área",
+      "Agendar compromissos e reuniões, auxiliando o gestor",
+      "Executar controle de estoque e cadastro de clientes e fornecedores",
+      "Organizar o arquivo físico e eletrônico de documentos",
+      "Auxiliar em reuniões e apresentações"
+    ],
+    "habilidades": [
+      "Organização e gestão de prioridades",
+      "Comunicação escrita e oral",
+      "Discrição e confidencialidade",
+      "Domínio de ferramentas de escritório",
+      "Proatividade na resolução de problemas do dia a dia",
+      "Relacionamento interpessoal"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "CES",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 2453.45,
+      "p25": 1760.0,
+      "p75": 3095.0,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-08/2026-07"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3515-05 — Técnico em secretariado (Classificação Brasileira de Ocupações, família 3515, MTE)",
+        "url": "https://codigocbo.com.br/cbo-351505-tecnico-em-secretariado",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "O*NET-SOC 43-6014.00 — Secretaries and Administrative Assistants, Except Legal, Medical, and Executive: perfil de interesses (Conventional, Enterprising, Social)",
+        "url": "https://www.onetonline.org/link/summary/43-6014.00",
+        "acesso_em": "2026-10-05"
+      },
+      {
+        "titulo": "Técnico em Secretariado — Salário (Portal Salário, dados do CAGED/MTE, ago/2025 a jul/2026, 24.979 vínculos)",
+        "url": "https://www.salario.com.br/profissao/tecnico-em-secretariado-cbo-351505/",
+        "acesso_em": "2026-10-05"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-10-05",
+    "revisado_por": "Sara Castilhos"
   }
 ]
