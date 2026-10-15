@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
-import { Target, Briefcase, MessageSquare, ArrowRight, Sparkles, TrendingUp } from 'lucide-react'
+import { Target, Briefcase, ArrowRight, Sparkles, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
 import type { Section } from '@/components/bottom-navigation'
 
@@ -155,8 +155,8 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
             <Image
               src="/images/logo-inova.png"
               alt="INOVA"
-              width={100}
-              height={40}
+              width={376}
+              height={216}
               className="h-8 w-auto"
             />
           </div>
