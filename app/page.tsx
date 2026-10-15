@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import { AuthProvider, useAuth } from '@/contexts/auth-context'
+import { useState, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useAuth } from '@/contexts/auth-context'
 import { BottomNavigation, type Section } from '@/components/bottom-navigation'
 import { HomeSection } from '@/components/sections/home-section'
 import { TestSection } from '@/components/sections/test-section'
@@ -12,24 +13,46 @@ import { LandingPage } from '@/components/landing-page'
 import { Spinner } from '@/components/ui/spinner'
 import Image from 'next/image'
 
+const VALID_SECTIONS: Section[] = ['inicio', 'teste', 'carreiras', 'comunidade', 'perfil']
+
+function LoadingShell() {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+      <Image
+        src="/images/logo-inova.png"
+        alt="INOVA"
+        width={376}
+        height={216}
+        preload
+        className="mb-6 h-[50px] w-[150px] object-contain"
+      />
+      <Spinner className="h-8 w-8 text-primary" />
+      <p className="mt-4 text-muted-foreground">Carregando...</p>
+    </div>
+  )
+}
+
 function AppContent() {
   const { user, profile, loading } = useAuth()
-  const [activeSection, setActiveSection] = useState<Section>('inicio')
+  // A aba ativa vive na URL (/?section=carreiras etc.): é lida na carga e
+  // regravada a cada troca de aba. Assim tanto o "Voltar" da página de uma
+  // profissão quanto o botão voltar do navegador/celular retornam para a aba
+  // em que a pessoa estava, e recarregar a página mantém a aba.
+  const searchParams = useSearchParams()
+  const sectionParam = searchParams.get('section') as Section | null
+  const initialSection: Section =
+    sectionParam && VALID_SECTIONS.includes(sectionParam) ? sectionParam : 'inicio'
+  const [activeSection, setActiveSection] = useState<Section>(initialSection)
+
+  const navigate = (section: Section) => {
+    setActiveSection(section)
+    // replaceState (e não push): trocar de aba continua sem criar entradas
+    // novas no histórico, como antes — só atualiza a URL da entrada atual.
+    window.history.replaceState(null, '', section === 'inicio' ? '/' : `/?section=${section}`)
+  }
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-        <Image
-          src="/images/logo-inova.png"
-          alt="INOVA"
-          width={150}
-          height={50}
-          className="mb-6"
-        />
-        <Spinner className="h-8 w-8 text-primary" />
-        <p className="mt-4 text-muted-foreground">Carregando...</p>
-      </div>
-    )
+    return <LoadingShell />
   }
 
   if (!user || !profile) {
@@ -39,17 +62,17 @@ function AppContent() {
   const renderSection = () => {
     switch (activeSection) {
       case 'inicio':
-        return <HomeSection onNavigate={setActiveSection} />
+        return <HomeSection onNavigate={navigate} />
       case 'teste':
-        return <TestSection onNavigate={setActiveSection} />
+        return <TestSection onNavigate={navigate} />
       case 'carreiras':
         return <CareersSection />
       case 'comunidade':
         return <CommunitySection />
       case 'perfil':
-        return <ProfileSection onNavigate={setActiveSection} />
+        return <ProfileSection onNavigate={navigate} />
       default:
-        return <HomeSection onNavigate={setActiveSection} />
+        return <HomeSection onNavigate={navigate} />
     }
   }
 
@@ -61,8 +84,9 @@ function AppContent() {
           <Image
             src="/images/logo-inova.png"
             alt="INOVA"
-            width={100}
-            height={32}
+            width={376}
+            height={216}
+            preload
             className="h-8 w-auto"
           />
         </div>
@@ -80,16 +104,19 @@ function AppContent() {
       {/* Navigation */}
       <BottomNavigation
         activeSection={activeSection}
-        onNavigate={setActiveSection}
+        onNavigate={navigate}
       />
     </div>
   )
 }
 
+// O AuthProvider fica em app/layout.tsx (não aqui), para não reiniciar o login
+// cada vez que esta página é montada de novo — por exemplo, ao voltar da página
+// de uma profissão.
 export default function Page() {
   return (
-    <AuthProvider>
+    <Suspense fallback={<LoadingShell />}>
       <AppContent />
-    </AuthProvider>
+    </Suspense>
   )
 }
