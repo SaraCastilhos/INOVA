@@ -55,8 +55,9 @@ export function LandingPage() {
           <Image
             src="/images/logo-inova.png"
             alt="INOVA"
-            width={120}
-            height={40}
+            width={376}
+            height={216}
+            preload
             className="h-10 w-auto"
           />
           <div className="flex items-center gap-3">
@@ -225,8 +226,8 @@ export function LandingPage() {
           <Image
             src="/images/logo-inova.png"
             alt="INOVA"
-            width={100}
-            height={32}
+            width={376}
+            height={216}
             className="h-8 w-auto"
           />
           <p className="text-sm text-muted-foreground text-center">

@@ -62,9 +62,10 @@ export default function LoginPage() {
             <Image
               src="/images/logo-inova.png"
               alt="INOVA"
-              width={180}
-              height={60}
-              className="mx-auto mb-4"
+              width={376}
+              height={216}
+              preload
+              className="mx-auto mb-4 h-[60px] w-[180px] object-contain"
             />
             <h1 className="text-2xl font-bold text-foreground">
               Bem-vindo de volta!
