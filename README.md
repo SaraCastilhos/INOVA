@@ -13,7 +13,7 @@ O objetivo é reduzir a indecisão e a ansiedade ligadas à escolha profissional
 - **Cadastro e autenticação** por e-mail/senha, com perfis Estudante, Profissional ou Ambos.
 - **Teste vocacional RIASEC** (modelo de Holland — 6 perfis: Realista, Investigativo, Artístico, Social, Empreendedor, Convencional): adaptação pt-BR do **O\*NET Mini Interest Profiler** (30 itens, escala de 5 pontos), com ranking dos três perfis dominantes, aviso de perfil pouco diferenciado e histórico de tentativas. Cada resultado registra a versão do questionário que o gerou.
 - **Guia de carreiras**:
-  - *Profissões* com código CBO, descrição, atividades, habilidades, formação exigida, regulamentação, código RIASEC e salário médio com faixa (1º–3º quartil) — cada ficha com fontes públicas e data de acesso. Busca textual, filtro por área de atuação e filtro por tipo RIASEC (liberado após fazer o teste).
+  - *Profissões* com código CBO, descrição, atividades, habilidades, formação exigida, regulamentação, código RIASEC e salário médio com faixa (1º–3º quartil) — cada ficha com fontes públicas e data de acesso. A lista mostra cards compactos; cada profissão tem uma página própria e pública em **/profissoes/[slug]** (pré-renderizada no build, sem exigir login). Busca textual, filtro por área de atuação e filtro por tipo RIASEC (liberado após fazer o teste); busca, filtros e rolagem são mantidos ao abrir uma profissão e voltar.
   - *Formas de ingresso* no ensino superior (ENEM, SISU, PROUNI, FIES, vestibular) e diretório de universidades do Vale do Paranhana/RS.
   - Página pública **/metodologia** explicando as fontes do guia e o funcionamento do teste.
 - **Comunidade**:
@@ -34,10 +34,12 @@ O objetivo é reduzir a indecisão e a ansiedade ligadas à escolha profissional
 ## Estrutura do projeto
 
 ```
-app/            rotas (App Router): landing, autenticação, termos/privacidade, metodologia
+app/            rotas (App Router): landing/app (a aba ativa fica em ?section=), autenticação,
+                termos/privacidade, metodologia e profissoes/[slug] (página de cada profissão)
 components/     seções da SPA (início, teste, carreiras, comunidade, perfil); ui/ guarda só
                 os componentes shadcn/ui em uso — gere novos com `npx shadcn add <nome>`
-contexts/       AuthProvider — sessão, perfil, testes e badges do usuário logado
+contexts/       AuthProvider — sessão, perfil, testes e badges do usuário logado; montado em
+                app/layout.tsx para não reiniciar o login ao navegar entre páginas
 data/           conteúdo curado e versionado: guia de profissões e instrumento do teste (JSON + schema)
 lib/            tipos, carregamento do conteúdo de data/, pontuação do teste, dados estáticos
                 (ingresso, universidades) e clientes Supabase
