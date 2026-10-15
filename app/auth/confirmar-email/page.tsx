@@ -25,9 +25,10 @@ export default function ConfirmarEmailPage() {
           <Image
             src="/images/logo-inova.png"
             alt="INOVA"
-            width={180}
-            height={60}
-            className="mx-auto"
+            width={376}
+            height={216}
+            preload
+            className="mx-auto h-[60px] w-[180px] object-contain"
           />
 
           {/* Icon */}

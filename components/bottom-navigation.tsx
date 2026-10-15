@@ -53,8 +53,9 @@ export function BottomNavigation({ activeSection, onNavigate }: BottomNavigation
           <Image
             src="/images/logo-inova.png"
             alt="INOVA"
-            width={120}
-            height={40}
+            width={376}
+            height={216}
+            preload
             className="h-10 w-auto"
           />
         </div>

@@ -31,8 +31,9 @@ export default function MetodologiaPage() {
         <Image
           src="/images/logo-inova.png"
           alt="INOVA"
-          width={140}
-          height={48}
+          width={376}
+          height={216}
+          preload
           className="h-10 w-auto"
         />
 
