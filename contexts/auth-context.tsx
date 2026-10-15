@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback, useRef, type ReactNode } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User, Session } from '@supabase/supabase-js'
 import type { Profile, TestResult, UserBadge, RIASECType } from '@/lib/types'
@@ -100,23 +100,66 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await loadUserData(user.id)
   }, [user, loadUserData])
 
+  // Usuário cujos dados já foram (ou estão sendo) carregados, e essa carga.
+  // initAuth() e o evento SIGNED_IN costumam chegar juntos ao abrir o site
+  // logado — os dois reaproveitam a mesma busca em vez de buscar duas vezes.
+  // Atualizações explícitas (refreshProfile, salvar teste etc.) continuam
+  // chamando loadUserData direto e sempre buscam de novo.
+  const loadedUserIdRef = useRef<string | null>(null)
+  const userDataLoadRef = useRef<Promise<void> | null>(null)
+
+  const ensureUserData = useCallback((userId: string) => {
+    if (loadedUserIdRef.current === userId && userDataLoadRef.current) {
+      return userDataLoadRef.current
+    }
+    loadedUserIdRef.current = userId
+    const load = loadUserData(userId).catch((error) => {
+      console.error('Error loading user data:', error)
+    })
+    userDataLoadRef.current = load
+    return load
+  }, [loadUserData])
+
+  const resetUserData = useCallback(() => {
+    loadedUserIdRef.current = null
+    userDataLoadRef.current = null
+    setProfile(null)
+    setTestResults([])
+    setBadges([])
+  }, [])
+
   useEffect(() => {
     const initAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
 
-      if (session?.user) {
-        setSession(session)
-        setUser(session.user)
-        await loadUserData(session.user.id)
+        if (session?.user) {
+          setSession(session)
+          setUser(session.user)
+          await ensureUserData(session.user.id)
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error)
+      } finally {
+        // Sempre sai da tela "Carregando...", mesmo se algo acima falhar.
+        setLoading(false)
       }
-
-      setLoading(false)
     }
 
     initAuth()
 
+    // IMPORTANTE: este callback NÃO pode fazer `await` de nenhuma chamada do
+    // Supabase (consultas ao banco, getSession etc.). A biblioteca de auth
+    // chama este callback segurando uma trava interna e espera ele terminar —
+    // ao abrir o site já logado, ela dispara SIGNED_IN ainda durante a
+    // inicialização. Qualquer consulta feita aqui dentro pede o token via
+    // getSession(), que espera essa mesma inicialização terminar: um espera o
+    // outro para sempre (deadlock) e a tela "Carregando..." nunca some.
+    // Por isso o trabalho que fala com o banco é adiado com setTimeout(…, 0),
+    // que roda depois que a biblioteca libera a trava (orientação oficial do
+    // Supabase para onAuthStateChange).
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         setSession(session)
         setUser(session?.user ?? null)
 
@@ -127,18 +170,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return
         }
 
-        if (session?.user) {
-          await loadUserData(session.user.id)
-        } else {
-          setProfile(null)
-          setTestResults([])
-          setBadges([])
-        }
+        setTimeout(() => {
+          if (!session?.user) {
+            resetUserData()
+            return
+          }
+
+          const userId = session.user.id
+          if (event === 'SIGNED_IN') {
+            // Mesmo usuário já carregado: é a própria abertura do site ou a
+            // biblioteca reconfirmando a sessão quando a aba do navegador
+            // volta a ficar visível — não há nada novo para buscar.
+            if (loadedUserIdRef.current === userId) return
+
+            // Login novo (ou troca de usuário): mostra "Carregando..." até
+            // perfil/testes/badges chegarem, em vez de piscar a página inicial.
+            setLoading(true)
+            ensureUserData(userId).finally(() => setLoading(false))
+            return
+          }
+
+          // USER_UPDATED e afins: mesmo usuário, dados podem ter mudado.
+          loadUserData(userId).catch((error) =>
+            console.error('Error loading user data:', error)
+          )
+        }, 0)
       }
     )
 
     return () => subscription.unsubscribe()
-  }, [supabase, loadUserData])
+  }, [supabase, loadUserData, ensureUserData, resetUserData])
 
   const signUp = async (email: string, password: string, metadata: SignUpMetadata) => {
     const { error } = await supabase.auth.signUp({
@@ -159,9 +220,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signOut = async () => {
     await supabase.auth.signOut()
-    setProfile(null)
-    setTestResults([])
-    setBadges([])
+    resetUserData()
   }
 
   const updateProfile = async (updates: Partial<Profile>) => {
