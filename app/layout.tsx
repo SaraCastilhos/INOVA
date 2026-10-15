@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from 'sonner'
+import { AuthProvider } from '@/contexts/auth-context'
 import './globals.css'
 
 const inter = Inter({ 
@@ -31,7 +32,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="bg-background">
       <body className={`${inter.variable} font-sans antialiased min-h-screen`}>
-        {children}
+        {/* No layout raiz (e não dentro de app/page.tsx) para o login inicializar
+            uma vez só: o layout não desmonta ao navegar entre / e
+            /profissoes/[slug], então voltar de uma profissão não recarrega o app. */}
+        <AuthProvider>{children}</AuthProvider>
         <Toaster richColors position="bottom-center" />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

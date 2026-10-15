@@ -1,13 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES, AREAS, guiaAtualizadoEm } from '@/lib/data'
-import { RIASEC_INFO, FORMACAO_LABELS, type RIASECType } from '@/lib/types'
+import { RIASEC_INFO, type RIASECType } from '@/lib/types'
+import { fmtBRL, fmtData } from '@/lib/format'
 import {
   Briefcase,
   GraduationCap,
@@ -17,32 +18,84 @@ import {
   Filter,
   X,
   Search,
-  Wrench,
-  Sparkles,
-  FileText,
+  ArrowRight,
   CalendarClock,
   Lock,
 } from 'lucide-react'
 
 type Tab = 'profissoes' | 'ingresso' | 'universidades'
 
-const fmtBRL = (n: number) =>
-  n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
+// Estado da aba Carreiras guardado na sessão do navegador (sessionStorage):
+// sobrevive à ida e volta da página de uma profissão e à troca de aba do menu,
+// e some ao fechar a aba do navegador. Valores salvos são validados ao ler —
+// um valor antigo/inválido volta ao padrão em vez de quebrar a tela.
+type GuiaState = { tab: Tab; tipo: RIASECType | 'todos'; area: string; busca: string }
+const VALID_TABS: Tab[] = ['profissoes', 'ingresso', 'universidades']
+const RIASEC_TYPES = Object.keys(RIASEC_INFO) as RIASECType[]
+const SCROLL_KEY = 'inova:guia:scroll'
 
-const fmtData = (iso: string) => {
-  const [y, m, d] = iso.split('-')
-  return d && m && y ? `${d}/${m}/${y}` : iso
+function readGuiaState(key: string): Partial<GuiaState> {
+  if (typeof window === 'undefined') return {}
+  try {
+    const raw = window.sessionStorage.getItem(key)
+    if (!raw) return {}
+    const s = JSON.parse(raw)
+    return {
+      tab: VALID_TABS.includes(s.tab) ? s.tab : undefined,
+      tipo: s.tipo === 'todos' || RIASEC_TYPES.includes(s.tipo) ? s.tipo : undefined,
+      area: s.area === 'todas' || (AREAS as string[]).includes(s.area) ? s.area : undefined,
+      busca: typeof s.busca === 'string' ? s.busca.slice(0, 200) : undefined,
+    }
+  } catch {
+    return {}
+  }
 }
 
 export function CareersSection() {
-  const { testResults } = useAuth()
-  const [activeTab, setActiveTab] = useState<Tab>('profissoes')
-  const [selectedFilter, setSelectedFilter] = useState<RIASECType | 'todos'>('todos')
-  const [areaFilter, setAreaFilter] = useState<string>('todas')
-  const [searchQuery, setSearchQuery] = useState('')
-
+  const { user, testResults } = useAuth()
   const lastTest = testResults?.[0]
   const jaFezTeste = Boolean(lastTest)
+
+  // Uma chave por usuário: outra conta logada na mesma aba não herda os filtros.
+  const storageKey = `inova:guia:${user?.id ?? 'anon'}`
+  const [saved] = useState(() => readGuiaState(storageKey))
+  const [activeTab, setActiveTab] = useState<Tab>(saved.tab ?? 'profissoes')
+  // Filtro RIASEC só vale para quem já fez o teste (RN04).
+  const [selectedFilter, setSelectedFilter] = useState<RIASECType | 'todos'>(
+    jaFezTeste ? saved.tipo ?? 'todos' : 'todos'
+  )
+  const [areaFilter, setAreaFilter] = useState<string>(saved.area ?? 'todas')
+  const [searchQuery, setSearchQuery] = useState(saved.busca ?? '')
+
+  useEffect(() => {
+    try {
+      const state: GuiaState = { tab: activeTab, tipo: selectedFilter, area: areaFilter, busca: searchQuery }
+      window.sessionStorage.setItem(storageKey, JSON.stringify(state))
+    } catch {
+      // sessionStorage indisponível (modo privado restrito etc.): só não lembra.
+    }
+  }, [storageKey, activeTab, selectedFilter, areaFilter, searchQuery])
+
+  // Ao voltar da página de uma profissão, retoma a rolagem de onde a pessoa
+  // clicou no card (a posição é guardada no clique, ver saveScroll).
+  useEffect(() => {
+    try {
+      const y = window.sessionStorage.getItem(SCROLL_KEY)
+      if (y === null) return
+      window.sessionStorage.removeItem(SCROLL_KEY)
+      requestAnimationFrame(() => window.scrollTo(0, Number(y) || 0))
+    } catch {
+      // idem acima
+    }
+  }, [])
+
+  const saveScroll = () => {
+    try {
+      window.sessionStorage.setItem(SCROLL_KEY, String(window.scrollY))
+    } catch {
+      // idem acima
+    }
+  }
   const userTopTypes: RIASECType[] = lastTest
     ? ([lastTest.primary_type, lastTest.secondary_type, lastTest.tertiary_type].filter(Boolean) as RIASECType[])
     : []
@@ -193,100 +246,44 @@ export function CareersSection() {
           </Card>
 
           {/* Professions List */}
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProfissoes.map((profissao) => (
-              <Card key={profissao.slug} className="card-hover">
-                <CardContent className="pt-6 space-y-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="font-semibold text-foreground">{profissao.nome}</h3>
-                      <p className="text-xs text-muted-foreground">
-                        CBO {profissao.cbo_code} · {profissao.area}
-                      </p>
+              <Link
+                key={profissao.slug}
+                href={`/profissoes/${profissao.slug}`}
+                onClick={saveScroll}
+                className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
+                <Card className="card-hover h-full">
+                  <CardContent className="pt-6 space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h3 className="font-semibold text-foreground">{profissao.nome}</h3>
+                        <p className="text-xs text-muted-foreground">{profissao.area}</p>
+                      </div>
+                      <div
+                        className="shrink-0 px-2 py-1 rounded-full text-xs font-bold text-white"
+                        style={{ backgroundColor: RIASEC_INFO[profissao.riasec_primary].cor }}
+                        title={`Perfil RIASEC: ${profissao.riasec_code}`}
+                      >
+                        {profissao.riasec_code}
+                      </div>
                     </div>
-                    <div
-                      className="shrink-0 px-2 py-1 rounded-full text-xs font-bold text-white"
-                      style={{ backgroundColor: RIASEC_INFO[profissao.riasec_primary].cor }}
-                      title={`Perfil RIASEC: ${profissao.riasec_code}`}
-                    >
-                      {profissao.riasec_code}
-                    </div>
-                  </div>
 
-                  <p className="text-sm text-muted-foreground">{profissao.descricao}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{profissao.descricao}</p>
 
-                  <div>
                     <p className="text-sm font-medium text-secondary">
                       {fmtBRL(profissao.salario.media)}
-                      <span className="text-xs text-muted-foreground font-normal">
-                        {' '}(média; faixa {fmtBRL(profissao.salario.p25)}–{fmtBRL(profissao.salario.p75)})
-                      </span>
+                      <span className="text-xs text-muted-foreground font-normal"> média</span>
                     </p>
-                    <p className="text-xs text-muted-foreground">
-                      Fonte: {profissao.salario.fonte} · ref. {profissao.salario.referencia}
-                    </p>
-                  </div>
 
-                  <div>
-                    <h4 className="flex items-center gap-1.5 text-xs font-semibold text-foreground mb-1">
-                      <Wrench className="h-3.5 w-3.5" /> Atividades típicas
-                    </h4>
-                    <ul className="space-y-1">
-                      {profissao.atividades.map((a) => (
-                        <li key={a} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <span className="text-primary">-</span>
-                          {a}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="flex items-center gap-1.5 text-xs font-semibold text-foreground mb-2">
-                      <Sparkles className="h-3.5 w-3.5" /> Habilidades
-                    </h4>
-                    <div className="flex flex-wrap gap-1">
-                      {profissao.habilidades.map((h) => (
-                        <span key={h} className="px-2 py-0.5 rounded-full text-xs bg-muted text-muted-foreground">
-                          {h}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <GraduationCap className="h-3.5 w-3.5" />
-                    {FORMACAO_LABELS[profissao.formacao_requerida]}
-                    {profissao.regulamentada && profissao.conselho && (
-                      <span>· registro no {profissao.conselho}</span>
-                    )}
-                  </div>
-
-                  <details className="text-xs">
-                    <summary className="flex items-center gap-1.5 cursor-pointer text-muted-foreground hover:text-foreground">
-                      <FileText className="h-3.5 w-3.5" /> Fontes ({profissao.fontes.length}) · atualizado em{' '}
-                      {fmtData(profissao.atualizado_em)}
-                    </summary>
-                    <ul className="mt-2 space-y-1">
-                      {profissao.fontes.map((f) => (
-                        <li key={f.url}>
-                          <a
-                            href={f.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-start gap-1 text-primary hover:underline"
-                          >
-                            <ExternalLink className="h-3 w-3 mt-0.5 shrink-0" />
-                            <span>
-                              {f.titulo} <span className="text-muted-foreground">(acesso em {fmtData(f.acesso_em)})</span>
-                            </span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </CardContent>
-              </Card>
+                    <span className="inline-flex items-center gap-1 text-sm text-primary">
+                      Ver detalhes
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
 
