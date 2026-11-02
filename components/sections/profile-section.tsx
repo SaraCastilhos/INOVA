@@ -7,6 +7,17 @@ import { useAuth } from '@/contexts/auth-context'
 import { createClient } from '@/lib/supabase/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 import type { Profile } from '@/lib/types'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
 import { isResultadoDeOutraVersao, maxPorTipoDoResultado } from '@/lib/instruments'
@@ -283,14 +294,34 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
       {/* Sign Out */}
       <Card className="border-destructive/20">
         <CardContent className="pt-6">
-          <Button
-            variant="outline"
-            className="w-full border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
-            onClick={handleSignOut}
-          >
-            <LogOut className="h-4 w-4 mr-2" />
-            Sair da conta
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-full border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Sair da conta
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Você vai sair da sua conta e precisará entrar de novo para acessar seu perfil.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  onClick={handleSignOut}
+                >
+                  Sair
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardContent>
       </Card>
     </div>
