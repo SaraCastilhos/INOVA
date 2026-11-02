@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { INSTRUMENTO, ITENS, maxPorTipo, pontuar, respostasParaVetor } from '@/lib/instruments'
+import { abrirGuiaNoTipo } from '@/components/sections/careers-section'
+import { INSTRUMENTO, INSTRUMENT_VERSION, ITENS, maxPorTipo, pontuar, respostasParaVetor } from '@/lib/instruments'
+import { sugerirProfissoes } from '@/lib/professions'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
 import { AlertTriangle, ChevronLeft, ChevronRight, CheckCircle, Target, ArrowRight, Loader2 } from 'lucide-react'
 import type { Section } from '@/components/bottom-navigation'
@@ -17,39 +19,112 @@ interface TestSectionProps {
 
 type TestPhase = 'intro' | 'questions' | 'result'
 
-export function TestSection({ onNavigate }: TestSectionProps) {
-  const { saveTestResult } = useAuth()
-  const [phase, setPhase] = useState<TestPhase>('intro')
-  const [currentQuestion, setCurrentQuestion] = useState(0)
-  // respostas: posicao do item -> valor escolhido (0..escala.max)
-  const [answers, setAnswers] = useState<Record<number, number>>({})
-  const [saving, setSaving] = useState(false)
-  const [topTypes, setTopTypes] = useState<RIASECType[]>([])
-  const [scores, setScores] = useState<Record<RIASECType, number>>({ R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 })
-  const [poucoDiferenciado, setPoucoDiferenciado] = useState(false)
+// Quantas profissões sugeridas aparecem por tipo no resultado.
+const SUGESTOES_POR_TIPO = 2
 
-  const handleAnswer = (posicao: number, valor: number) => {
-    setAnswers(prev => ({ ...prev, [posicao]: valor }))
+// Pausa entre marcar a resposta e passar para a próxima atividade.
+const AVANCO_MS = 350
+
+// Progresso do teste guardado na sessão do navegador (sessionStorage), como o
+// estado do guia: trocar de aba no meio das perguntas, ou abrir uma profissão
+// sugerida e voltar, não perde as respostas nem o resultado. Só vale para a
+// versão atual do instrumento e some ao fechar a aba do navegador. Valores
+// salvos são validados ao ler; o que for inválido é descartado.
+type TesteSalvo = { version: string; phase: TestPhase; atual: number; respostas: Record<number, number> }
+
+function readTesteSalvo(key: string): TesteSalvo | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const raw = window.sessionStorage.getItem(key)
+    if (!raw) return null
+    const s = JSON.parse(raw)
+    if (s.version !== INSTRUMENT_VERSION) return null
+
+    const respostas: Record<number, number> = {}
+    for (const item of ITENS) {
+      const v = s.respostas?.[item.posicao]
+      if (Number.isInteger(v) && v >= INSTRUMENTO.escala.min && v <= INSTRUMENTO.escala.max) {
+        respostas[item.posicao] = v
+      }
+    }
+    const completo = Object.keys(respostas).length === ITENS.length
+    const phase: TestPhase =
+      s.phase === 'result' && completo ? 'result' : s.phase === 'questions' ? 'questions' : 'intro'
+    const atual = Number.isInteger(s.atual) ? Math.min(Math.max(s.atual, 0), ITENS.length - 1) : 0
+    return { version: INSTRUMENT_VERSION, phase, atual, respostas }
+  } catch {
+    return null
+  }
+}
+
+export function TestSection({ onNavigate }: TestSectionProps) {
+  const { user, saveTestResult } = useAuth()
+  const storageKey = `inova:teste:${user?.id ?? 'anon'}`
+  const [saved] = useState(() => readTesteSalvo(storageKey))
+  const [phase, setPhase] = useState<TestPhase>(saved?.phase ?? 'intro')
+  const [currentQuestion, setCurrentQuestion] = useState(saved?.atual ?? 0)
+  // respostas: posicao do item -> valor escolhido (0..escala.max)
+  const [answers, setAnswers] = useState<Record<number, number>>(saved?.respostas ?? {})
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    try {
+      if (phase === 'intro') {
+        window.sessionStorage.removeItem(storageKey)
+      } else {
+        const state: TesteSalvo = { version: INSTRUMENT_VERSION, phase, atual: currentQuestion, respostas: answers }
+        window.sessionStorage.setItem(storageKey, JSON.stringify(state))
+      }
+    } catch {
+      // sessionStorage indisponível (modo privado restrito etc.): só não lembra.
+    }
+  }, [storageKey, phase, currentQuestion, answers])
+
+  // O resultado é sempre recalculado das respostas (que só ficam completas e
+  // gravadas no banco antes de a tela de resultado abrir).
+  const resultado = phase === 'result' ? pontuar(answers) : null
+
+  const abrirNoGuia = (tipo: RIASECType) => {
+    abrirGuiaNoTipo(user?.id, tipo)
+    onNavigate('carreiras')
   }
 
+  // Ao escolher uma resposta, o teste avança sozinho depois de uma pausa curta
+  // (para a pessoa ver a opção marcada). Qualquer navegação manual cancela o
+  // avanço pendente.
+  const avancoRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const cancelarAvanco = () => {
+    if (avancoRef.current) clearTimeout(avancoRef.current)
+    avancoRef.current = null
+  }
+  useEffect(() => cancelarAvanco, [])
+
+  // Sentido da última troca de pergunta, para a animação de entrada.
+  const [direcao, setDirecao] = useState<'next' | 'prev'>('next')
+
   const goToNext = () => {
-    if (currentQuestion < ITENS.length - 1) {
-      setCurrentQuestion(prev => prev + 1)
-    }
+    cancelarAvanco()
+    setDirecao('next')
+    setCurrentQuestion(prev => Math.min(prev + 1, ITENS.length - 1))
   }
 
   const goToPrev = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(prev => prev - 1)
+    cancelarAvanco()
+    setDirecao('prev')
+    setCurrentQuestion(prev => Math.max(prev - 1, 0))
+  }
+
+  const handleAnswer = (posicao: number, valor: number) => {
+    setAnswers(prev => ({ ...prev, [posicao]: valor }))
+    cancelarAvanco()
+    if (currentQuestion < ITENS.length - 1) {
+      avancoRef.current = setTimeout(goToNext, AVANCO_MS)
     }
   }
 
   const calculateResult = async () => {
     setSaving(true)
-    const resultado = pontuar(answers)
-    const answersArray = respostasParaVetor(answers)
-
-    const { error } = await saveTestResult(resultado.scores, answersArray)
+    const { error } = await saveTestResult(pontuar(answers).scores, respostasParaVetor(answers))
     setSaving(false)
 
     if (error) {
@@ -57,17 +132,12 @@ export function TestSection({ onNavigate }: TestSectionProps) {
       return
     }
 
-    setScores(resultado.scores)
-    setTopTypes(resultado.top3)
-    setPoucoDiferenciado(resultado.poucoDiferenciado)
     setPhase('result')
   }
 
   const startTest = () => {
     setAnswers({})
     setCurrentQuestion(0)
-    setTopTypes([])
-    setPoucoDiferenciado(false)
     setPhase('questions')
   }
 
@@ -158,11 +228,20 @@ export function TestSection({ onNavigate }: TestSectionProps) {
       <div className="space-y-6 section-enter max-w-2xl mx-auto">
         {/* Progress Bar */}
         <div className="space-y-2">
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>Pergunta {currentQuestion + 1} de {ITENS.length}</span>
-            <span>{Math.round(progress)}% concluído</span>
+          <div className="flex justify-between text-sm">
+            <span className="font-medium text-foreground">
+              Atividade {currentQuestion + 1} de {ITENS.length}
+            </span>
+            <span className="text-muted-foreground">{Math.round(progress)}% concluído</span>
           </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div
+            className="h-3 bg-muted rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(progress)}
+            aria-label="Progresso do teste"
+          >
             <div
               className="h-full bg-primary rounded-full progress-bar"
               style={{ width: `${progress}%` }}
@@ -170,13 +249,18 @@ export function TestSection({ onNavigate }: TestSectionProps) {
           </div>
         </div>
 
-        {/* Question Card */}
-        <Card>
+        {/* Question Card — a key reinicia a animação a cada troca de atividade */}
+        <Card key={currentQuestion} className={direcao === 'next' ? 'question-enter-next' : 'question-enter-prev'}>
           <CardContent className="pt-6">
-            <p className="text-sm text-muted-foreground mb-2 text-center">
-              {INSTRUMENTO.escala.instrucao}
-            </p>
-            <p className="text-lg font-medium text-foreground mb-6 text-center">
+            {/* A instrução completa só aparece na 1ª atividade; nas demais, a
+                própria pergunta "Você gostaria de…" faz esse papel. */}
+            {currentQuestion === 0 && (
+              <p className="text-sm text-muted-foreground mb-4 text-center">
+                {INSTRUMENTO.escala.instrucao}
+              </p>
+            )}
+            <p className="text-sm font-medium text-primary text-center mb-1">Você gostaria de…</p>
+            <p className="text-xl font-semibold text-foreground mb-6 text-center text-balance">
               {currentQ.texto}
             </p>
 
@@ -246,29 +330,14 @@ export function TestSection({ onNavigate }: TestSectionProps) {
             </Button>
           )}
         </div>
-
-        {/* Quick navigation dots */}
-        <div className="flex flex-wrap justify-center gap-1">
-          {ITENS.map((item, index) => (
-            <button
-              key={item.posicao}
-              onClick={() => setCurrentQuestion(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentQuestion
-                  ? 'bg-primary scale-125'
-                  : answers[item.posicao] !== undefined
-                  ? 'bg-primary/40'
-                  : 'bg-muted'
-              }`}
-              aria-label={`Ir para pergunta ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
     )
   }
 
-  if (phase === 'result') {
+  if (resultado) {
+    const { scores, top3: topTypes, poucoDiferenciado } = resultado
+    const sugestoes = sugerirProfissoes(topTypes)
+
     return (
       <div className="space-y-6 section-enter max-w-2xl mx-auto">
         <Card>
@@ -286,9 +355,9 @@ export function TestSection({ onNavigate }: TestSectionProps) {
               <div className="flex items-start gap-3 p-4 rounded-xl bg-muted border border-border">
                 <AlertTriangle className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-muted-foreground">
-                  Suas pontuações ficaram próximas umas das outras. Isso é comum e indica um
-                  perfil pouco diferenciado — nesse caso, leia os tipos abaixo como pistas, não
-                  como uma resposta fechada.
+                  Seus interesses estão bem distribuídos entre vários tipos. Isso é comum! Use
+                  os tipos abaixo como pontos de partida para explorar, não como uma resposta
+                  fechada.
                 </p>
               </div>
             )}
@@ -359,13 +428,65 @@ export function TestSection({ onNavigate }: TestSectionProps) {
                 ))}
             </div>
 
+            {/* Profissões sugeridas (RF03) */}
+            <div className="space-y-3">
+              <div>
+                <h3 className="font-semibold text-foreground">Profissões para explorar:</h3>
+                <p className="text-xs text-muted-foreground">
+                  Profissões do guia cujo tipo principal é um dos seus três tipos predominantes.
+                </p>
+              </div>
+              {sugestoes.map(({ tipo, profissoes }) => (
+                <div key={tipo} className="rounded-xl border border-border p-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs"
+                      style={{ backgroundColor: RIASEC_INFO[tipo].cor }}
+                    >
+                      {tipo}
+                    </div>
+                    <span className="text-sm font-medium text-foreground">{RIASEC_INFO[tipo].nome}</span>
+                  </div>
+                  {profissoes.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">Ainda não há profissões deste tipo no guia.</p>
+                  ) : (
+                    <>
+                      <ul className="space-y-1">
+                        {profissoes.slice(0, SUGESTOES_POR_TIPO).map((p) => (
+                          <li key={p.slug}>
+                            <Link
+                              href={`/profissoes/${p.slug}`}
+                              onClick={() => abrirGuiaNoTipo(user?.id, tipo)}
+                              className="flex items-center justify-between gap-3 rounded-lg px-2 py-1.5 text-sm text-foreground hover:bg-muted"
+                            >
+                              <span>{p.nome}</span>
+                              <span className="text-xs text-muted-foreground">{p.riasec_code}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                      {profissoes.length > SUGESTOES_POR_TIPO && (
+                        <button
+                          onClick={() => abrirNoGuia(tipo)}
+                          className="inline-flex items-center gap-1 px-2 text-sm text-primary hover:underline"
+                        >
+                          Ver as {profissoes.length} profissões do tipo {RIASEC_INFO[tipo].nome}
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
-                onClick={() => onNavigate('carreiras')}
+                onClick={() => abrirNoGuia(topTypes[0])}
               >
-                Ver Profissões Sugeridas
+                Explorar o Guia de Profissões
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button variant="outline" className="flex-1" onClick={startTest}>

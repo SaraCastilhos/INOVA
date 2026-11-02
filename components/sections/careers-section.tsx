@@ -51,13 +51,26 @@ function readGuiaState(key: string): Partial<GuiaState> {
   }
 }
 
+// Uma chave por usuário: outra conta logada na mesma aba não herda os filtros.
+const guiaKey = (userId: string | undefined) => `inova:guia:${userId ?? 'anon'}`
+
+/** Deixa o guia aberto na lista de profissões filtrada por um tipo RIASEC.
+ *  Usado pelo resultado do teste antes de levar a pessoa para o guia. */
+export function abrirGuiaNoTipo(userId: string | undefined, tipo: RIASECType) {
+  try {
+    const state: GuiaState = { tab: 'profissoes', tipo, area: 'todas', busca: '' }
+    window.sessionStorage.setItem(guiaKey(userId), JSON.stringify(state))
+  } catch {
+    // sessionStorage indisponível: o guia só abre sem o filtro.
+  }
+}
+
 export function CareersSection() {
   const { user, testResults } = useAuth()
   const lastTest = testResults?.[0]
   const jaFezTeste = Boolean(lastTest)
 
-  // Uma chave por usuário: outra conta logada na mesma aba não herda os filtros.
-  const storageKey = `inova:guia:${user?.id ?? 'anon'}`
+  const storageKey = guiaKey(user?.id)
   const [saved] = useState(() => readGuiaState(storageKey))
   const [activeTab, setActiveTab] = useState<Tab>(saved.tab ?? 'profissoes')
   // Filtro RIASEC só vale para quem já fez o teste (RN04).
