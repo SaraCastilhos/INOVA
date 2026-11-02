@@ -10,7 +10,7 @@ import { abrirGuiaNoTipo } from '@/components/sections/careers-section'
 import { INSTRUMENTO, INSTRUMENT_VERSION, ITENS, maxPorTipo, pontuar, respostasParaVetor } from '@/lib/instruments'
 import { sugerirProfissoes } from '@/lib/professions'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
-import { AlertTriangle, ChevronLeft, ChevronRight, CheckCircle, Target, ArrowRight, Loader2 } from 'lucide-react'
+import { AlertTriangle, ChevronLeft, ChevronRight, CheckCircle, ArrowRight, Loader2, ListChecks, Clock } from 'lucide-react'
 import type { Section } from '@/components/bottom-navigation'
 
 interface TestSectionProps {
@@ -148,75 +148,92 @@ export function TestSection({ onNavigate }: TestSectionProps) {
 
   if (phase === 'intro') {
     return (
-      <div className="space-y-6 section-enter max-w-2xl mx-auto">
+      // No computador o card fica no meio da altura da tela, e não colado no topo.
+      <div className="section-enter max-w-2xl mx-auto md:min-h-[calc(100vh-3rem)] md:flex md:flex-col md:justify-center">
         <Card>
-          <CardHeader className="text-center">
-            <div className="mx-auto p-4 rounded-full bg-primary/10 w-fit mb-4">
-              <Target className="h-12 w-12 text-primary" />
-            </div>
-            <CardTitle className="text-2xl text-foreground">Teste de Interesses RIASEC</CardTitle>
+          <CardHeader className="text-center gap-1 space-y-0 pb-2">
+            <CardTitle className="text-2xl text-foreground">Descubra seus interesses profissionais</CardTitle>
             <CardDescription className="text-base">
-              Baseado no modelo de John Holland (RIASEC), adaptado do O*NET Mini Interest Profiler
+              Um teste rápido para conhecer melhor o que você gosta de fazer.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {(Object.entries(RIASEC_INFO) as [RIASECType, typeof RIASEC_INFO[RIASECType]][]).map(([tipo, info]) => (
-                <div
-                  key={tipo}
-                  className="p-3 rounded-xl text-center"
-                  style={{ backgroundColor: `${info.cor}15` }}
-                >
-                  <div
-                    className="w-10 h-10 mx-auto rounded-full flex items-center justify-center text-white font-bold mb-2"
-                    style={{ backgroundColor: info.cor }}
-                  >
-                    {tipo}
-                  </div>
-                  <p className="text-sm font-medium text-foreground">{info.nome}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-muted rounded-xl p-4 space-y-2">
-              <h3 className="font-semibold text-foreground">Como funciona:</h3>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>- {ITENS.length} atividades de trabalho</li>
-                <li>- Para cada uma, diga o quanto gostaria de fazê-la (de &ldquo;{INSTRUMENTO.escala.opcoes[0].rotulo}&rdquo; a &ldquo;{INSTRUMENTO.escala.opcoes[INSTRUMENTO.escala.opcoes.length - 1].rotulo}&rdquo;)</li>
-                <li>- Tempo estimado: 5-10 minutos</li>
-                <li>- Resultado imediato com seu perfil</li>
-              </ul>
-            </div>
-
-            {INSTRUMENTO.status === 'rascunho' && (
-              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted border border-border">
-                <AlertTriangle className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-muted-foreground">
-                  Esta é uma versão em construção do questionário: a adaptação dos itens para o
-                  português ainda está em revisão por especialistas.{' '}
-                  <Link href="/metodologia#teste" className="text-primary hover:underline">
-                    Saiba como funciona
-                  </Link>
-                </p>
-              </div>
-            )}
-
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-accent/10 border border-accent/30">
-              <AlertTriangle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-foreground">
-                <strong>Aviso importante:</strong> este é um questionário de interesses para
-                autoconhecimento. Ele <strong>NÃO substitui</strong> a avaliação de um psicólogo
-                ou orientador profissional habilitado (CFP).
+          <CardContent className="space-y-8">
+            <div className="space-y-3">
+              <p className="text-sm text-center text-foreground">
+                Você vai descobrir quais destes tipos combinam mais com você:
               </p>
+              {/* 3 por linha no celular: em 6 colunas "Investigativo" não cabe e quebra no meio. */}
+              <div className="grid grid-cols-3 gap-y-3 gap-x-2 sm:grid-cols-6">
+                {(Object.entries(RIASEC_INFO) as [RIASECType, typeof RIASEC_INFO[RIASECType]][]).map(([tipo, info]) => (
+                  <div key={tipo} className="flex flex-col items-center gap-1 min-w-0">
+                    <div
+                      className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm font-bold"
+                      style={{ backgroundColor: info.cor }}
+                    >
+                      {tipo}
+                    </div>
+                    <span className="text-xs text-muted-foreground text-center leading-tight">
+                      {info.nome}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <details className="group rounded-lg text-sm pt-4">
+                <summary className="flex items-center gap-1 cursor-pointer select-none text-primary hover:underline list-none [&::-webkit-details-marker]:hidden">
+                  <ChevronRight className="h-4 w-4 transition-transform group-open:rotate-90" />
+                  O que significa cada tipo?
+                </summary>
+                <ul className="mt-3 space-y-2">
+                  {(Object.entries(RIASEC_INFO) as [RIASECType, typeof RIASEC_INFO[RIASECType]][]).map(([tipo, info]) => (
+                    <li key={tipo} className="flex items-start gap-2">
+                      <span
+                        className="shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-white text-xs font-bold"
+                        style={{ backgroundColor: info.cor }}
+                      >
+                        {tipo}
+                      </span>
+                      <span className="text-muted-foreground">
+                        <strong className="text-foreground font-medium">{info.nome}:</strong> {info.descricao}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
             </div>
+
+            <ul className="space-y-2 text-sm text-foreground">
+              <li className="flex items-center gap-3">
+                <ListChecks className="h-5 w-5 text-primary shrink-0" />
+                {ITENS.length} atividades de trabalho: diga o quanto gostaria de fazer cada uma
+              </li>
+              <li className="flex items-center gap-3">
+                <Clock className="h-5 w-5 text-primary shrink-0" />
+                Cerca de 5 minutos
+              </li>
+              <li className="flex items-center gap-3">
+                <CheckCircle className="h-5 w-5 text-primary shrink-0" />
+                Resultado na hora, com profissões para explorar
+              </li>
+            </ul>
 
             <Button
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6"
               onClick={startTest}
             >
-              Iniciar Teste
+              Começar o teste
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
+
+            <div className="flex items-start gap-3 p-3 rounded-xl bg-muted">
+              <AlertTriangle className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-muted-foreground">
+                Este teste é para autoconhecimento e <strong>não substitui</strong> um psicólogo ou
+                orientador profissional.{' '}
+                <Link href="/metodologia#teste" className="text-primary hover:underline">
+                  Saiba como funciona
+                </Link>
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>
