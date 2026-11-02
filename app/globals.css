@@ -143,6 +143,45 @@
   transition: width 0.3s ease;
 }
 
+/* Troca de pergunta no teste: entra pela direita ao avançar, pela esquerda ao voltar */
+.question-enter-next {
+  animation: questionInNext 0.25s ease-out;
+}
+
+.question-enter-prev {
+  animation: questionInPrev 0.25s ease-out;
+}
+
+@keyframes questionInNext {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes questionInPrev {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-enter,
+  .question-enter-next,
+  .question-enter-prev {
+    animation: none;
+  }
+}
+
 /* Card hover effects */
 .card-hover {
   transition: transform 0.2s ease, box-shadow 0.2s ease;

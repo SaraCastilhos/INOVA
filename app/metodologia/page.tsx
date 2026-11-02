@@ -166,9 +166,9 @@ export default function MetodologiaPage() {
               versões diferentes não são comparados entre si.
             </li>
             <li>
-              Quando as pontuações ficam muito próximas, o resultado avisa que o
-              perfil é pouco diferenciado e deve ser lido como pista, não como
-              resposta fechada.
+              Quando as pontuações ficam muito próximas, o resultado avisa que os
+              interesses estão distribuídos entre vários tipos e que os tipos devem
+              ser lidos como pontos de partida, não como resposta fechada.
             </li>
             <li>
               É um questionário de interesses para autoconhecimento. Não mede
