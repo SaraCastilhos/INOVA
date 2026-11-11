@@ -4,6 +4,7 @@ import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
+import { PROFISSOES } from '@/lib/data'
 import { Target, Briefcase, ArrowRight, Sparkles, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
 import type { Section } from '@/components/bottom-navigation'
@@ -137,11 +138,11 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
               <p className="text-xs text-muted-foreground">Testes feitos</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-secondary">12</p>
+              <p className="text-2xl font-bold text-secondary">{PROFISSOES.length}</p>
               <p className="text-xs text-muted-foreground">Profissões</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-accent">6</p>
+              <p className="text-2xl font-bold text-accent">{Object.keys(RIASEC_INFO).length}</p>
               <p className="text-xs text-muted-foreground">Tipos RIASEC</p>
             </div>
           </div>
