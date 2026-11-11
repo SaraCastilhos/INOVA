@@ -48,7 +48,7 @@ export default function PrivacidadePage() {
             <li>Dados de cadastro: nome, e-mail, senha (armazenada com hash) e, opcionalmente, data de nascimento.</li>
             <li>Dados de uso: respostas e resultados do teste vocacional RIASEC.</li>
             <li>Conteúdo publicado por você: depoimentos e mensagens do fórum.</li>
-            <li>Registros de acesso anônimos, usados apenas para fins estatísticos, sem identificação individual.</li>
+            <li>Métricas de acesso anônimas e agregadas (Vercel Analytics), usadas apenas para fins estatísticos, sem identificação individual.</li>
           </ul>
 
           <h2>2. Finalidade do tratamento</h2>
@@ -68,23 +68,27 @@ export default function PrivacidadePage() {
           <h2>4. Compartilhamento</h2>
           <p>
             Os dados não são vendidos ou compartilhados com terceiros para fins
-            comerciais. O nome de exibição e depoimentos aprovados ficam visíveis
-            publicamente dentro da plataforma, conforme a natureza da comunidade.
+            comerciais. O nome de exibição, os depoimentos e as mensagens do fórum
+            ficam visíveis publicamente dentro da plataforma, conforme a natureza
+            da comunidade.
           </p>
 
           <h2>5. Exclusão e anonimização</h2>
           <p>
-            Ao excluir sua conta, seus dados pessoais (nome, e-mail, data de
-            nascimento) são removidos. Publicações já existentes no fórum têm o
-            autor substituído por "Usuário removido", preservando o histórico da
-            discussão sem manter vínculo com sua identidade.
+            Para excluir sua conta, envie um e-mail para <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>{' '}
+            a partir do endereço cadastrado, para confirmarmos que o pedido é seu.
+            Ao excluir a conta, seus dados pessoais (nome, e-mail, data de
+            nascimento, resultados do teste) e as publicações feitas com ela
+            (depoimentos, tópicos, respostas e comentários) são apagados e não
+            podem ser recuperados.
           </p>
 
           <h2>6. Seus direitos</h2>
           <p>
             Conforme a LGPD, você pode solicitar a qualquer momento: confirmação
             do tratamento, acesso aos dados, correção, anonimização ou exclusão,
-            e revogação do consentimento.
+            e revogação do consentimento. Para isso, escreva para o e-mail de
+            contato indicado abaixo.
           </p>
 
           <h2>7. Segurança</h2>
@@ -93,10 +97,18 @@ export default function PrivacidadePage() {
             acesso por linha (Row Level Security) no banco de dados.
           </p>
 
-          <h2>8. Contato</h2>
+          <h2>8. Crianças e adolescentes</h2>
+          <p>
+            O INOVA é voltado a pessoas com 14 anos ou mais. Usuários menores de 18
+            anos devem usar a plataforma com a ciência dos pais ou responsáveis, que
+            também podem solicitar a exclusão da conta e dos dados pelo e-mail de
+            contato.
+          </p>
+
+          <h2>9. Contato</h2>
           <p>
             Solicitações relacionadas aos seus dados pessoais podem ser enviadas
-            para a equipe responsável pelo INOVA.
+            para <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>.
           </p>
         </div>
       </main>

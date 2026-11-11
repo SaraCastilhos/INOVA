@@ -54,16 +54,17 @@ export default function TermosPage() {
           <h2>2. Cadastro e conta</h2>
           <ul>
             <li>O cadastro exige nome, e-mail, senha e, opcionalmente, data de nascimento.</li>
+            <li>O INOVA é voltado a pessoas com 14 anos ou mais. Se você tem menos de 18 anos, use a plataforma com a ciência dos seus pais ou responsáveis.</li>
             <li>Você é responsável por manter a confidencialidade da sua senha.</li>
-            <li>É permitido alternar entre os perfis Estudante e Profissional, com limite de troca a cada 30 dias.</li>
           </ul>
 
           <h2>3. Conteúdo enviado pelo usuário</h2>
           <p>
-            Depoimentos e mensagens no fórum passam por moderação antes de serem
-            publicados publicamente. Não é permitido conteúdo ofensivo,
-            discriminatório ou que viole direitos de terceiros. Conteúdo em
-            desacordo com estes termos pode ser removido.
+            Depoimentos e mensagens no fórum são publicados na hora, passam por um
+            filtro automático de termos ofensivos e spam e podem ser denunciados por
+            outros usuários. Não é permitido conteúdo ofensivo, discriminatório ou
+            que viole direitos de terceiros. Conteúdo em desacordo com estes termos
+            pode ser removido pela equipe a qualquer momento.
           </p>
 
           <h2>4. Especialistas verificados</h2>
@@ -75,9 +76,11 @@ export default function TermosPage() {
 
           <h2>5. Exclusão de conta</h2>
           <p>
-            Você pode solicitar a exclusão da sua conta a qualquer momento. Dados
-            pessoais são removidos; publicações já feitas no fórum permanecem
-            atribuídas a "Usuário removido", conforme detalhado na{' '}
+            Você pode solicitar a exclusão da sua conta a qualquer momento,
+            enviando um e-mail para <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>{' '}
+            a partir do endereço cadastrado. Seus dados pessoais e as publicações
+            feitas com a conta (depoimentos, tópicos, respostas e comentários) são
+            apagados. Mais detalhes na{' '}
             <Link href="/privacidade" className="text-primary hover:underline">
               Política de Privacidade
             </Link>
@@ -85,7 +88,9 @@ export default function TermosPage() {
           </p>
 
           <h2>6. Contato</h2>
-          <p>Dúvidas sobre estes termos podem ser enviadas para a equipe do INOVA.</p>
+          <p>
+            Dúvidas sobre estes termos podem ser enviadas para <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>.
+          </p>
         </div>
       </main>
     </div>
