@@ -223,12 +223,6 @@ export interface Universidade {
   link: string
 }
 
-export interface RIASECQuestion {
-  id: number
-  tipo: RIASECType
-  texto: string
-}
-
 // ---- Instrumento de avaliação (teste vocacional) ----
 // Conteúdo curado e versionado em data/instruments/. O formato é garantido por
 // scripts/validate-instruments.mjs e documentado em

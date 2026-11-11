@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES, AREAS, guiaAtualizadoEm } from '@/lib/data'
+import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES, AREAS, guiaAtualizadoEm } from '@/lib/guia'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
 import { fmtBRL, fmtData } from '@/lib/format'
 import {

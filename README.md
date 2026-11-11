@@ -41,11 +41,11 @@ components/     seções da SPA (início, teste, carreiras, comunidade, perfil);
 contexts/       AuthProvider — sessão, perfil, testes e badges do usuário logado; montado em
                 app/layout.tsx para não reiniciar o login ao navegar entre páginas
 data/           conteúdo curado e versionado: guia de profissões e instrumento do teste (JSON + schema)
-lib/            tipos, carregamento do conteúdo de data/, pontuação do teste, dados estáticos
-                (ingresso, universidades) e clientes Supabase
+lib/            tipos, carregamento do conteúdo de data/ (professions.ts, instruments.ts), guia.ts
+                (ponte para o guia: profissões, formas de ingresso e universidades) e clientes Supabase
 scripts/        validadores do conteúdo de data/
-banco/          migrações numeradas (histórico) e consultas de apoio ao admin
-supabase-schema.sql  schema completo e atual do banco
+banco/          schema.sql (estado atual completo do banco), migracoes/ (histórico numerado)
+                e admin-helpers.sql (consultas de apoio à moderação)
 ```
 
 ## Como rodar localmente
@@ -58,7 +58,7 @@ Requer Node.js 20+ e um projeto Supabase.
 
 ## Banco de dados
 
-- **`supabase-schema.sql`** (na raiz) é a fonte da verdade: o estado atual completo do banco. Numa **instalação nova**, basta rodá-lo no SQL Editor do Supabase — ele já consolida todas as migrações.
+- **`banco/schema.sql`** é a fonte da verdade: o estado atual completo do banco. Numa **instalação nova**, basta rodá-lo no SQL Editor do Supabase — ele já consolida todas as migrações.
 - **`banco/migracoes/`** guarda o histórico: cada mudança feita no banco de produção, numerada (`NNN-*.sql`), com o motivo explicado no cabeçalho. Num **banco existente**, aplique em ordem as que ainda não rodaram (todas são idempotentes). Toda mudança nova vira uma migração aqui **e** é consolidada no schema.
 - `banco/admin-helpers.sql` não é migração: são consultas prontas para moderação manual (aprovar especialistas, ler denúncias, manter a lista de termos bloqueados), já que ainda não há painel administrativo.
 
