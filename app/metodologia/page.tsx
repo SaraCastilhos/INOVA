@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft } from 'lucide-react'
-import { guiaAtualizadoEm, PROFISSOES } from '@/lib/data'
+import { guiaAtualizadoEm, PROFISSOES } from '@/lib/guia'
 import { INSTRUMENTO, ITENS } from '@/lib/instruments'
 
 export const metadata = {

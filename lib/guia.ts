@@ -1,51 +1,9 @@
-import type { FormaIngresso, Universidade, RIASECQuestion } from './types'
+import type { FormaIngresso, Universidade } from './types'
 
-// O guia de profissões vive em data/professions.json (conteúdo curado,
-// versionado). Reexportado aqui para manter os imports existentes estáveis.
+// Dados do guia de carreiras. As profissões vivem em data/professions.json
+// (conteúdo curado e versionado) e são reexportadas daqui; formas de ingresso
+// e universidades ficam neste arquivo.
 export { PROFISSOES, AREAS, guiaAtualizadoEm } from './professions'
-
-// LEGADO — não é mais usado pelo app. O teste vocacional passou a usar o
-// instrumento versionado em data/instruments/ (adaptação do O*NET Mini-IP), via
-// lib/instruments.ts. Este array de 24 itens (escala 1–5) é o questionário
-// caseiro que gerou os resultados marcados como 'riasec-legacy-24' no banco
-// (migração 015). Mantido só como referência de proveniência desses resultados.
-export const RIASEC_QUESTIONS: RIASECQuestion[] = [
-  // Realista (R)
-  { id: 1, tipo: 'R', texto: 'Gosto de trabalhar com ferramentas e equipamentos manuais.' },
-  { id: 2, tipo: 'R', texto: 'Prefiro atividades que envolvam construir ou consertar coisas.' },
-  { id: 3, tipo: 'R', texto: 'Me sinto bem trabalhando ao ar livre ou em ambientes práticos.' },
-  { id: 4, tipo: 'R', texto: 'Gosto de usar as mãos para criar ou reparar objetos.' },
-  
-  // Investigativo (I)
-  { id: 5, tipo: 'I', texto: 'Adoro resolver problemas complexos e fazer descobertas.' },
-  { id: 6, tipo: 'I', texto: 'Gosto de pesquisar e analisar dados.' },
-  { id: 7, tipo: 'I', texto: 'Tenho curiosidade por entender como as coisas funcionam.' },
-  { id: 8, tipo: 'I', texto: 'Prefiro trabalhar com ideias e teorias do que com pessoas.' },
-  
-  // Artístico (A)
-  { id: 9, tipo: 'A', texto: 'Tenho facilidade para me expressar através da arte, música ou escrita.' },
-  { id: 10, tipo: 'A', texto: 'Valorizo a originalidade e a criatividade no trabalho.' },
-  { id: 11, tipo: 'A', texto: 'Gosto de ambientes de trabalho não convencionais.' },
-  { id: 12, tipo: 'A', texto: 'Me sinto inspirado por atividades que permitem inovação.' },
-  
-  // Social (S)
-  { id: 13, tipo: 'S', texto: 'Sinto prazer em ajudar pessoas a resolverem seus problemas.' },
-  { id: 14, tipo: 'S', texto: 'Gosto de ensinar ou orientar outras pessoas.' },
-  { id: 15, tipo: 'S', texto: 'Tenho facilidade em me comunicar e trabalhar em equipe.' },
-  { id: 16, tipo: 'S', texto: 'Me preocupo com o bem-estar das pessoas ao meu redor.' },
-  
-  // Empreendedor (E)
-  { id: 17, tipo: 'E', texto: 'Gosto de liderar equipes e convencer pessoas.' },
-  { id: 18, tipo: 'E', texto: 'Tenho interesse em negócios e em alcançar metas.' },
-  { id: 19, tipo: 'E', texto: 'Me sinto motivado por desafios competitivos.' },
-  { id: 20, tipo: 'E', texto: 'Gosto de tomar decisões e assumir riscos calculados.' },
-  
-  // Convencional (C)
-  { id: 21, tipo: 'C', texto: 'Sou organizado e gosto de seguir procedimentos claros.' },
-  { id: 22, tipo: 'C', texto: 'Prefiro trabalhos com instruções detalhadas e rotinas.' },
-  { id: 23, tipo: 'C', texto: 'Tenho habilidade para trabalhar com números e dados.' },
-  { id: 24, tipo: 'C', texto: 'Me sinto confortável em ambientes estruturados.' },
-]
 
 export const FORMAS_INGRESSO: FormaIngresso[] = [
   {

@@ -11,7 +11,7 @@ import {
   GraduationCap,
   ExternalLink,
 } from 'lucide-react'
-import { PROFISSOES } from '@/lib/data'
+import { PROFISSOES } from '@/lib/guia'
 import { RIASEC_INFO, FORMACAO_LABELS } from '@/lib/types'
 import { fmtBRL, fmtData } from '@/lib/format'
 
