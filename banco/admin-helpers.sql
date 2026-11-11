@@ -105,3 +105,30 @@ where email = '<email-da-conta>';
 -- ("Anyone can view forum topics" já é policy aberta). Se um tópico
 -- criado pelo app não estiver aparecendo, o problema não é moderação;
 -- vale conferir se a conta usada pra criar está realmente logada.
+
+-- ------------------------------------------------
+-- 5) Excluir uma conta a pedido (LGPD)
+-- ------------------------------------------------
+-- O pedido chega por e-mail (contat3.inova@gmail.com), enviado do endereço
+-- cadastrado. IRREVERSÍVEL: apagar o usuário remove o perfil e, em cascata
+-- (todas as FKs são "on delete cascade"), resultados do teste, badges,
+-- depoimentos, curtidas, comentários, tópicos, respostas e denúncias feitas
+-- pela conta. Não existe "Usuário removido": as publicações somem junto.
+--
+-- Passo 1 — conferir quem é e o que será apagado (troque o e-mail)
+select p.id, p.email, p.display_name,
+  (select count(*) from public.test_results        where user_id = p.id) as testes,
+  (select count(*) from public.experiences         where user_id = p.id) as depoimentos,
+  (select count(*) from public.experience_comments where user_id = p.id) as comentarios,
+  (select count(*) from public.forum_topics        where user_id = p.id) as topicos,
+  (select count(*) from public.forum_replies       where user_id = p.id) as respostas
+from public.profiles p
+where p.email = '<email-da-conta>';
+
+-- Passo 2 — apagar a conta (use o id do passo 1). Se preferir, faça pelo
+-- painel: Authentication > Users > ... > Delete user (mesmo efeito).
+delete from auth.users where id = '<id-da-conta>';
+
+-- Passo 3 — a foto de perfil NÃO é apagada junto (fica no Storage). Apague pelo
+-- painel: Storage > avatars > pasta com o id da conta. Evite "delete from
+-- storage.objects" por SQL: remove o registro mas pode deixar o arquivo.
