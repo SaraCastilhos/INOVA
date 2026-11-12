@@ -105,3 +105,27 @@ Para gerar ou atualizar:
    `cbo_ocupacoes` ficar igual à lista do app — o banco recusa código que não
    esteja nela.
 
+
+## Onde estudar (`cursos.json`)
+
+Alimenta a seção "Onde estudar" da página de cada profissão. Tem duas listas:
+
+- `instituicoes`: as instituições pesquisadas, com cidade, região
+  (`paranhana`, `vizinhas` ou `porto-alegre`), a página onde a lista de cursos
+  foi lida (`fonte`) e a data (`acesso_em`).
+- `cursos`: o catálogo de cursos (`graduacao`, `tecnologo` ou `tecnico`), cada um
+  com as instituições que o oferecem **presencialmente** e o link da página do
+  curso naquela instituição. Curso sem nenhuma oferta encontrada fica com
+  `ofertas: []` e aparece na ficha como "não encontrado nas instituições
+  pesquisadas".
+
+Cada ficha de `professions.json` tem `cursos` (lista de ids do catálogo; vazia
+quando não há curso a indicar) e, se precisar, `cursos_nota` (uma observação
+curta sobre a formação). Para profissões de nível fundamental ou médio, a tela
+apresenta os cursos como "podem ajudar", não como exigência. O validador recusa
+id de curso inexistente e instituição desconhecida.
+
+Ao atualizar: confira a lista de cursos no site de cada instituição, só
+presencial (cursos de portal "online"/EaD não entram — a PUCRS, por exemplo,
+redireciona alguns cursos para online.pucrs.br), e troque `acesso_em`. Atenção:
+a "Escola Técnica Estadual Parobé" fica em Porto Alegre, não em Parobé.

@@ -150,6 +150,56 @@ function validateFicha(p, slugsSeen, cbosSeen) {
   if (!isDate(p.atualizado_em)) at('atualizado_em precisa ser AAAA-MM-DD')
   if (!isStr(p.revisado_por, 2)) at('revisado_por ausente')
 
+  // "Onde estudar": ids do catálogo data/cursos.json (lista vazia = não há
+  // curso específico a indicar).
+  if (!Array.isArray(p.cursos)) {
+    at('cursos precisa ser uma lista (pode ser vazia)')
+  } else {
+    for (const id of p.cursos) {
+      if (!cursoIds.has(id)) at(`cursos: "${id}" não existe em data/cursos.json`)
+    }
+    if (new Set(p.cursos).size !== p.cursos.length) at('cursos: há item repetido na lista')
+  }
+  if (p.cursos_nota !== undefined && !isStr(p.cursos_nota, 10)) {
+    at('cursos_nota, quando existe, precisa ser um texto')
+  }
+
+  return e
+}
+
+// Catálogo de "onde estudar" (data/cursos.json): instituições e cursos com as
+// páginas de curso de cada instituição.
+const NIVEIS = ['graduacao', 'tecnologo', 'tecnico']
+const REGIOES = ['paranhana', 'vizinhas', 'porto-alegre']
+let cursoIds = new Set()
+
+function validateCatalogo(cat) {
+  const e = []
+  const instIds = new Set()
+  for (const i of cat.instituicoes ?? []) {
+    const r = `instituição ${i?.id ?? '?'}`
+    if (!isStr(i.id) || instIds.has(i.id)) e.push(`${r}: id ausente ou repetido`)
+    instIds.add(i.id)
+    if (!isStr(i.nome) || !isStr(i.sigla) || !isStr(i.cidade)) e.push(`${r}: nome, sigla e cidade são obrigatórios`)
+    if (!REGIOES.includes(i.regiao)) e.push(`${r}: regiao inválida`)
+    if (!isUrl(i.fonte)) e.push(`${r}: fonte precisa ser URL`)
+    if (!isDate(i.acesso_em)) e.push(`${r}: acesso_em precisa ser AAAA-MM-DD`)
+  }
+  for (const c of cat.cursos ?? []) {
+    const r = `curso ${c?.id ?? '?'}`
+    if (!isStr(c.id) || cursoIds.has(c.id)) e.push(`${r}: id ausente ou repetido`)
+    cursoIds.add(c.id)
+    if (!isStr(c.nome)) e.push(`${r}: nome ausente`)
+    if (!NIVEIS.includes(c.nivel)) e.push(`${r}: nivel inválido`)
+    if (!Array.isArray(c.ofertas)) { e.push(`${r}: ofertas precisa ser lista`); continue }
+    const vistas = new Set()
+    for (const o of c.ofertas) {
+      if (!instIds.has(o.instituicao)) e.push(`${r}: instituição desconhecida "${o.instituicao}"`)
+      if (vistas.has(o.instituicao)) e.push(`${r}: instituição repetida "${o.instituicao}"`)
+      vistas.add(o.instituicao)
+      if (!isUrl(o.url)) e.push(`${r}: url inválida em ${o.instituicao}`)
+    }
+  }
   return e
 }
 
@@ -172,6 +222,19 @@ async function main() {
 
   if (!Array.isArray(data)) {
     console.error('✖ o arquivo precisa conter um array de fichas')
+    process.exit(1)
+  }
+
+  try {
+    const cat = JSON.parse(await readFile(path.join(ROOT, 'data', 'cursos.json'), 'utf8'))
+    const errosCat = validateCatalogo(cat)
+    if (errosCat.length) {
+      console.error('\n✖ data/cursos.json')
+      errosCat.forEach((msg) => console.error(`    - ${msg}`))
+      process.exit(1)
+    }
+  } catch (err) {
+    console.error(`✖ não foi possível ler data/cursos.json: ${err.message}`)
     process.exit(1)
   }
 

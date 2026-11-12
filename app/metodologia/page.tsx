@@ -101,7 +101,32 @@ export default function MetodologiaPage() {
               profissão é regulamentada, o site do conselho profissional
               correspondente (CREA, CRP, CRM, CRC, OAB, CAU e outros).
             </li>
+            <li>
+              <strong>Profissões parecidas:</strong> calculadas a partir da área e do
+              código RIASEC das próprias fichas (mesma área ou mesmo tipo principal, e
+              pelo menos uma letra do código em comum). É uma aproximação, não uma
+              recomendação.
+            </li>
           </ul>
+
+          <h2 id="onde-estudar">Onde estudar</h2>
+          <p>
+            Cada ficha indica o curso que leva à profissão, de acordo com a formação
+            exigida. Quando a profissão não exige curso técnico nem superior, os cursos
+            listados são apenas os que podem ajudar. As instituições são as do Vale do
+            Paranhana (FACCAT, IFRS Rolante e CIMOL), do Vale do Sinos (Feevale,
+            Unisinos, Liberato e IFSul Sapiranga) e de Porto Alegre (UFRGS, UFCSPA,
+            PUCRS, IFRS Porto Alegre e Escola Técnica Estadual Parobé). A oferta de cada
+            curso foi conferida na lista de cursos do site de cada instituição, ou da
+            Secretaria da Educação do RS no caso das escolas estaduais, e o link leva à
+            página do curso. Só entram cursos presenciais que a instituição lista como
+            oferecidos; cursos a distância podem ser procurados no{' '}
+            <a href="https://emec.mec.gov.br/" target="_blank" rel="noopener noreferrer">
+              e-MEC
+            </a>
+            , o cadastro oficial de cursos superiores do MEC. A oferta muda a cada
+            semestre: confirme na instituição antes de se inscrever.
+          </p>
 
           <h2>Como uma profissão é publicada</h2>
           <p>
