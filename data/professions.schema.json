@@ -18,6 +18,7 @@
         "formacao_requerida",
         "regulamentada",
         "conselho",
+        "cursos",
         "riasec_code",
         "riasec_primary",
         "salario",
@@ -80,6 +81,16 @@
         "conselho": {
           "type": ["string", "null"],
           "description": "Sigla do conselho (ex.: CREA, CRP). null quando não regulamentada."
+        },
+        "cursos": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true,
+          "description": "Ids de data/cursos.json com os cursos que levam à profissão (ou que ajudam, se a formação exigida é fundamental/médio). Lista vazia = sem curso específico."
+        },
+        "cursos_nota": {
+          "type": "string",
+          "description": "Observação opcional sobre a formação, exibida em \"Onde estudar\"."
         },
         "riasec_code": {
           "type": "string",

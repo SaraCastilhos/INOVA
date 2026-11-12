@@ -231,6 +231,8 @@ export interface Profissao {
   formacao_requerida: FormacaoRequerida
   regulamentada: boolean
   conselho: string | null
+  cursos: string[] // ids de data/cursos.json ("Onde estudar"); vazia = sem curso específico
+  cursos_nota?: string
   riasec_code: string // 1 a 3 letras RIASEC, ex.: "IC" (fonte: O*NET)
   riasec_primary: RIASECType // = riasec_code[0]; mantém o filtro atual
   salario: SalarioInfo

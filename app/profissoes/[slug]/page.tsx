@@ -12,9 +12,17 @@ import {
   ExternalLink,
   Shuffle,
   ChevronRight,
+  School,
 } from 'lucide-react'
 import { PROFISSOES } from '@/lib/guia'
 import { profissoesParecidas, type MotivoParecida } from '@/lib/professions'
+import {
+  cursosDaProfissao,
+  cursosAtualizadoEm,
+  NIVEL_LABEL,
+  REGIAO_LABEL,
+  EMEC_URL,
+} from '@/lib/cursos'
 import { RIASEC_INFO, FORMACAO_LABELS } from '@/lib/types'
 import { fmtBRL, fmtData } from '@/lib/format'
 
@@ -54,6 +62,11 @@ export default async function ProfissaoDetalhePage({ params }: { params: Params 
   const profissao = getProfissao(slug)
   if (!profissao) notFound()
   const parecidas = profissoesParecidas(profissao)
+  const cursos = cursosDaProfissao(profissao)
+  // Para profissões que não exigem curso técnico nem superior, os cursos
+  // listados são os que ajudam, não uma exigência.
+  const semExigencia =
+    profissao.formacao_requerida === 'fundamental' || profissao.formacao_requerida === 'medio'
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -139,6 +152,86 @@ export default async function ProfissaoDetalhePage({ params }: { params: Params 
           {FORMACAO_LABELS[profissao.formacao_requerida]}
           {profissao.regulamentada && profissao.conselho && (
             <span>· registro no {profissao.conselho}</span>
+          )}
+        </div>
+
+        <div>
+          <h2 className="flex items-center gap-2 text-base font-semibold text-foreground mb-1">
+            <School className="h-4 w-4" /> Onde estudar
+          </h2>
+          {semExigencia && (
+            <p className="text-sm text-muted-foreground mb-2">
+              Esta profissão não exige curso técnico nem superior.
+              {cursos.length > 0 ? ' Estes cursos podem ajudar:' : ' Não há um curso específico a indicar.'}
+            </p>
+          )}
+          {!semExigencia && cursos.length === 0 && !profissao.cursos_nota && (
+            <p className="text-sm text-muted-foreground mb-2">Não há um curso específico a indicar.</p>
+          )}
+          {cursos.length > 0 && (
+            <ul className="space-y-2">
+              {cursos.map((c) => (
+                <li key={c.id} className="rounded-xl border border-border p-3">
+                  <p className="text-sm font-medium text-foreground">
+                    {c.nome}{' '}
+                    <span className="text-xs font-normal text-muted-foreground">
+                      · {NIVEL_LABEL[c.nivel]}
+                    </span>
+                  </p>
+                  {c.porRegiao.length === 0 ? (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Não encontramos este curso presencial nas instituições pesquisadas.
+                    </p>
+                  ) : (
+                    <dl className="mt-1.5 space-y-1">
+                      {c.porRegiao.map((g) => (
+                        <div key={g.regiao} className="text-xs">
+                          <dt className="inline text-muted-foreground">{REGIAO_LABEL[g.regiao]}: </dt>
+                          <dd className="inline">
+                            {g.ofertas.map((o, i) => (
+                              <span key={o.instituicao.id}>
+                                {i > 0 && ', '}
+                                <a
+                                  href={o.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-primary hover:underline"
+                                  title={o.instituicao.nome}
+                                >
+                                  {o.instituicao.sigla}
+                                </a>
+                                {o.instituicao.cidade !== REGIAO_LABEL[g.regiao] && (
+                                  <span className="text-muted-foreground"> ({o.instituicao.cidade})</span>
+                                )}
+                              </span>
+                            ))}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+          {profissao.cursos_nota && (
+            <p className="text-sm text-muted-foreground mt-2">{profissao.cursos_nota}</p>
+          )}
+          {(cursos.length > 0 || profissao.cursos_nota) && (
+            <p className="text-xs text-muted-foreground mt-2">
+              Cursos presenciais, conferidos nos sites das instituições em{' '}
+              {fmtData(cursosAtualizadoEm)}. Para outras cidades e cursos a distância, procure
+              pelo nome do curso no{' '}
+              <a
+                href={EMEC_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                e-MEC
+              </a>
+              , o cadastro oficial de cursos superiores.
+            </p>
           )}
         </div>
 

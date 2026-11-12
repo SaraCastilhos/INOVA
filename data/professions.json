@@ -27,6 +27,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["sistemas-de-informacao", "ciencia-da-computacao", "engenharia-de-software", "analise-e-desenvolvimento-de-sistemas"],
     "riasec_code": "IC",
     "riasec_primary": "I",
     "salario": {
@@ -91,6 +92,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-mecanica", "tec-eletromecanica"],
     "riasec_code": "RCI",
     "riasec_primary": "R",
     "salario": {
@@ -154,6 +156,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-calcados"],
     "riasec_code": "ARI",
     "riasec_primary": "A",
     "salario": {
@@ -218,6 +221,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["pedagogia"],
     "riasec_code": "S",
     "riasec_primary": "S",
     "salario": {
@@ -286,6 +290,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRA",
+    "cursos": ["administracao"],
     "riasec_code": "EC",
     "riasec_primary": "E",
     "salario": {
@@ -349,6 +354,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRC",
+    "cursos": ["ciencias-contabeis"],
     "riasec_code": "CEI",
     "riasec_primary": "C",
     "salario": {
@@ -411,6 +417,7 @@
     "formacao_requerida": "fundamental",
     "regulamentada": false,
     "conselho": null,
+    "cursos": [],
     "riasec_code": "RC",
     "riasec_primary": "R",
     "salario": {
@@ -474,6 +481,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "COREN",
+    "cursos": ["enfermagem"],
     "riasec_code": "SCI",
     "riasec_primary": "S",
     "salario": {
@@ -536,6 +544,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["design", "design-grafico"],
     "riasec_code": "AC",
     "riasec_primary": "A",
     "salario": {
@@ -597,6 +606,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREA",
+    "cursos": ["engenharia-de-producao"],
     "riasec_code": "CIR",
     "riasec_primary": "C",
     "salario": {
@@ -659,6 +669,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-seguranca-do-trabalho"],
     "riasec_code": "ICR",
     "riasec_primary": "I",
     "salario": {
@@ -721,6 +732,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRMV",
+    "cursos": ["medicina-veterinaria"],
     "riasec_code": "IR",
     "riasec_primary": "I",
     "salario": {
@@ -783,6 +795,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CAU",
+    "cursos": ["arquitetura-e-urbanismo"],
     "riasec_code": "RCA",
     "riasec_primary": "R",
     "salario": {
@@ -845,6 +858,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREFITO",
+    "cursos": ["fisioterapia"],
     "riasec_code": "SIR",
     "riasec_primary": "S",
     "salario": {
@@ -907,6 +921,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRESS",
+    "cursos": ["servico-social"],
     "riasec_code": "S",
     "riasec_primary": "S",
     "salario": {
@@ -969,6 +984,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": true,
     "conselho": "CRECI",
+    "cursos": ["tec-transacoes-imobiliarias"],
     "riasec_code": "ECS",
     "riasec_primary": "E",
     "salario": {
@@ -1031,6 +1047,7 @@
     "formacao_requerida": "medio",
     "regulamentada": true,
     "conselho": "CORE",
+    "cursos": ["gestao-comercial"],
     "riasec_code": "EC",
     "riasec_primary": "E",
     "salario": {
@@ -1093,6 +1110,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["logistica"],
     "riasec_code": "CEI",
     "riasec_primary": "C",
     "salario": {
@@ -1155,6 +1173,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["gestao-de-recursos-humanos", "administracao"],
     "riasec_code": "ECS",
     "riasec_primary": "E",
     "salario": {
@@ -1216,6 +1235,7 @@
     "formacao_requerida": "medio",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["fotografia", "producao-audiovisual"],
     "riasec_code": "RA",
     "riasec_primary": "R",
     "salario": {
@@ -1278,6 +1298,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["moda"],
     "riasec_code": "ARE",
     "riasec_primary": "A",
     "salario": {
@@ -1340,6 +1361,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRF",
+    "cursos": ["farmacia"],
     "riasec_code": "ISC",
     "riasec_primary": "I",
     "salario": {
@@ -1401,6 +1423,7 @@
     "formacao_requerida": "fundamental",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-eletrotecnica"],
     "riasec_code": "RC",
     "riasec_primary": "R",
     "salario": {
@@ -1463,6 +1486,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CORECON",
+    "cursos": ["ciencias-economicas"],
     "riasec_code": "ICE",
     "riasec_primary": "I",
     "salario": {
@@ -1524,6 +1548,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRB",
+    "cursos": ["biblioteconomia"],
     "riasec_code": "CSI",
     "riasec_primary": "C",
     "salario": {
@@ -1586,6 +1611,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRN",
+    "cursos": ["nutricao"],
     "riasec_code": "SI",
     "riasec_primary": "S",
     "salario": {
@@ -1647,6 +1673,7 @@
     "formacao_requerida": "medio",
     "regulamentada": true,
     "conselho": "OMB",
+    "cursos": ["musica", "tec-instrumento-musical"],
     "riasec_code": "AE",
     "riasec_primary": "A",
     "salario": {
@@ -1709,6 +1736,7 @@
     "formacao_requerida": "medio",
     "regulamentada": false,
     "conselho": null,
+    "cursos": [],
     "riasec_code": "RCS",
     "riasec_primary": "R",
     "salario": {
@@ -1770,6 +1798,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["publicidade-e-propaganda", "design"],
     "riasec_code": "AE",
     "riasec_primary": "A",
     "salario": {
@@ -1831,6 +1860,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["publicidade-e-propaganda"],
     "riasec_code": "ECA",
     "riasec_primary": "E",
     "salario": {
@@ -1892,6 +1922,7 @@
     "formacao_requerida": "medio",
     "regulamentada": true,
     "conselho": "SUSEP",
+    "cursos": [],
     "riasec_code": "ECS",
     "riasec_primary": "E",
     "salario": {
@@ -1953,6 +1984,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["secretariado-executivo", "tec-secretariado"],
     "riasec_code": "CES",
     "riasec_primary": "C",
     "salario": {
@@ -2014,6 +2046,7 @@
     "formacao_requerida": "fundamental",
     "regulamentada": false,
     "conselho": null,
+    "cursos": [],
     "riasec_code": "RC",
     "riasec_primary": "R",
     "salario": {
@@ -2075,6 +2108,7 @@
     "formacao_requerida": "fundamental",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-manutencao-automotiva"],
     "riasec_code": "RCI",
     "riasec_primary": "R",
     "salario": {
@@ -2137,6 +2171,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRBio",
+    "cursos": ["ciencias-biologicas"],
     "riasec_code": "ICR",
     "riasec_primary": "I",
     "salario": {
@@ -2198,6 +2233,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["matematica-licenciatura"],
     "riasec_code": "SA",
     "riasec_primary": "S",
     "salario": {
@@ -2259,6 +2295,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREFITO",
+    "cursos": ["terapia-ocupacional"],
     "riasec_code": "SI",
     "riasec_primary": "S",
     "salario": {
@@ -2320,6 +2357,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["administracao", "gestao-de-recursos-humanos"],
     "riasec_code": "ECS",
     "riasec_primary": "E",
     "salario": {
@@ -2381,6 +2419,8 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": [],
+    "cursos_nota": "O concurso aceita graduação (bacharelado) em qualquer área.",
     "riasec_code": "CE",
     "riasec_primary": "C",
     "salario": {
@@ -2442,6 +2482,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["artes-visuais"],
     "riasec_code": "AR",
     "riasec_primary": "A",
     "salario": {
@@ -2503,6 +2544,7 @@
     "formacao_requerida": "medio",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["design-de-animacao", "jogos-digitais"],
     "riasec_code": "AR",
     "riasec_primary": "A",
     "salario": {
@@ -2564,6 +2606,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["teatro", "artes-visuais"],
     "riasec_code": "A",
     "riasec_primary": "A",
     "salario": {
@@ -2625,6 +2668,7 @@
     "formacao_requerida": "medio",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["estetica-e-cosmetica"],
     "riasec_code": "AR",
     "riasec_primary": "A",
     "salario": {
@@ -2686,6 +2730,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["gastronomia"],
     "riasec_code": "ERC",
     "riasec_primary": "E",
     "salario": {
@@ -2747,6 +2792,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRM",
+    "cursos": ["medicina"],
     "riasec_code": "ISR",
     "riasec_primary": "I",
     "salario": {
@@ -2808,6 +2854,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRP",
+    "cursos": ["psicologia"],
     "riasec_code": "SI",
     "riasec_primary": "S",
     "salario": {
@@ -2869,6 +2916,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREA",
+    "cursos": ["engenharia-civil"],
     "riasec_code": "RIC",
     "riasec_primary": "R",
     "salario": {
@@ -2930,6 +2978,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["ciencia-de-dados", "estatistica", "ciencia-da-computacao"],
     "riasec_code": "IC",
     "riasec_primary": "I",
     "salario": {
@@ -2991,6 +3040,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-contabilidade"],
     "riasec_code": "CE",
     "riasec_primary": "C",
     "salario": {
@@ -3052,6 +3102,7 @@
     "formacao_requerida": "medio",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-administracao", "tec-recursos-humanos", "processos-gerenciais"],
     "riasec_code": "C",
     "riasec_primary": "C",
     "salario": {
@@ -3113,6 +3164,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["estatistica"],
     "riasec_code": "IC",
     "riasec_primary": "I",
     "salario": {
@@ -3174,6 +3226,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-secretariado"],
     "riasec_code": "CES",
     "riasec_primary": "C",
     "salario": {
@@ -3236,6 +3289,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "OAB",
+    "cursos": ["direito"],
     "riasec_code": "ECI",
     "riasec_primary": "E",
     "salario": {
@@ -3299,6 +3353,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRO",
+    "cursos": ["odontologia"],
     "riasec_code": "IRS",
     "riasec_primary": "I",
     "salario": {
@@ -3362,6 +3417,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["jornalismo"],
     "riasec_code": "AIE",
     "riasec_primary": "A",
     "salario": {
@@ -3431,6 +3487,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": true,
     "conselho": "COREN",
+    "cursos": ["tec-enfermagem"],
     "riasec_code": "SCR",
     "riasec_primary": "S",
     "salario": {
@@ -3498,6 +3555,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREA",
+    "cursos": ["engenharia-mecanica"],
     "riasec_code": "RIC",
     "riasec_primary": "R",
     "salario": {
@@ -3561,6 +3619,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREF",
+    "cursos": ["educacao-fisica"],
     "riasec_code": "SR",
     "riasec_primary": "S",
     "salario": {
@@ -3624,6 +3683,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["letras"],
     "riasec_code": "S",
     "riasec_primary": "S",
     "salario": {
@@ -3686,6 +3746,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-informatica", "tec-informatica-para-internet", "analise-e-desenvolvimento-de-sistemas", "sistemas-para-internet"],
     "riasec_code": "CI",
     "riasec_primary": "C",
     "salario": {
@@ -3748,6 +3809,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["redes-de-computadores", "ciencia-da-computacao", "sistemas-de-informacao"],
     "riasec_code": "CRI",
     "riasec_primary": "C",
     "salario": {
@@ -3810,6 +3872,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["analise-e-desenvolvimento-de-sistemas", "redes-de-computadores", "sistemas-de-informacao"],
     "riasec_code": "CRI",
     "riasec_primary": "C",
     "salario": {
@@ -3872,6 +3935,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREA",
+    "cursos": ["engenharia-de-computacao"],
     "riasec_code": "RIC",
     "riasec_primary": "R",
     "salario": {
@@ -3939,6 +4003,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREA",
+    "cursos": ["engenharia-eletrica"],
     "riasec_code": "RIC",
     "riasec_primary": "R",
     "salario": {
@@ -4001,6 +4066,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-mecatronica"],
     "riasec_code": "RCI",
     "riasec_primary": "R",
     "salario": {
@@ -4063,6 +4129,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-eletrotecnica"],
     "riasec_code": "RIC",
     "riasec_primary": "R",
     "salario": {
@@ -4126,6 +4193,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["pedagogia"],
     "riasec_code": "SEI",
     "riasec_primary": "S",
     "salario": {
@@ -4188,6 +4256,8 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["traducao-interpretacao-libras"],
+    "cursos_nota": "Também vale outra graduação com especialização de pelo menos 360 horas em Libras e exame de proficiência.",
     "riasec_code": "CAS",
     "riasec_primary": "C",
     "salario": {
@@ -4255,6 +4325,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRFa",
+    "cursos": ["fonoaudiologia"],
     "riasec_code": "SIC",
     "riasec_primary": "S",
     "salario": {
@@ -4322,6 +4393,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRBM",
+    "cursos": ["biomedicina"],
     "riasec_code": "IRC",
     "riasec_primary": "I",
     "salario": {
@@ -4394,6 +4466,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CRQ",
+    "cursos": ["quimica"],
     "riasec_code": "IRC",
     "riasec_primary": "I",
     "salario": {
@@ -4461,6 +4534,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREA",
+    "cursos": ["geografia"],
     "riasec_code": "IR",
     "riasec_primary": "I",
     "salario": {
@@ -4523,6 +4597,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREA",
+    "cursos": ["engenharia-ambiental"],
     "riasec_code": "IRC",
     "riasec_primary": "I",
     "salario": {
@@ -4590,6 +4665,7 @@
     "formacao_requerida": "fundamental",
     "regulamentada": false,
     "conselho": null,
+    "cursos": [],
     "riasec_code": "RC",
     "riasec_primary": "R",
     "salario": {
@@ -4652,6 +4728,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": true,
     "conselho": "CRQ",
+    "cursos": ["tec-quimica"],
     "riasec_code": "IRC",
     "riasec_primary": "I",
     "salario": {
@@ -4719,6 +4796,7 @@
     "formacao_requerida": "superior-conselho",
     "regulamentada": true,
     "conselho": "CREA",
+    "cursos": ["agronomia"],
     "riasec_code": "IR",
     "riasec_primary": "I",
     "salario": {
@@ -4786,6 +4864,7 @@
     "formacao_requerida": "tecnico",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-agropecuaria"],
     "riasec_code": "RIC",
     "riasec_primary": "R",
     "salario": {
@@ -4848,6 +4927,7 @@
     "formacao_requerida": "fundamental",
     "regulamentada": false,
     "conselho": null,
+    "cursos": [],
     "riasec_code": "SCR",
     "riasec_primary": "S",
     "salario": {
@@ -4910,6 +4990,7 @@
     "formacao_requerida": "superior",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["marketing", "administracao"],
     "riasec_code": "ECI",
     "riasec_primary": "E",
     "salario": {
@@ -4972,6 +5053,7 @@
     "formacao_requerida": "medio",
     "regulamentada": false,
     "conselho": null,
+    "cursos": ["tec-guia-de-turismo", "turismo"],
     "riasec_code": "SE",
     "riasec_primary": "S",
     "salario": {

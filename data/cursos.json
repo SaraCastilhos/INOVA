@@ -1,0 +1,1491 @@
+{
+  "acesso_em": "2026-11-12",
+  "instituicoes": [
+    {
+      "id": "faccat",
+      "nome": "Faculdades Integradas de Taquara",
+      "sigla": "FACCAT",
+      "cidade": "Taquara",
+      "regiao": "paranhana",
+      "fonte": "https://www2.faccat.br/portal/",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "ifrs-rolante",
+      "nome": "Instituto Federal do Rio Grande do Sul, Campus Rolante",
+      "sigla": "IFRS Rolante",
+      "cidade": "Rolante",
+      "regiao": "paranhana",
+      "fonte": "https://ifrs.edu.br/rolante/ensino/cursos-2/",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "cimol",
+      "nome": "Escola Técnica Estadual Monteiro Lobato (CIMOL)",
+      "sigla": "CIMOL",
+      "cidade": "Taquara",
+      "regiao": "paranhana",
+      "fonte": "https://educacao.rs.gov.br/tecnico-em-mecanica",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "ifsul-sapiranga",
+      "nome": "Instituto Federal Sul-rio-grandense, Campus Sapiranga",
+      "sigla": "IFSul Sapiranga",
+      "cidade": "Sapiranga",
+      "regiao": "vizinhas",
+      "fonte": "https://www.sapiranga.ifsul.edu.br/",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "feevale",
+      "nome": "Universidade Feevale",
+      "sigla": "Feevale",
+      "cidade": "Novo Hamburgo",
+      "regiao": "vizinhas",
+      "fonte": "https://www.feevale.br/",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "liberato",
+      "nome": "Fundação Escola Técnica Liberato Salzano Vieira da Cunha",
+      "sigla": "Liberato",
+      "cidade": "Novo Hamburgo",
+      "regiao": "vizinhas",
+      "fonte": "https://www.liberato.com.br/cursos-tecnicos/",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "unisinos",
+      "nome": "Universidade do Vale do Rio dos Sinos",
+      "sigla": "Unisinos",
+      "cidade": "São Leopoldo e Porto Alegre",
+      "regiao": "vizinhas",
+      "fonte": "https://www.unisinos.br/graduacao/cursos?modalidade=P",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "ufrgs",
+      "nome": "Universidade Federal do Rio Grande do Sul",
+      "sigla": "UFRGS",
+      "cidade": "Porto Alegre",
+      "regiao": "porto-alegre",
+      "fonte": "https://www.ufrgs.br/site/ensino/graduacao/",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "ufcspa",
+      "nome": "Universidade Federal de Ciências da Saúde de Porto Alegre",
+      "sigla": "UFCSPA",
+      "cidade": "Porto Alegre",
+      "regiao": "porto-alegre",
+      "fonte": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "pucrs",
+      "nome": "Pontifícia Universidade Católica do Rio Grande do Sul",
+      "sigla": "PUCRS",
+      "cidade": "Porto Alegre",
+      "regiao": "porto-alegre",
+      "fonte": "https://portal.pucrs.br/ensino/graduacao/",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "ifrs-poa",
+      "nome": "Instituto Federal do Rio Grande do Sul, Campus Porto Alegre",
+      "sigla": "IFRS Porto Alegre",
+      "cidade": "Porto Alegre",
+      "regiao": "porto-alegre",
+      "fonte": "https://poa.ifrs.edu.br/index.php/cursos-relevancia",
+      "acesso_em": "2026-11-12"
+    },
+    {
+      "id": "ete-parobe",
+      "nome": "Escola Técnica Estadual Parobé",
+      "sigla": "ETE Parobé",
+      "cidade": "Porto Alegre",
+      "regiao": "porto-alegre",
+      "fonte": "https://educacao.rs.gov.br/tecnico-em-mecanica",
+      "acesso_em": "2026-11-12"
+    }
+  ],
+  "cursos": [
+    {
+      "id": "sistemas-de-informacao",
+      "nome": "Sistemas de Informação",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Sistemas%20de%20Informacao%20_Bacharelado"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/sistemas-de-informacao"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/sistemas-de-informacao"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/sistemas-de-informacao/"
+        }
+      ]
+    },
+    {
+      "id": "ciencia-da-computacao",
+      "nome": "Ciência da Computação",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/ciencia-da-computacao"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/ciencia-da-computacao"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/ciencia-da-computacao/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/ciencia-da-computacao/"
+        }
+      ]
+    },
+    {
+      "id": "engenharia-de-software",
+      "nome": "Engenharia de Software",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/engenharia-de-software"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/engenharia-de-software/"
+        }
+      ]
+    },
+    {
+      "id": "analise-e-desenvolvimento-de-sistemas",
+      "nome": "Análise e Desenvolvimento de Sistemas",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-rolante",
+          "url": "https://ifrs.edu.br/rolante/ensino/tecnologia-em-analise-e-desenvolvimento-de-sistemas/"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/analise-e-desenvolvimento-de-sistemas"
+        }
+      ]
+    },
+    {
+      "id": "sistemas-para-internet",
+      "nome": "Sistemas para Internet",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Sistemas%20para%20Internet%20-%20Tecnologo"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/sistemas-para-internet"
+        },
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/ssi"
+        }
+      ]
+    },
+    {
+      "id": "redes-de-computadores",
+      "nome": "Redes de Computadores",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/redes-de-computadores"
+        }
+      ]
+    },
+    {
+      "id": "ciencia-de-dados",
+      "nome": "Ciência de Dados",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/ciencia-de-dados/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/ciencia-de-dados-e-inteligencia-artificial/"
+        }
+      ]
+    },
+    {
+      "id": "estatistica",
+      "nome": "Estatística",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/estatistica/"
+        }
+      ]
+    },
+    {
+      "id": "engenharia-de-computacao",
+      "nome": "Engenharia de Computação",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/engenharia-de-computacao"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/engenharia-de-computacao"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/engenharia-de-computacao/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/engenharia-de-computacao/"
+        }
+      ]
+    },
+    {
+      "id": "tec-informatica",
+      "nome": "Técnico em Informática",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-rolante",
+          "url": "https://ifrs.edu.br/rolante/ensino/curso-tecnico-em-informatica-integrado-ao-ensino-medio/"
+        },
+        {
+          "instituicao": "ifsul-sapiranga",
+          "url": "https://www.sapiranga.ifsul.edu.br/tecnico/tec-informatica"
+        },
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/inf-int"
+        }
+      ]
+    },
+    {
+      "id": "tec-informatica-para-internet",
+      "nome": "Técnico em Informática para Internet",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "liberato",
+          "url": "https://www.liberato.com.br/informatica-para-internet/"
+        }
+      ]
+    },
+    {
+      "id": "administracao",
+      "nome": "Administração",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Administracao%20-%20Bacharelado"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/administracao"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/administracao"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/administracao/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/administracao-administracao-de-empresas/"
+        }
+      ]
+    },
+    {
+      "id": "processos-gerenciais",
+      "nome": "Processos Gerenciais",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-rolante",
+          "url": "https://ifrs.edu.br/rolante/ensino/tpg/"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/processos-gerenciais"
+        },
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/spg"
+        }
+      ]
+    },
+    {
+      "id": "ciencias-contabeis",
+      "nome": "Ciências Contábeis",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "http://contabeis.faccat.br"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/ciencias-contabeis"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/ciencias-contabeis"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/ciencias-contabeis/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/ciencias-contabeis/"
+        }
+      ]
+    },
+    {
+      "id": "ciencias-economicas",
+      "nome": "Ciências Econômicas",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/ciencias-economicas"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/ciencias-economicas/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/ciencias-economicas-economia/"
+        }
+      ]
+    },
+    {
+      "id": "gestao-comercial",
+      "nome": "Gestão Comercial",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Gestao%20Comercial%20-%20Tecnologo"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/gestao-comercial"
+        }
+      ]
+    },
+    {
+      "id": "gestao-de-recursos-humanos",
+      "nome": "Gestão de Recursos Humanos",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/gestao-de-recursos-humanos"
+        }
+      ]
+    },
+    {
+      "id": "logistica",
+      "nome": "Logística",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/logistica"
+        }
+      ]
+    },
+    {
+      "id": "marketing",
+      "nome": "Marketing",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/marketing"
+        }
+      ]
+    },
+    {
+      "id": "tec-administracao",
+      "nome": "Técnico em Administração",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-rolante",
+          "url": "https://ifrs.edu.br/rolante/ensino/curso-tecnico-em-administracao/"
+        },
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/adm"
+        }
+      ]
+    },
+    {
+      "id": "tec-recursos-humanos",
+      "nome": "Técnico em Recursos Humanos",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-rolante",
+          "url": "https://ifrs.edu.br/rolante/12146-2/tecnico-em-recurso-humanos-concomitante-ao-ensino-medio/"
+        }
+      ]
+    },
+    {
+      "id": "tec-contabilidade",
+      "nome": "Técnico em Contabilidade",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/con"
+        }
+      ]
+    },
+    {
+      "id": "tec-secretariado",
+      "nome": "Técnico em Secretariado",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/sec"
+        }
+      ]
+    },
+    {
+      "id": "secretariado-executivo",
+      "nome": "Secretariado Executivo",
+      "nivel": "graduacao",
+      "ofertas": []
+    },
+    {
+      "id": "tec-transacoes-imobiliarias",
+      "nome": "Técnico em Transações Imobiliárias",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/tti"
+        }
+      ]
+    },
+    {
+      "id": "turismo",
+      "nome": "Turismo",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/turismo"
+        }
+      ]
+    },
+    {
+      "id": "tec-guia-de-turismo",
+      "nome": "Técnico em Guia de Turismo",
+      "nivel": "tecnico",
+      "ofertas": []
+    },
+    {
+      "id": "gastronomia",
+      "nome": "Gastronomia",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/gastronomia"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/gastronomia"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/gastronomia/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/gastronomia-bacharelado"
+        }
+      ]
+    },
+    {
+      "id": "direito",
+      "nome": "Direito",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=node/2344"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/direito"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/direito"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/ciencias-juridicas-e-sociais/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/direito/"
+        }
+      ]
+    },
+    {
+      "id": "medicina",
+      "nome": "Medicina",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/medicina"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/medicina"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/medicina/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/medicina"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/medicina/"
+        }
+      ]
+    },
+    {
+      "id": "enfermagem",
+      "nome": "Enfermagem",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Enfermagem"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/enfermagem"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/enfermagem"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/enfermagem/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/enfermagem"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/enfermagem/"
+        }
+      ]
+    },
+    {
+      "id": "tec-enfermagem",
+      "nome": "Técnico em Enfermagem",
+      "nivel": "tecnico",
+      "ofertas": []
+    },
+    {
+      "id": "fisioterapia",
+      "nome": "Fisioterapia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=node/3052"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/fisioterapia"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/fisioterapia"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/fisioterapia/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/fisioterapia"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/fisioterapia/"
+        }
+      ]
+    },
+    {
+      "id": "farmacia",
+      "nome": "Farmácia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/farmacia"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/farmacia"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/farmacia/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/farmacia"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/farmacia/"
+        }
+      ]
+    },
+    {
+      "id": "nutricao",
+      "nome": "Nutrição",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/nutricao"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/nutricao"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/nutricao/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/nutricao"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/nutricao/"
+        }
+      ]
+    },
+    {
+      "id": "psicologia",
+      "nome": "Psicologia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Psicologia"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/psicologia"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/psicologia"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/psicologia/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/psicologia"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/psicologia/"
+        }
+      ]
+    },
+    {
+      "id": "odontologia",
+      "nome": "Odontologia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/odontologia"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/odontologia/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/odontologia/"
+        }
+      ]
+    },
+    {
+      "id": "biomedicina",
+      "nome": "Biomedicina",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=biomedicina"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/biomedicina"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/biomedicina"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/biomedicina/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/biomedicina"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/biomedicina/"
+        }
+      ]
+    },
+    {
+      "id": "fonoaudiologia",
+      "nome": "Fonoaudiologia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/fonoaudiologia/"
+        },
+        {
+          "instituicao": "ufcspa",
+          "url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos/fonoaudiologia"
+        }
+      ]
+    },
+    {
+      "id": "terapia-ocupacional",
+      "nome": "Terapia Ocupacional",
+      "nivel": "graduacao",
+      "ofertas": []
+    },
+    {
+      "id": "educacao-fisica",
+      "nome": "Educação Física (bacharelado)",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/educacao-fisica"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/educacao-fisica"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/educacao-fisica/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/educacao-fisica-bacharelado/"
+        }
+      ]
+    },
+    {
+      "id": "estetica-e-cosmetica",
+      "nome": "Estética e Cosmética",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/estetica-e-cosmetica"
+        }
+      ]
+    },
+    {
+      "id": "medicina-veterinaria",
+      "nome": "Medicina Veterinária",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/medicina-veterinaria"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/medicina-veterinaria/"
+        }
+      ]
+    },
+    {
+      "id": "ciencias-biologicas",
+      "nome": "Ciências Biológicas",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/ciencias-biologicas"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/biologia"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/ciencias-biologicas/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/ciencias-biologicas-bacharelado/"
+        }
+      ]
+    },
+    {
+      "id": "quimica",
+      "nome": "Química",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/quimica/"
+        }
+      ]
+    },
+    {
+      "id": "geografia",
+      "nome": "Geografia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/geografia/"
+        }
+      ]
+    },
+    {
+      "id": "tec-quimica",
+      "nome": "Técnico em Química",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "liberato",
+          "url": "https://www.liberato.com.br/quimica/"
+        },
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/qui"
+        }
+      ]
+    },
+    {
+      "id": "engenharia-de-producao",
+      "nome": "Engenharia de Produção",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Engenharia%20de%20Producao%20Bacharelado"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/engenharia-de-producao"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/engenharia-de-producao"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/engenharia-de-producao/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/engenharia-de-producao/"
+        }
+      ]
+    },
+    {
+      "id": "engenharia-civil",
+      "nome": "Engenharia Civil",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/engenharia-civil"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/engenharia-civil"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/engenharia-civil/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/engenharia-civil/"
+        }
+      ]
+    },
+    {
+      "id": "engenharia-mecanica",
+      "nome": "Engenharia Mecânica",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/engenharia-mecanica"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/engenharia-mecanica"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/engenharia-mecanica/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/engenharia-mecanica/"
+        }
+      ]
+    },
+    {
+      "id": "engenharia-eletrica",
+      "nome": "Engenharia Elétrica",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/engenharia-eletrica"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/engenharia-eletrica"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/engenharia-eletrica/"
+        }
+      ]
+    },
+    {
+      "id": "engenharia-ambiental",
+      "nome": "Engenharia Ambiental",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/engenharia-ambiental"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/engenharia-ambiental/"
+        }
+      ]
+    },
+    {
+      "id": "agronomia",
+      "nome": "Agronomia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/engenharia-agronomica"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/agronomia/"
+        }
+      ]
+    },
+    {
+      "id": "arquitetura-e-urbanismo",
+      "nome": "Arquitetura e Urbanismo",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/arquitetura-e-urbanismo"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/arquitetura-e-urbanismo"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/arquitetura-e-urbanismo/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/arquitetura-e-urbanismo/"
+        }
+      ]
+    },
+    {
+      "id": "tec-mecanica",
+      "nome": "Técnico em Mecânica",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "cimol",
+          "url": "https://educacao.rs.gov.br/tecnico-em-mecanica"
+        },
+        {
+          "instituicao": "liberato",
+          "url": "https://www.liberato.com.br/mecanica/"
+        },
+        {
+          "instituicao": "ete-parobe",
+          "url": "https://educacao.rs.gov.br/tecnico-em-mecanica"
+        }
+      ]
+    },
+    {
+      "id": "tec-eletromecanica",
+      "nome": "Técnico em Eletromecânica",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifsul-sapiranga",
+          "url": "https://www.sapiranga.ifsul.edu.br/tecnico/tec-eletromecanica"
+        }
+      ]
+    },
+    {
+      "id": "tec-eletrotecnica",
+      "nome": "Técnico em Eletrotécnica",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "cimol",
+          "url": "https://educacao.rs.gov.br/tecnico-em-eletrotecnica"
+        },
+        {
+          "instituicao": "liberato",
+          "url": "https://www.liberato.com.br/eletrotecnica/"
+        },
+        {
+          "instituicao": "ete-parobe",
+          "url": "https://educacao.rs.gov.br/tecnico-em-eletrotecnica"
+        }
+      ]
+    },
+    {
+      "id": "tec-mecatronica",
+      "nome": "Técnico em Mecatrônica",
+      "nivel": "tecnico",
+      "ofertas": []
+    },
+    {
+      "id": "tec-manutencao-automotiva",
+      "nome": "Técnico em Manutenção Automotiva",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "liberato",
+          "url": "https://www.liberato.com.br/manutencao-automotiva/"
+        }
+      ]
+    },
+    {
+      "id": "tec-seguranca-do-trabalho",
+      "nome": "Técnico em Segurança do Trabalho",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "liberato",
+          "url": "https://www.liberato.com.br/seguranca-do-trabalho/"
+        },
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/seg"
+        }
+      ]
+    },
+    {
+      "id": "tec-calcados",
+      "nome": "Técnico em Calçados",
+      "nivel": "tecnico",
+      "ofertas": []
+    },
+    {
+      "id": "tec-agropecuaria",
+      "nome": "Técnico em Agropecuária",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-rolante",
+          "url": "https://ifrs.edu.br/rolante/ensino/curso-tecnico-em-agropecuaria/"
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "nome": "Design",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=node/2330"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/design"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/design"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/design-visual/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/design/"
+        }
+      ]
+    },
+    {
+      "id": "design-grafico",
+      "nome": "Design Gráfico",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/design-grafico"
+        }
+      ]
+    },
+    {
+      "id": "design-de-animacao",
+      "nome": "Design de Animação",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/design-de-animacao"
+        }
+      ]
+    },
+    {
+      "id": "jogos-digitais",
+      "nome": "Jogos Digitais",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=node/2566"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/jogos-digitais"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/jogos-digitais"
+        }
+      ]
+    },
+    {
+      "id": "moda",
+      "nome": "Moda",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/moda"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/moda"
+        }
+      ]
+    },
+    {
+      "id": "artes-visuais",
+      "nome": "Artes Visuais",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/artes-visuais"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/artes-visuais/"
+        }
+      ]
+    },
+    {
+      "id": "teatro",
+      "nome": "Teatro",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/teatro/"
+        }
+      ]
+    },
+    {
+      "id": "musica",
+      "nome": "Música",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/musica/"
+        }
+      ]
+    },
+    {
+      "id": "tec-instrumento-musical",
+      "nome": "Técnico em Instrumento Musical",
+      "nivel": "tecnico",
+      "ofertas": [
+        {
+          "instituicao": "ifrs-poa",
+          "url": "https://poa.ifrs.edu.br/index.php/cursos-relevancia/inm"
+        }
+      ]
+    },
+    {
+      "id": "fotografia",
+      "nome": "Fotografia",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/fotografia"
+        }
+      ]
+    },
+    {
+      "id": "producao-audiovisual",
+      "nome": "Produção Audiovisual",
+      "nivel": "tecnologo",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/producao-audiovisual"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/producao-audiovisual"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/producao-audiovisual/"
+        }
+      ]
+    },
+    {
+      "id": "publicidade-e-propaganda",
+      "nome": "Publicidade e Propaganda",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Comunicacao%20Social%20-%20Bacharelado%20-%20Habilitacao%20em%20Publicidade%20e%20Propaganda"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/publicidade-e-propaganda"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/publicidade-e-propaganda"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/publicidade-e-propaganda/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/publicidade-e-propaganda/"
+        }
+      ]
+    },
+    {
+      "id": "jornalismo",
+      "nome": "Jornalismo",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/jornalismo"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/jornalismo"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/jornalismo/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/jornalismo/"
+        }
+      ]
+    },
+    {
+      "id": "biblioteconomia",
+      "nome": "Biblioteconomia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/biblioteconomia/"
+        }
+      ]
+    },
+    {
+      "id": "pedagogia",
+      "nome": "Pedagogia",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=pedagogia-licenciatura"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/pedagogia"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/pedagogia"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/pedagogia/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/pedagogia/"
+        }
+      ]
+    },
+    {
+      "id": "matematica-licenciatura",
+      "nome": "Matemática (licenciatura)",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Matematica%20-%20Licenciatura"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/matematica"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/matematica/"
+        }
+      ]
+    },
+    {
+      "id": "letras",
+      "nome": "Letras (licenciatura)",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "faccat",
+          "url": "https://www2.faccat.br/portal/?q=Letras%20-%20Licenciatura"
+        },
+        {
+          "instituicao": "feevale",
+          "url": "https://www.feevale.br/graduacao/letras"
+        },
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/letras"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/letras/"
+        },
+        {
+          "instituicao": "pucrs",
+          "url": "https://portal.pucrs.br/ensino/cursos/graduacao/letras-lingua-portuguesa/"
+        }
+      ]
+    },
+    {
+      "id": "servico-social",
+      "nome": "Serviço Social",
+      "nivel": "graduacao",
+      "ofertas": [
+        {
+          "instituicao": "unisinos",
+          "url": "https://www.unisinos.br/graduacao/cursos/servico-social"
+        },
+        {
+          "instituicao": "ufrgs",
+          "url": "https://www.ufrgs.br/site/ensino/graduacao/servico-social/"
+        }
+      ]
+    },
+    {
+      "id": "traducao-interpretacao-libras",
+      "nome": "Tradução e Interpretação de Libras",
+      "nivel": "tecnico",
+      "ofertas": []
+    }
+  ]
+}
