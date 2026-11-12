@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -8,26 +9,36 @@ import { PROFISSOES } from '@/lib/guia'
 import { Target, Briefcase, ArrowRight, Sparkles, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
 import type { Section } from '@/components/bottom-navigation'
+import { ConviteConta } from '@/components/convite-conta'
+import { pontuar } from '@/lib/instruments'
+import { lerTestePendente } from '@/lib/teste-pendente'
 
 interface HomeSectionProps {
   onNavigate: (section: Section) => void
 }
 
 export function HomeSection({ onNavigate }: HomeSectionProps) {
-  const { profile, testResults } = useAuth()
+  const { user, profile, testResults } = useAuth()
+  // Modo visitante (sem conta): vale o resultado do teste guardado no navegador.
+  const visitante = !user || !profile
 
   const lastTest = testResults?.[0] ?? null
+  const [topVisitante] = useState<RIASECType[]>(() => {
+    if (!visitante) return []
+    const pendente = lerTestePendente()
+    return pendente ? pontuar(pendente.respostas).top3 : []
+  })
 
   const topTipos: RIASECType[] = lastTest
     ? ([lastTest.primary_type, lastTest.secondary_type, lastTest.tertiary_type].filter(Boolean) as RIASECType[])
-    : []
+    : topVisitante
 
   return (
     <div className="space-y-6 section-enter">
       {/* Welcome Header */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-secondary p-6 text-white">
         <div className="relative z-10">
-          <p className="text-sm opacity-90 mb-1">Olá, {profile?.display_name}!</p>
+          <p className="text-sm opacity-90 mb-1">{visitante ? 'Olá!' : `Olá, ${profile?.display_name}!`}</p>
           <h1 className="text-2xl font-bold mb-2">Bem-vindo ao INOVA</h1>
           <p className="text-sm opacity-90 max-w-md">
             Sua jornada de autoconhecimento profissional começa aqui. Descubra suas aptidões e explore carreiras alinhadas ao seu perfil.
@@ -39,7 +50,7 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
       </div>
 
       {/* Last Test Result */}
-      {lastTest ? (
+      {topTipos.length > 0 ? (
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2 text-foreground">
@@ -67,7 +78,7 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
               <Button
                 variant="outline"
                 className="flex-1"
-                onClick={() => onNavigate('perfil')}
+                onClick={() => onNavigate(visitante ? 'teste' : 'perfil')}
               >
                 Ver detalhes
               </Button>
@@ -129,25 +140,34 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
         </Card>
       </div>
 
+      {visitante && (
+        <ConviteConta
+          titulo="Crie sua conta grátis"
+          descricao="Guarde o resultado do teste, acompanhe seu histórico, ganhe badges e participe da comunidade."
+        />
+      )}
+
       {/* Stats */}
-      <Card>
-        <CardContent className="pt-6">
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <p className="text-2xl font-bold text-primary">{testResults?.length ?? 0}</p>
-              <p className="text-xs text-muted-foreground">Testes feitos</p>
+      {!visitante && (
+        <Card>
+          <CardContent className="pt-6">
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <p className="text-2xl font-bold text-primary">{testResults?.length ?? 0}</p>
+                <p className="text-xs text-muted-foreground">Testes feitos</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-secondary">{PROFISSOES.length}</p>
+                <p className="text-xs text-muted-foreground">Profissões</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-accent">{Object.keys(RIASEC_INFO).length}</p>
+                <p className="text-xs text-muted-foreground">Tipos RIASEC</p>
+              </div>
             </div>
-            <div>
-              <p className="text-2xl font-bold text-secondary">{PROFISSOES.length}</p>
-              <p className="text-xs text-muted-foreground">Profissões</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-accent">{Object.keys(RIASEC_INFO).length}</p>
-              <p className="text-xs text-muted-foreground">Tipos RIASEC</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
 
       {/* About INOVA */}
       <Card className="bg-muted/30">
