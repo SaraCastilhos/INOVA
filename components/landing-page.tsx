@@ -93,7 +93,7 @@ export function LandingPage() {
               href="/auth/cadastro"
               className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
             >
-              Começar agora
+              Descobrir minha profissão
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
