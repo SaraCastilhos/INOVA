@@ -152,7 +152,7 @@ create policy "Users can insert own test results" on public.test_results
 -- ================================================
 create table if not exists public.experiences (
   id uuid primary key default uuid_generate_v4(),
-  user_id uuid references public.profiles(id) on delete cascade not null,
+  user_id uuid references public.profiles(id) on delete set null, -- null = autor excluiu a conta (migração 016)
   author_name text not null,
   profession text not null,
   riasec_type text,
@@ -275,7 +275,7 @@ create trigger update_likes_count
 create table if not exists public.experience_comments (
   id uuid primary key default uuid_generate_v4(),
   experience_id uuid references public.experiences(id) on delete cascade not null,
-  user_id uuid references public.profiles(id) on delete cascade not null,
+  user_id uuid references public.profiles(id) on delete set null, -- null = autor excluiu a conta (migração 016)
   content text not null check (char_length(content) <= 1250),
   created_at timestamptz not null default now()
 );
@@ -329,7 +329,7 @@ create trigger update_comments_count
 -- ================================================
 create table if not exists public.forum_topics (
   id uuid primary key default uuid_generate_v4(),
-  user_id uuid references public.profiles(id) on delete cascade not null,
+  user_id uuid references public.profiles(id) on delete set null, -- null = autor excluiu a conta (migração 016)
   title text not null check (char_length(title) <= 200),
   content text not null check (char_length(content) <= 3000),
   riasec_type text,
@@ -397,7 +397,7 @@ $$;
 create table if not exists public.forum_replies (
   id uuid primary key default uuid_generate_v4(),
   topic_id uuid references public.forum_topics(id) on delete cascade not null,
-  user_id uuid references public.profiles(id) on delete cascade not null,
+  user_id uuid references public.profiles(id) on delete set null, -- null = autor excluiu a conta (migração 016)
   content text not null check (char_length(content) <= 1250),
   likes_count integer not null default 0,
   created_at timestamptz not null default now(),
@@ -692,3 +692,49 @@ create policy "Users can delete their own avatar"
     bucket_id = 'avatars'
     and auth.uid()::text = (storage.foldername(name))[1]
   );
+
+-- ================================================
+-- EXCLUSÃO DE CONTA — migração 016
+-- ================================================
+-- A pessoa exclui a própria conta pelo app (Perfil > Excluir conta).
+-- Dados pessoais somem em cascata (perfil, testes, badges, curtidas,
+-- denúncias feitas); depoimentos, comentários, tópicos e respostas ficam,
+-- com user_id = null ("Usuário removido"). A foto no Storage é apagada
+-- pelo app antes de chamar a função.
+
+-- Antes de o perfil sumir, troca a cópia do nome guardada nos depoimentos.
+-- Vale também para a exclusão manual pelo painel do Supabase.
+create or replace function public.anonymize_profile_content()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+begin
+  update public.experiences
+    set author_name = 'Usuário removido'
+    where user_id = old.id;
+  return old;
+end;
+$$;
+
+drop trigger if exists trg_anonymize_profile_content on public.profiles;
+create trigger trg_anonymize_profile_content
+  before delete on public.profiles
+  for each row execute procedure public.anonymize_profile_content();
+
+-- security definer: o cliente não tem permissão em auth.users. Só apaga
+-- o id de auth.uid(), nunca outro.
+create or replace function public.delete_own_account()
+returns void language plpgsql security definer set search_path = public
+as $$
+declare
+  v_uid uuid := auth.uid();
+begin
+  if v_uid is null then
+    raise exception 'Você precisa estar logado para excluir a conta.';
+  end if;
+
+  delete from auth.users where id = v_uid;
+end;
+$$;
+
+revoke all on function public.delete_own_account() from public, anon;
+grant execute on function public.delete_own_account() to authenticated;

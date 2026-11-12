@@ -35,6 +35,7 @@ import {
   Camera,
   Loader2,
   Phone,
+  Trash2,
   X
 } from 'lucide-react'
 import type { Section } from '@/components/bottom-navigation'
@@ -325,6 +326,7 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+          <DeleteAccountDialog />
         </CardContent>
       </Card>
     </div>
@@ -487,5 +489,93 @@ function EditProfileModal({ profile, onClose }: { profile: Profile; onClose: () 
         </form>
       </div>
     </div>
+  )
+}
+// Exclusão da própria conta (migração 016). Pede para digitar EXCLUIR
+// porque é irreversível; o botão de confirmar não é um AlertDialogAction
+// para o diálogo não fechar antes de a exclusão terminar.
+const DELETE_CONFIRM_WORD = 'EXCLUIR'
+
+function DeleteAccountDialog() {
+  const { deleteAccount } = useAuth()
+  const [open, setOpen] = useState(false)
+  const [confirmText, setConfirmText] = useState('')
+  const [deleting, setDeleting] = useState(false)
+
+  const canConfirm = confirmText.trim().toUpperCase() === DELETE_CONFIRM_WORD && !deleting
+
+  const handleOpenChange = (next: boolean) => {
+    if (deleting) return
+    setOpen(next)
+    if (!next) setConfirmText('')
+  }
+
+  const handleDelete = async () => {
+    setDeleting(true)
+    const { error } = await deleteAccount()
+    if (error) {
+      setDeleting(false)
+      toast.error('Não foi possível excluir a conta. Tente novamente em instantes.')
+      return
+    }
+    toast.success('Sua conta foi excluída.')
+    window.history.replaceState(null, '', '/')
+  }
+
+  return (
+    <AlertDialog open={open} onOpenChange={handleOpenChange}>
+      <AlertDialogTrigger asChild>
+        <button
+          type="button"
+          className="mt-4 w-full flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-destructive transition-colors"
+        >
+          <Trash2 className="h-4 w-4" />
+          Excluir minha conta
+        </button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Excluir sua conta?</AlertDialogTitle>
+          <AlertDialogDescription asChild>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <p>
+                Isso não pode ser desfeito. Seu nome, e-mail, data de nascimento, foto,
+                bio, contato, resultados do teste e conquistas serão apagados.
+              </p>
+              <p>
+                Depoimentos, tópicos, respostas e comentários que você publicou continuam
+                na Comunidade, mas sem o seu nome: aparecem como &quot;Usuário removido&quot;.
+                Se quiser que algum deles suma também, exclua-o antes.
+              </p>
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div>
+          <label htmlFor="delete-confirm" className="block text-sm font-medium text-foreground mb-2">
+            Digite <span className="font-bold">{DELETE_CONFIRM_WORD}</span> para confirmar
+          </label>
+          <input
+            id="delete-confirm"
+            type="text"
+            value={confirmText}
+            onChange={(e) => setConfirmText(e.target.value)}
+            autoComplete="off"
+            disabled={deleting}
+            className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground"
+          />
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={deleting}>Cancelar</AlertDialogCancel>
+          <Button
+            onClick={handleDelete}
+            disabled={!canConfirm}
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+          >
+            {deleting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+            Excluir conta
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }

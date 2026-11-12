@@ -39,7 +39,7 @@ export interface TestResult {
 
 export interface Experience {
   id: string
-  user_id: string
+  user_id: string | null // null = autor excluiu a conta (migração 016)
   author_name: string
   profession: string
   riasec_type: RIASECType | null
@@ -59,7 +59,7 @@ export interface Experience {
 export interface ExperienceComment {
   id: string
   experience_id: string
-  user_id: string
+  user_id: string | null // null = autor excluiu a conta (migração 016)
   content: string
   created_at: string
   // Joined fields
@@ -68,7 +68,7 @@ export interface ExperienceComment {
 
 export interface ForumTopic {
   id: string
-  user_id: string
+  user_id: string | null // null = autor excluiu a conta (migração 016)
   title: string
   content: string
   riasec_type: RIASECType | null
@@ -85,7 +85,7 @@ export interface ForumTopic {
 export interface ForumReply {
   id: string
   topic_id: string
-  user_id: string
+  user_id: string | null // null = autor excluiu a conta (migração 016)
   content: string
   likes_count: number
   created_at: string

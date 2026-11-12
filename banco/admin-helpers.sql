@@ -109,13 +109,19 @@ where email = '<email-da-conta>';
 -- ------------------------------------------------
 -- 5) Excluir uma conta a pedido (LGPD)
 -- ------------------------------------------------
--- O pedido chega por e-mail (contat3.inova@gmail.com), enviado do endereço
--- cadastrado. IRREVERSÍVEL: apagar o usuário remove o perfil e, em cascata
--- (todas as FKs são "on delete cascade"), resultados do teste, badges,
--- depoimentos, curtidas, comentários, tópicos, respostas e denúncias feitas
--- pela conta. Não existe "Usuário removido": as publicações somem junto.
+-- Desde a migração 016 a própria pessoa exclui a conta pelo app
+-- (Perfil > Excluir minha conta): apaga a foto, os dados pessoais e
+-- anonimiza as publicações, sem passar por aqui. Use este roteiro só
+-- quando o pedido chegar por e-mail (ex.: a pessoa perdeu o acesso).
 --
--- Passo 1 — conferir quem é e o que será apagado (troque o e-mail)
+-- O pedido chega por e-mail (contat3.inova@gmail.com), enviado do endereço
+-- cadastrado. IRREVERSÍVEL: apagar o usuário remove o perfil e, em cascata,
+-- resultados do teste, badges, curtidas e denúncias feitas pela conta.
+-- Depoimentos, comentários, tópicos e respostas FICAM, sem autor
+-- (user_id = null), e aparecem como "Usuário removido" (migração 016).
+-- Se a pessoa pedir que alguma publicação suma, apague-a antes.
+--
+-- Passo 1 — conferir quem é e quantas publicações ficarão anônimas (troque o e-mail)
 select p.id, p.email, p.display_name,
   (select count(*) from public.test_results        where user_id = p.id) as testes,
   (select count(*) from public.experiences         where user_id = p.id) as depoimentos,
