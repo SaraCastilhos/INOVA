@@ -8,3 +8,8 @@ export const fmtData = (iso: string) => {
   const [y, m, d] = iso.split('-')
   return d && m && y ? `${d}/${m}/${y}` : iso
 }
+
+// Para busca: tira acentos e caixa, assim "medico" acha "Médico" e
+// "tecnico" acha "Técnico em…".
+export const normalizarBusca = (texto: string) =>
+  texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
