@@ -4563,5 +4563,454 @@
     "status": "publicado",
     "atualizado_em": "2026-11-12",
     "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "costurador-de-calcados",
+    "nome": "Costurador de calçados",
+    "cbo_code": "7642-05",
+    "area": "Indústria e Produção",
+    "descricao": "Prepara as máquinas e as peças e costura as partes que formam o calçado, como cabedais, palmilhas e cordões, conferindo numeração, lado e tonalidade das peças e arrematando e refilando as costuras. Regula agulhas, linhas, pontos e tensão das máquinas, faz a limpeza e a lubrificação dos equipamentos e segue normas de segurança. A CBO pede escolaridade do ensino fundamental; a experiência se constrói na prática, e o desempenho pleno vem após dois ou três anos.",
+    "atividades": [
+      "Interpretar fichas técnicas de produção",
+      "Regular agulhas, linhas, pontos e tensão das máquinas de costura",
+      "Preparar as peças, marcando com gabaritos, aplicando fitas e dobrando bordas",
+      "Conferir numeração, lado e tonalidade das peças",
+      "Unir as peças do calçado com costura, arrematar e refilar",
+      "Costurar cabedais em palmilhas e cordões em cabedais",
+      "Limpar, lubrificar e ajustar as máquinas e solicitar manutenção"
+    ],
+    "habilidades": [
+      "Agilidade manual",
+      "Concentração visual e auditiva",
+      "Organização",
+      "Capacidade de adaptação",
+      "Trabalho em equipe",
+      "Cuidado com normas de segurança e uso de EPI"
+    ],
+    "formacao_requerida": "fundamental",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "RC",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 2203.9,
+      "p25": 1723,
+      "p75": 2533,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 7642-05 — Costurador de calçados, a máquina (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 7642-05 — Costurador de calçados, a máquina: descrição sumária e formação (Classificação Brasileira de Ocupações, família 7642, MTE)",
+        "url": "https://codigocbo.com.br/cbo-764205-costurador-de-calcados-a-maquina",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 51-6031.00 — Sewing Machine Operators: perfil de interesses (Realistic, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/51-6031.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Costurador de Calçados, a Máquina — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 15.586 vínculos)",
+        "url": "https://www.salario.com.br/profissao/costurador-de-calcados-a-maquina-cbo-764205/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "tecnico-quimico",
+    "nome": "Técnico químico",
+    "cbo_code": "3111-05",
+    "area": "Indústria e Produção",
+    "descricao": "Executa ensaios e análises físico-químicas, prepara reagentes e amostras, opera e monitora máquinas e processos químicos em laboratórios e indústrias e supervisiona a produção, seguindo normas de qualidade, boas práticas de fabricação, biossegurança e controle ambiental. Também participa do desenvolvimento de produtos e processos, elabora laudos e documentos para a legalização de produtos e presta assistência técnica. A formação é técnica de nível médio, em habilitações como técnico em química ou técnico químico em curtimento e couro, com registro no Conselho Regional de Química (CRQ).",
+    "atividades": [
+      "Coletar e preparar amostras e reagentes",
+      "Realizar análises químicas, físicas e microbiológicas e registrar os resultados",
+      "Operar, regular e monitorar máquinas, equipamentos e processos químicos",
+      "Testar matérias-primas e produtos e elaborar receitas de fabricação",
+      "Coordenar equipes e controlar o processo produtivo",
+      "Seguir procedimentos de qualidade e monitorar parâmetros de poluição ambiental",
+      "Redigir laudos, relatórios e documentos para a legalização de produtos"
+    ],
+    "habilidades": [
+      "Atenção e concentração",
+      "Organização",
+      "Iniciativa e perspicácia",
+      "Comunicação e bom relacionamento interpessoal",
+      "Liderança",
+      "Cuidado com normas de segurança"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": true,
+    "conselho": "CRQ",
+    "riasec_code": "IRC",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 3383.75,
+      "p25": 2387,
+      "p75": 3763,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3111-05 — Técnico químico (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 3111-05 — Técnico químico: descrição sumária e formação (Classificação Brasileira de Ocupações, família 3111, MTE)",
+        "url": "https://codigocbo.com.br/cbo-311105-tecnico-quimico",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 2.800/1956 — cria os Conselhos de Química (art. 20: técnicos químicos são profissionais da química; art. 25: registro obrigatório no CRQ)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l2800.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 19-4031.00 — Chemical Technicians: perfil de interesses (Investigative, Realistic, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/19-4031.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Técnico Químico — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 13.960 vínculos)",
+        "url": "https://www.salario.com.br/profissao/tecnico-quimico-cbo-311105/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "engenheiro-agronomo",
+    "nome": "Engenheiro agrônomo",
+    "cbo_code": "2221-10",
+    "area": "Agrárias e Meio Ambiente",
+    "descricao": "Planeja, coordena e executa atividades agrícolas, pecuárias e florestais e o uso sustentável de recursos naturais. Presta assistência técnica e extensão rural, orientando produtores sobre sistemas de produção, conservação do solo e da água, administração da propriedade e comercialização; analisa a viabilidade de projetos, inspeciona a qualidade e a sanidade de produtos e pode atuar na fiscalização agropecuária e ambiental. Exige graduação em Agronomia e registro no CREA.",
+    "atividades": [
+      "Diagnosticar situações e analisar a viabilidade técnica, econômica e ambiental de projetos",
+      "Orientar produtores no planejamento e na administração de sistemas produtivos",
+      "Orientar o uso sustentável e a conservação do solo, da água e do meio ambiente",
+      "Analisar amostras e inspecionar a qualidade e a sanidade de produtos",
+      "Realizar visitas técnicas, perícias e auditorias",
+      "Fiscalizar atividades agropecuárias e o transporte e a comercialização de produtos",
+      "Emitir laudos e pareceres e elaborar relatórios técnicos"
+    ],
+    "habilidades": [
+      "Raciocínio lógico e analítico",
+      "Capacidade de síntese e discernimento",
+      "Espírito empreendedor",
+      "Negociação e liderança",
+      "Expressão oral e escrita",
+      "Adaptabilidade e criatividade"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CREA",
+    "riasec_code": "IR",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 9787.01,
+      "p25": 4567,
+      "p75": 13226,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2221-10 — Engenheiro agrônomo (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2221-10 — Engenheiro agrônomo: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2221, MTE)",
+        "url": "https://codigocbo.com.br/cbo-222110-engenheiro-agronomo",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 5.194/1966 — regula o exercício das profissões de engenheiro, arquiteto e engenheiro-agrônomo (art. 55: exercício só após registro no Conselho Regional)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l5194.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 19-1013.00 — Soil and Plant Scientists: perfil de interesses (Investigative, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/19-1013.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Engenheiro Agrônomo — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 4.726 vínculos)",
+        "url": "https://www.salario.com.br/profissao/engenheiro-agronomo-cbo-222110/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "tecnico-agropecuario",
+    "nome": "Técnico agropecuário",
+    "cbo_code": "3211-10",
+    "area": "Agrárias e Meio Ambiente",
+    "descricao": "Orienta produtores rurais sobre plantio, tratos culturais, colheita, manejo de animais, conservação do solo, uso racional de agrotóxicos e medicamentos veterinários e comercialização da produção. Planeja e executa projetos agropecuários, verificando viabilidade econômica, solo, clima e infraestrutura, administra propriedades rurais, promove a organização e a capacitação de produtores e pode atuar na fiscalização da produção e na difusão da produção orgânica. O acesso é por curso técnico agrícola ou em agropecuária (nível médio).",
+    "atividades": [
+      "Orientar produtores sobre preparo e conservação do solo, plantio, tratos culturais e colheita",
+      "Recomendar o uso racional de agrotóxicos e medicamentos veterinários e o destino das embalagens",
+      "Planejar atividades e elaborar projetos agropecuários, verificando a viabilidade econômica",
+      "Coletar amostras de solo, plantas, rações e sangue para análises",
+      "Administrar propriedades rurais e comercializar a produção",
+      "Organizar reuniões e estimular associações de produtores",
+      "Fiscalizar a produção de mudas e sementes e a sanidade de produtos"
+    ],
+    "habilidades": [
+      "Comunicação oral e escrita",
+      "Capacidade de adaptação",
+      "Organização e comprometimento",
+      "Liderança",
+      "Interação com a comunidade",
+      "Autoconfiança e confiabilidade"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "RIC",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 3556.3,
+      "p25": 2274,
+      "p75": 4200,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3211-10 — Técnico agropecuário (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 3211-10 — Técnico agropecuário: descrição sumária e formação (Classificação Brasileira de Ocupações, família 3211, MTE)",
+        "url": "https://codigocbo.com.br/cbo-321110-tecnico-agropecuario",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 19-4012.00 — Agricultural Technicians: perfil de interesses (Realistic, Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/19-4012.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Técnico Agropecuário — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 4.367 vínculos)",
+        "url": "https://www.salario.com.br/profissao/tecnico-agropecuario-cbo-321110/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "cuidador-de-idosos",
+    "nome": "Cuidador de idosos",
+    "cbo_code": "5162-10",
+    "area": "Serviços Sociais e Jurídicos",
+    "descricao": "Cuida de idosos e de outras pessoas que precisam de ajuda no dia a dia, em casa ou em instituições, seguindo as orientações da família, dos responsáveis ou da equipe de saúde. Ajuda no banho, na alimentação e na higiene, controla horários de remédios e atividades, observa mudanças no estado de saúde, acompanha a pessoa em passeios e consultas, mantém o ambiente seguro e estimula a autonomia, o lazer e a convivência. A CBO pede do ensino fundamental ao médio e cursos de formação básicos; para pessoas com alto grau de dependência, exige formação na área de saúde (técnico ou auxiliar de enfermagem).",
+    "atividades": [
+      "Ajudar a pessoa nas atividades diárias, como banho, higiene e alimentação",
+      "Controlar horários de remédios, refeições e atividades",
+      "Observar o estado de saúde e relatar alterações aos responsáveis",
+      "Preparar e servir refeições e estimular a ingestão de líquidos",
+      "Acompanhar a pessoa em passeios, consultas e atividades sociais",
+      "Manter o ambiente limpo, organizado e seguro, prevenindo acidentes",
+      "Dar apoio emocional e estimular a independência e o lazer"
+    ],
+    "habilidades": [
+      "Paciência",
+      "Calma em situações críticas",
+      "Respeito à privacidade e discrição",
+      "Honestidade",
+      "Escuta atenta",
+      "Criatividade"
+    ],
+    "formacao_requerida": "fundamental",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "SCR",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 1863.66,
+      "p25": 1683,
+      "p75": 1974,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 5162-10 — Cuidador de idosos (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 5162-10 — Cuidador de idosos: descrição sumária e formação (Classificação Brasileira de Ocupações, família 5162, MTE)",
+        "url": "https://codigocbo.com.br/cbo-516210-cuidador-de-idosos",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 31-1122.00 — Personal Care Aides: perfil de interesses (Social, Conventional, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/31-1122.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Cuidador de Idosos — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 96.323 vínculos)",
+        "url": "https://www.salario.com.br/profissao/cuidador-de-idosos-cbo-516210/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "analista-de-pesquisa-de-mercado",
+    "nome": "Analista de pesquisa de mercado (analista de marketing)",
+    "cbo_code": "1423-35",
+    "area": "Gestão e Negócios",
+    "descricao": "Pesquisa o mercado, a concorrência e os hábitos, opiniões e expectativas dos consumidores para orientar decisões de marketing, vendas e comunicação. Analisa tendências e indicadores de desempenho, acompanha a participação da empresa e dos produtos no mercado, apoia o desenvolvimento de novos produtos e ajuda a elaborar o plano estratégico das áreas comerciais. Também é chamado de analista de marketing ou de inteligência de mercado. A CBO pede nível superior, em bacharelado ou tecnologia.",
+    "atividades": [
+      "Pesquisar o mercado e os comportamentos, opiniões e hábitos dos consumidores",
+      "Analisar tendências do mercado, a demanda e a atuação da concorrência",
+      "Monitorar metas, indicadores de desempenho e a participação da empresa no mercado",
+      "Elaborar recomendações de ações e apoiar o plano estratégico da empresa",
+      "Subsidiar o desenvolvimento de novos produtos e serviços",
+      "Assistir clientes nas atividades de comercialização e marketing",
+      "Elaborar relatórios e monitorar mídias"
+    ],
+    "habilidades": [
+      "Raciocínio analítico e capacidade de síntese",
+      "Capacidade de abstração",
+      "Negociação e tomada de decisão",
+      "Relacionamento interpessoal",
+      "Liderança",
+      "Flexibilidade e trabalho em equipe"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "ECI",
+    "riasec_primary": "E",
+    "salario": {
+      "media": 4965.38,
+      "p25": 2800,
+      "p75": 6000,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 1423-35 — Analista de pesquisa de mercado (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 1423-35 — Analista de pesquisa de mercado: descrição sumária e formação (Classificação Brasileira de Ocupações, família 1423, MTE)",
+        "url": "https://codigocbo.com.br/cbo-142335-analista-de-pesquisa-de-mercado",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 13-1161.00 — Market Research Analysts and Marketing Specialists: perfil de interesses (Enterprising, Conventional, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/13-1161.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Analista de Mercado (CBO 1423-35) — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 75.581 vínculos)",
+        "url": "https://www.salario.com.br/profissao/analista-de-mercado-cbo-142335/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "guia-de-turismo",
+    "nome": "Guia de turismo",
+    "cbo_code": "5114-05",
+    "area": "Gestão e Negócios",
+    "descricao": "Acompanha grupos de turistas em passeios e viagens, executando os roteiros, apresentando os locais visitados e transmitindo informações históricas, culturais e naturais. Organiza as atividades do dia, cuida da segurança e do bem-estar dos passageiros, resolve imprevistos com hotéis, transportadoras e autoridades e desenvolve novos roteiros e itinerários. A CBO pede ensino médio e domínio de línguas estrangeiras, e a Lei nº 8.623/1993 exige que o guia seja cadastrado no órgão federal de turismo. O salário abaixo vem de uma amostra pequena (762 vínculos) e deve ser lido com cautela.",
+    "atividades": [
+      "Recepcionar e reunir o grupo e executar o roteiro turístico",
+      "Apresentar os pontos visitados e explicar normas e diferenças culturais dos locais",
+      "Organizar as atividades do dia, os horários, as paradas e os serviços de bordo",
+      "Zelar pela segurança dos passageiros e prestar primeiros socorros",
+      "Intermediar relações com operadoras, hotéis e transportadoras e resolver imprevistos",
+      "Pesquisar locais e desenvolver novos itinerários e roteiros",
+      "Administrar ingressos, documentos, reservas e valores da excursão"
+    ],
+    "habilidades": [
+      "Comunicação e domínio de outros idiomas",
+      "Liderança e integração do grupo",
+      "Atenção constante e responsabilidade",
+      "Flexibilidade para contornar situações adversas",
+      "Pontualidade",
+      "Atualização constante"
+    ],
+    "formacao_requerida": "medio",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "SE",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 2463.71,
+      "p25": 1769,
+      "p75": 2800,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 5114-05 — Guia de turismo (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 5114-05 — Guia de turismo: descrição sumária e formação (Classificação Brasileira de Ocupações, família 5114, MTE)",
+        "url": "https://codigocbo.com.br/cbo-511405-guia-de-turismo",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 8.623/1993 — dispõe sobre a profissão de guia de turismo (art. 2º: cadastro no órgão federal de turismo, a Embratur no texto da lei)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l8623.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 39-7011.00 — Tour Guides and Escorts: perfil de interesses (Social, Enterprising)",
+        "url": "https://www.onetonline.org/link/summary/39-7011.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Guia de Turismo — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 762 vínculos)",
+        "url": "https://www.salario.com.br/profissao/guia-de-turismo-cbo-511405/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
   }
 ]
