@@ -10,8 +10,11 @@ import {
   CalendarClock,
   GraduationCap,
   ExternalLink,
+  Shuffle,
+  ChevronRight,
 } from 'lucide-react'
 import { PROFISSOES } from '@/lib/guia'
+import { profissoesParecidas, type MotivoParecida } from '@/lib/professions'
 import { RIASEC_INFO, FORMACAO_LABELS } from '@/lib/types'
 import { fmtBRL, fmtData } from '@/lib/format'
 
@@ -21,6 +24,12 @@ import { fmtBRL, fmtData } from '@/lib/format'
 // original pedia: guia de profissões com leitura pública.
 
 type Params = Promise<{ slug: string }>
+
+const MOTIVO_LABEL: Record<MotivoParecida, string> = {
+  'area-e-perfil': 'Mesma área e perfil parecido',
+  area: 'Mesma área',
+  perfil: 'Perfil RIASEC parecido',
+}
 
 function getProfissao(slug: string) {
   return PROFISSOES.find((p) => p.slug === slug)
@@ -44,6 +53,7 @@ export default async function ProfissaoDetalhePage({ params }: { params: Params 
   const { slug } = await params
   const profissao = getProfissao(slug)
   if (!profissao) notFound()
+  const parecidas = profissoesParecidas(profissao)
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -131,6 +141,40 @@ export default async function ProfissaoDetalhePage({ params }: { params: Params 
             <span>· registro no {profissao.conselho}</span>
           )}
         </div>
+
+        {parecidas.length > 0 && (
+          <div>
+            <h2 className="flex items-center gap-2 text-base font-semibold text-foreground mb-1">
+              <Shuffle className="h-4 w-4" /> Profissões parecidas
+            </h2>
+            <p className="text-xs text-muted-foreground mb-2">
+              Pela área e pelo código RIASEC em comum.
+            </p>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {parecidas.map(({ profissao: p, motivo }) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/profissoes/${p.slug}`}
+                    className="flex h-full items-center gap-3 rounded-xl border border-border p-3 hover:bg-muted transition-colors"
+                  >
+                    <span
+                      className="shrink-0 px-2 py-0.5 rounded-full text-xs font-bold text-white"
+                      style={{ backgroundColor: RIASEC_INFO[p.riasec_primary].cor }}
+                      title={`Perfil RIASEC: ${p.riasec_code}`}
+                    >
+                      {p.riasec_code}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-medium text-foreground">{p.nome}</span>
+                      <span className="block text-xs text-muted-foreground">{MOTIVO_LABEL[motivo]}</span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div>
           <h2 className="flex items-center gap-2 text-base font-semibold text-foreground mb-2">
