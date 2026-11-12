@@ -77,11 +77,13 @@ export default function TermosPage() {
 
           <h2>5. Exclusão de conta</h2>
           <p>
-            Você pode solicitar a exclusão da sua conta a qualquer momento,
-            enviando um e-mail para <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>{' '}
-            a partir do endereço cadastrado. Seus dados pessoais e as publicações
-            feitas com a conta (depoimentos, tópicos, respostas e comentários) são
-            apagados. Mais detalhes na{' '}
+            Você pode excluir sua conta a qualquer momento, em Perfil &gt; Excluir
+            minha conta. Se não conseguir acessá-la, envie um e-mail para{' '}
+            <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>{' '}
+            a partir do endereço cadastrado. Seus dados pessoais são apagados; as
+            publicações feitas com a conta (depoimentos, tópicos, respostas e
+            comentários) permanecem na Comunidade sem o seu nome, como
+            &quot;Usuário removido&quot;. Mais detalhes na{' '}
             <Link href="/privacidade" className="text-primary hover:underline">
               Política de Privacidade
             </Link>

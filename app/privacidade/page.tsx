@@ -76,12 +76,17 @@ export default function PrivacidadePage() {
 
           <h2>5. Exclusão e anonimização</h2>
           <p>
-            Para excluir sua conta, envie um e-mail para <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>{' '}
+            Você pode excluir sua conta pelo próprio site, em Perfil &gt; Excluir
+            minha conta. Se não conseguir acessá-la, envie um e-mail para{' '}
+            <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>{' '}
             a partir do endereço cadastrado, para confirmarmos que o pedido é seu.
             Ao excluir a conta, seus dados pessoais (nome, e-mail, data de
-            nascimento, resultados do teste) e as publicações feitas com ela
-            (depoimentos, tópicos, respostas e comentários) são apagados e não
-            podem ser recuperados.
+            nascimento, foto, bio, contato, resultados do teste e conquistas) são
+            apagados e não podem ser recuperados. As publicações feitas com ela
+            (depoimentos, tópicos, respostas e comentários) são anonimizadas:
+            continuam na Comunidade, mas sem vínculo com você, com o autor exibido
+            como &quot;Usuário removido&quot;. Se quiser que alguma publicação seja
+            apagada, exclua-a antes de excluir a conta, ou peça pelo e-mail acima.
           </p>
 
           <h2>6. Seus direitos</h2>
