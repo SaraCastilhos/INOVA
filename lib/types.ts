@@ -6,7 +6,6 @@ export interface Profile {
   display_name: string
   email: string
   birth_date: string | null
-  user_type: 'estudante' | 'profissional' | 'ambos'
   avatar_url: string | null
   bio: string | null
   contact: string | null
@@ -16,7 +15,9 @@ export interface Profile {
   is_admin: boolean
   lgpd_consent: boolean
   lgpd_consent_date: string | null
-  last_type_change: string | null
+  // user_type e last_type_change continuam no banco, mas estão obsoletos
+  // desde 12/11/2026 (o tipo de conta foi substituído pelo perfil
+  // profissional) — o app não lê nem grava esses campos.
   // Perfil profissional (migração 017). profession_title é preenchido pelo
   // banco a partir do código da CBO — o cliente só envia profession_cbo.
   profession_cbo: string | null
@@ -45,12 +46,12 @@ export type EducationLevel =
 // data de nascimento e consentimento ficam de fora — o banco recusa
 // "select *" em profiles; o próprio usuário lê tudo por get_my_profile().
 export const PUBLIC_PROFILE_COLUMNS =
-  'id, display_name, avatar_url, bio, contact, user_type, is_specialist, specialist_status, specialist_area, is_admin, profession_cbo, profession_title, profession_status, experience_range, education_level, education_course, education_in_progress, created_at, updated_at'
+  'id, display_name, avatar_url, bio, contact, is_specialist, specialist_status, specialist_area, is_admin, profession_cbo, profession_title, profession_status, experience_range, education_level, education_course, education_in_progress, created_at, updated_at'
 
 // Perfil como outra pessoa o vê.
 export type PublicProfile = Omit<
   Profile,
-  'email' | 'birth_date' | 'lgpd_consent' | 'lgpd_consent_date' | 'last_type_change'
+  'email' | 'birth_date' | 'lgpd_consent' | 'lgpd_consent_date'
 >
 
 export interface TestResult {

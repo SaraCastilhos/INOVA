@@ -46,7 +46,6 @@ import {
   Trash2,
   Search,
   X,
-  GraduationCap,
   Briefcase,
   Phone,
   Calendar,
@@ -2269,22 +2268,6 @@ function PublicProfileModal({ profile, onClose }: { profile: PublicProfile; onCl
     }
   }, [supabase, profile.id])
 
-  const getUserTypeIcon = () => {
-    switch (profile.user_type) {
-      case 'estudante': return <GraduationCap className="w-4 h-4" />
-      case 'profissional': return <Briefcase className="w-4 h-4" />
-      case 'ambos': return <Users className="w-4 h-4" />
-    }
-  }
-
-  const getUserTypeLabel = () => {
-    switch (profile.user_type) {
-      case 'estudante': return 'Estudante'
-      case 'profissional': return 'Profissional'
-      case 'ambos': return 'Estudante e Profissional'
-    }
-  }
-
   const guiaSlug = slugDoGuia(profile.profession_cbo)
 
   return (
@@ -2310,10 +2293,6 @@ function PublicProfileModal({ profile, onClose }: { profile: PublicProfile; onCl
               <div className="flex items-center justify-center gap-2">
                 <h3 className="text-lg font-bold text-foreground">{profile.display_name}</h3>
                 {profile.is_specialist && <BadgeCheck className="w-5 h-5 text-secondary shrink-0" />}
-              </div>
-              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mt-1">
-                {getUserTypeIcon()}
-                <span>{getUserTypeLabel()}</span>
               </div>
               {profile.is_specialist && profile.specialist_area && (
                 <span className="inline-block mt-2 px-2.5 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary">

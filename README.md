@@ -10,7 +10,7 @@ O objetivo é reduzir a indecisão e a ansiedade ligadas à escolha profissional
 
 ## Funcionalidades
 
-- **Cadastro e autenticação** por e-mail/senha, com perfis Estudante, Profissional ou Ambos.
+- **Cadastro e autenticação** por e-mail/senha. Não há "tipo de conta": quem a pessoa é (estuda, atua ou já atuou numa profissão) vem do perfil profissional.
 - **Teste vocacional RIASEC** (modelo de Holland — 6 perfis: Realista, Investigativo, Artístico, Social, Empreendedor, Convencional): adaptação pt-BR do **O\*NET Mini Interest Profiler** (30 itens, escala de 5 pontos), com ranking dos três perfis dominantes, aviso de perfil pouco diferenciado e histórico de tentativas. Cada resultado registra a versão do questionário que o gerou.
 - **Guia de carreiras**:
   - *Profissões* com código CBO, descrição, atividades, habilidades, formação exigida, regulamentação, código RIASEC e salário médio com faixa (1º–3º quartil) — cada ficha com fontes públicas e data de acesso. A lista mostra cards compactos; cada profissão tem uma página própria e pública em **/profissoes/[slug]** (pré-renderizada no build, sem exigir login). Busca textual, filtro por área de atuação e filtro por tipo RIASEC (liberado após fazer o teste); busca, filtros e rolagem são mantidos ao abrir uma profissão e voltar.
@@ -21,7 +21,7 @@ O objetivo é reduzir a indecisão e a ansiedade ligadas à escolha profissional
   - *Fórum* de discussão com tópicos e respostas. O autor edita e fecha os próprios tópicos; o admin também fixa e modera qualquer conteúdo.
   - *Especialistas verificados*: quem atua ou já atuou na profissão do perfil (CBO) pede o selo com uma comprovação (link ou registro no conselho); a equipe aprova ou recusa com motivo, que a pessoa vê na aba. A área do selo fica congelada na aprovação. O selo identifica o especialista, mas não restringe quem responde no fórum.
   - *Moderação*: conteúdo publica na hora (pós-moderação), passa por um filtro automático de termos ofensivos/spam no banco e pode ser denunciado para revisão.
-- **Perfil**: foto (upload real), bio, contato e perfil público (visível ao clicar no nome/foto de qualquer usuário em depoimentos, fórum ou na lista de especialistas).
+- **Perfil**: foto (upload real), bio, contato, profissão da CBO (com situação: atua, estuda para ser, já atuou), tempo de experiência, formação e perfil público (visível ao clicar no nome/foto de qualquer usuário em depoimentos, fórum ou na lista de especialistas).
 - **Gamificação**: badges por marcos de uso (primeiro teste, primeiro depoimento, primeiro tópico etc.), sem ranking público.
 
 ## Stack técnica
