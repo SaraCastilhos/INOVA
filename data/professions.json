@@ -3659,5 +3659,444 @@
     "status": "publicado",
     "atualizado_em": "2026-11-12",
     "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "desenvolvedor-de-sistemas-tecnico",
+    "nome": "Desenvolvedor de sistemas (técnico)",
+    "cbo_code": "3171-10",
+    "area": "Tecnologia da Informação",
+    "descricao": "Também chamado de programador, desenvolve sistemas, sites e aplicativos: levanta o que o cliente precisa, projeta telas e bancos de dados, escreve e testa o código, publica o sistema e cuida da manutenção e das atualizações. Participa da escolha de linguagens, ferramentas e metodologias e do planejamento das etapas de trabalho com a equipe. A CBO pede curso técnico de nível médio em informática ou ensino superior incompleto em áreas como informática, ciências exatas ou engenharia.",
+    "atividades": [
+      "Levantar a demanda do cliente e definir os requisitos do sistema",
+      "Desenvolver o leiaute de telas e a interface de sistemas, sites e aplicativos",
+      "Modelar e montar a estrutura do banco de dados",
+      "Codificar, compilar e testar programas e aplicativos",
+      "Publicar o sistema no servidor e implementar recursos de segurança",
+      "Atualizar sistemas e páginas web e monitorar seu desempenho e segurança",
+      "Documentar os sistemas e dar suporte técnico aos usuários internos"
+    ],
+    "habilidades": [
+      "Raciocínio lógico e senso analítico",
+      "Programação e domínio de linguagens e ferramentas de desenvolvimento",
+      "Concentração e atenção a detalhes",
+      "Trabalho em equipe e comunicação",
+      "Flexibilidade e capacidade de trabalhar sob pressão",
+      "Atualização constante sobre novas tecnologias"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "CI",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 6103.56,
+      "p25": 2800,
+      "p75": 8360,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3171-10 — Desenvolvedor de sistemas de tecnologia da informação (técnico) (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 3171-10 — Desenvolvedor de sistemas de tecnologia da informação (técnico): descrição sumária e formação (Classificação Brasileira de Ocupações, família 3171, MTE)",
+        "url": "https://codigocbo.com.br/cbo-317110-programador-de-sistemas-de-informacao",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 15-1251.00 — Computer Programmers: perfil de interesses (Conventional, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/15-1251.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Programador de Sistemas de Informação (CBO 3171-10, título antigo da ocupação) — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 51.988 vínculos)",
+        "url": "https://www.salario.com.br/profissao/programador-de-sistemas-de-informacao-cbo-317110/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "analista-de-redes-e-de-comunicacao-de-dados",
+    "nome": "Analista de redes e de comunicação de dados",
+    "cbo_code": "2124-10",
+    "area": "Tecnologia da Informação",
+    "descricao": "Projeta, implanta e administra a infraestrutura de redes e sistemas de uma organização: define a arquitetura, configura servidores e equipamentos, monitora o desempenho, corrige falhas e controla o acesso aos dados e recursos. Também estabelece padrões e níveis de segurança, documenta a estrutura da rede, presta suporte técnico e avalia novas tecnologias. A CBO pede curso superior completo, em bacharelado ou tecnologia.",
+    "atividades": [
+      "Identificar as necessidades do cliente e propor soluções de tecnologia da informação",
+      "Especificar a arquitetura dos sistemas e participar da aprovação de infraestrutura, software e rede",
+      "Administrar os recursos de rede e o ambiente operacional",
+      "Monitorar o desempenho dos sistemas e identificar e corrigir falhas",
+      "Controlar o acesso aos dados e definir níveis de segurança",
+      "Documentar a estrutura da rede, os níveis de serviço e as soluções adotadas",
+      "Pesquisar e avaliar novas tecnologias em ambiente de teste"
+    ],
+    "habilidades": [
+      "Raciocínio lógico e abstrato",
+      "Senso analítico para diagnosticar problemas",
+      "Organização e atenção a procedimentos",
+      "Capacidade de antecipar cenários e riscos",
+      "Trabalho em equipe e proatividade",
+      "Resiliência e capacidade de trabalhar sob pressão"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "CRI",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 5700.31,
+      "p25": 2867,
+      "p75": 7000,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2124-10 — Analista de redes e de comunicação de dados (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2124-10 — Analista de redes e de comunicação de dados: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2124, MTE)",
+        "url": "https://codigocbo.com.br/cbo-212410-analista-de-redes-e-de-comunicacao-de-dados",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 15-1244.00 — Network and Computer Systems Administrators: perfil de interesses (Conventional, Realistic, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/15-1244.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Analista de Redes e de Comunicação de Dados — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 26.674 vínculos)",
+        "url": "https://www.salario.com.br/profissao/analista-de-redes-e-de-comunicacao-de-dados-cbo-212410/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "analista-de-suporte-computacional",
+    "nome": "Analista de suporte computacional",
+    "cbo_code": "2124-20",
+    "area": "Tecnologia da Informação",
+    "descricao": "Dá suporte técnico a usuários e clientes: atende chamados, orienta sobre o uso de sistemas, instala e configura hardware, softwares e sistemas operacionais e identifica e corrige falhas. Registra ocorrências, testa sistemas, propõe alternativas de implantação e aciona o suporte de fornecedores quando necessário. A CBO pede curso superior completo, em bacharelado ou tecnologia.",
+    "atividades": [
+      "Atender e controlar chamados de usuários e clientes",
+      "Orientar usuários no uso de sistemas e equipamentos",
+      "Montar e instalar hardware",
+      "Instalar e configurar softwares, drivers e sistemas operacionais",
+      "Identificar falhas e executar procedimentos para melhorar o desempenho dos sistemas",
+      "Testar sistemas e registrar defeitos e ocorrências",
+      "Acionar o suporte de terceiros e emitir pareceres técnicos"
+    ],
+    "habilidades": [
+      "Raciocínio lógico",
+      "Paciência e empatia com o usuário",
+      "Comunicação clara para explicar soluções técnicas",
+      "Organização no atendimento de chamados",
+      "Capacidade de trabalhar sob pressão",
+      "Memória e consulta à documentação técnica"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "CRI",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 4109.18,
+      "p25": 2353,
+      "p75": 4500,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2124-20 — Analista de suporte computacional (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2124-20 — Analista de suporte computacional: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2124, MTE)",
+        "url": "https://codigocbo.com.br/cbo-212420-analista-de-suporte-computacional",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 15-1232.00 — Computer User Support Specialists: perfil de interesses (Conventional, Realistic, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/15-1232.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Analista de Suporte Computacional — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 63.439 vínculos)",
+        "url": "https://www.salario.com.br/profissao/analista-de-suporte-computacional-cbo-212420/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "engenheiro-de-equipamentos-em-computacao",
+    "nome": "Engenheiro de equipamentos em computação",
+    "cbo_code": "2122-10",
+    "area": "Tecnologia da Informação",
+    "descricao": "Projeta, monta e mantém equipamentos e soluções de computação, unindo hardware e software: identifica problemas e oportunidades, cria protótipos, projeta módulos de equipamentos e programas em linguagem de baixo nível (firmware), testa e implanta as soluções. Também gerencia o ambiente operacional, elabora manuais e relatórios técnicos, presta suporte e treina usuários. Exige curso superior em Engenharia de Computação ou área afim e registro no CREA. O salário abaixo vem de uma amostra pequena (410 vínculos) e deve ser lido com cautela.",
+    "atividades": [
+      "Identificar problemas, restrições e oportunidades de projeto",
+      "Projetar módulos de equipamentos e programas em linguagem de baixo nível",
+      "Criar protótipos e validar novas tecnologias",
+      "Montar equipamentos e conectar aplicativos e hardware",
+      "Testar e implantar as soluções projetadas",
+      "Configurar o ambiente operacional e realizar manutenção preventiva e corretiva",
+      "Elaborar manuais e relatórios técnicos e treinar usuários"
+    ],
+    "habilidades": [
+      "Raciocínio lógico e abstrato",
+      "Curiosidade e persistência na solução de problemas",
+      "Atenção a detalhes",
+      "Criatividade",
+      "Trabalho em equipe e comunicação",
+      "Objetividade e capacidade de negociação"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CREA",
+    "riasec_code": "RIC",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 13936.4,
+      "p25": 7891,
+      "p75": 15479,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2122-10 — Engenheiro de equipamentos em computação (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2122-10 — Engenheiro de equipamentos em computação: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2122, MTE)",
+        "url": "https://www.ocupacoes.com.br/cbo-mte/212210-engenheiro-de-equipamentos-em-computacao",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 5.194/1966 — regula o exercício da engenharia (art. 55: exercício só após registro no Conselho Regional)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l5194.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 17-2061.00 — Computer Hardware Engineers: perfil de interesses (Realistic, Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/17-2061.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Engenheiro de Equipamentos em Computação — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 410 vínculos)",
+        "url": "https://www.salario.com.br/profissao/engenheiro-de-equipamentos-em-computacao-cbo-212210/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "engenheiro-eletricista",
+    "nome": "Engenheiro eletricista",
+    "cbo_code": "2143-05",
+    "area": "Construção e Infraestrutura",
+    "descricao": "Planeja, projeta e especifica sistemas e equipamentos elétricos, eletrônicos e de energia, como redes de geração, transmissão e distribuição, instalações elétricas e sistemas de automação e controle. Executa e supervisiona a instalação, os testes, a manutenção e as inspeções desses sistemas, elabora normas, laudos e manuais técnicos e coordena equipes e obras. O exercício da profissão exige graduação em Engenharia Elétrica, Eletrônica ou de Telecomunicações e registro no CREA.",
+    "atividades": [
+      "Projetar sistemas de geração, transmissão e distribuição de energia",
+      "Projetar sistemas elétricos e eletrônicos e de automação e controle de processos",
+      "Estudar a viabilidade técnica, econômica e socioambiental dos projetos",
+      "Especificar parâmetros técnicos e de segurança de sistemas e equipamentos",
+      "Instalar, configurar, testar e inspecionar sistemas e equipamentos",
+      "Elaborar planos de manutenção, laudos e manuais técnicos",
+      "Coordenar equipes e controlar cronogramas e normas de segurança"
+    ],
+    "habilidades": [
+      "Raciocínio lógico, analítico e matemático",
+      "Visão espacial",
+      "Capacidade de síntese e de tomada de decisões",
+      "Liderança e administração de conflitos",
+      "Atenção focada e cuidado com normas de segurança",
+      "Espírito empreendedor e capacidade de negociação"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CREA",
+    "riasec_code": "RIC",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 11265.35,
+      "p25": 7652,
+      "p75": 13812,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2143-05 — Engenheiro eletricista (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2143-05 — Engenheiro eletricista: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2143, MTE)",
+        "url": "https://codigocbo.com.br/cbo-214305-engenheiro-eletricista",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 17-2071.00 — Electrical Engineers: perfil de interesses (Realistic, Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/17-2071.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Engenheiro Eletricista — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 5.235 vínculos)",
+        "url": "https://www.salario.com.br/profissao/engenheiro-eletricista-cbo-214305/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "tecnico-em-mecatronica",
+    "nome": "Técnico em mecatrônica (automação da manufatura)",
+    "cbo_code": "3001-05",
+    "area": "Indústria e Produção",
+    "descricao": "Projeta, instala, programa e mantém sistemas de automação industrial, que combinam mecânica, eletrônica e computação. Programa controladores lógicos (CLP), máquinas de comando numérico (CNC) e robôs, integra equipamentos em redes industriais, testa e ajusta os sistemas e faz manutenção preventiva, preditiva e corretiva. Também elabora documentação técnica, analisa a compra de equipamentos e pode coordenar equipes. O acesso é por curso técnico de nível médio em mecatrônica.",
+    "atividades": [
+      "Analisar processos e produtos e propor soluções de automação",
+      "Programar controladores lógicos (CLP), máquinas CNC e parâmetros de acionamento",
+      "Integrar robôs e equipamentos de automação em redes industriais",
+      "Montar componentes mecânicos e eletroeletrônicos e testar os sistemas",
+      "Planejar e realizar manutenção preventiva, preditiva e corretiva",
+      "Elaborar a documentação técnica dos sistemas de automação",
+      "Emitir parecer técnico sobre a compra de máquinas e equipamentos"
+    ],
+    "habilidades": [
+      "Visão sistêmica",
+      "Raciocínio lógico para programação e diagnóstico de falhas",
+      "Trabalho em equipe e comunicação",
+      "Iniciativa e autodisciplina",
+      "Atualização tecnológica constante",
+      "Cuidado com normas de segurança e uso de EPI"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "RCI",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 4380.13,
+      "p25": 2870,
+      "p75": 5419,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3001-05 — Técnico em mecatrônica - automação da manufatura (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 3001-05 — Técnico em mecatrônica - automação da manufatura: descrição sumária e formação (Classificação Brasileira de Ocupações, família 3001, MTE)",
+        "url": "https://codigocbo.com.br/cbo-300105-tecnico-em-mecatronica-automacao-da-manufatura",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 17-3024.00 — Electro-Mechanical and Mechatronics Technologists and Technicians: perfil de interesses (Realistic, Conventional, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/17-3024.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Técnico em Mecatrônica - Automação da Manufatura — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 5.615 vínculos)",
+        "url": "https://www.salario.com.br/profissao/tecnico-em-mecatronica-automacao-da-manufatura-cbo-300105/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "eletrotecnico",
+    "nome": "Eletrotécnico",
+    "cbo_code": "3131-05",
+    "area": "Indústria e Produção",
+    "descricao": "Elabora estudos e projetos elétricos, dimensiona circuitos e componentes, monta e coloca em operação instalações e equipamentos e opera sistemas elétricos de geração, transmissão e distribuição. Faz manutenção preventiva, preditiva e corretiva, realiza medições e ensaios, aplica normas de qualidade e de segurança e pode atuar na área técnico-comercial, em vendas e orçamentos, e no treinamento de equipes. O acesso é por curso técnico de nível médio em eletrotécnica.",
+    "atividades": [
+      "Elaborar estudos e projetos, dimensionando circuitos e componentes eletroeletrônicos",
+      "Montar projetos, fazer o comissionamento e colocar sistemas em operação",
+      "Operar e supervisionar sistemas de geração, transmissão e distribuição de energia",
+      "Realizar manutenção preventiva, preditiva e corretiva e medir grandezas elétricas",
+      "Executar ensaios e testes conforme normas técnicas e de qualidade",
+      "Aplicar normas de segurança e orientar o uso de equipamentos de proteção",
+      "Atuar na área técnico-comercial, elaborando orçamentos e dando suporte técnico"
+    ],
+    "habilidades": [
+      "Interpretação de normas e instruções técnicas",
+      "Raciocínio lógico e afinidade com informática",
+      "Responsabilidade e discernimento",
+      "Trabalho em equipe e relacionamento interpessoal",
+      "Comunicação clara",
+      "Controle em situações de emergência"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "RIC",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 3372.39,
+      "p25": 2376,
+      "p75": 4000,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3131-05 — Eletrotécnico (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 3131-05 — Eletrotécnico: descrição sumária e formação (Classificação Brasileira de Ocupações, família 3131, MTE)",
+        "url": "https://codigocbo.com.br/cbo-313105-eletrotecnico",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 17-3023.00 — Electrical and Electronic Engineering Technologists and Technicians: perfil de interesses (Realistic, Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/17-3023.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Eletrotécnico — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 19.465 vínculos)",
+        "url": "https://www.salario.com.br/profissao/eletrotecnico-cbo-313105/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
   }
 ]
