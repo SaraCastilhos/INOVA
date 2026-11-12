@@ -4098,5 +4098,470 @@
     "status": "publicado",
     "atualizado_em": "2026-11-12",
     "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "pedagogo",
+    "nome": "Pedagogo",
+    "cbo_code": "2394-15",
+    "area": "Educação",
+    "descricao": "Planeja, coordena, implementa e avalia projetos pedagógicos e instrucionais, no ensino presencial e a distância, em escolas, cursos e empresas, aplicando metodologias que facilitem o ensino e a aprendizagem. Acompanha o trabalho dos professores e a trajetória dos alunos, organiza a formação continuada da equipe e cria espaços de participação da comunidade escolar. A família ocupacional inclui funções como coordenador pedagógico, orientador educacional e designer educacional. A CBO pede curso superior na área de educação ou em áreas correlatas, como a Pedagogia.",
+    "atividades": [
+      "Levantar necessidades educacionais e caracterizar o perfil dos alunos",
+      "Coordenar a construção do projeto pedagógico ou instrucional",
+      "Acompanhar e assessorar o trabalho docente e a trajetória escolar dos alunos",
+      "Produzir e especificar materiais e recursos pedagógicos",
+      "Construir sistemas e instrumentos de avaliação e propor soluções para problemas educacionais",
+      "Promover a formação continuada dos profissionais com grupos de estudo, cursos e oficinas",
+      "Criar espaços de participação e organizar reuniões com a comunidade escolar"
+    ],
+    "habilidades": [
+      "Comunicação verbal e escrita",
+      "Escuta e capacidade de integrar informações",
+      "Respeito às diversidades",
+      "Administração de conflitos",
+      "Organização e administração do tempo",
+      "Criatividade e flexibilidade",
+      "Trabalho em equipe"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "SEI",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 3191,
+      "p25": 1980,
+      "p75": 3847,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2394-15 — Pedagogo (atividades da família 2394, programadores, avaliadores e orientadores de ensino) (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2394-15 — Pedagogo: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2394, MTE)",
+        "url": "https://codigocbo.com.br/cbo-239415-pedagogo",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 25-9031.00 — Instructional Coordinators: perfil de interesses (Social, Enterprising, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/25-9031.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Pedagogo — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 12.431 vínculos)",
+        "url": "https://www.salario.com.br/profissao/pedagogo-cbo-239415/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "interprete-de-lingua-de-sinais",
+    "nome": "Intérprete de língua de sinais (Libras)",
+    "cbo_code": "2614-25",
+    "area": "Comunicação e Informação",
+    "descricao": "Interpreta, de forma simultânea ou consecutiva, entre a Língua Brasileira de Sinais (Libras) e a língua portuguesa, em aulas, eventos, atendimentos, programas de TV, internet e repartições públicas, e traduz textos e vídeos, adaptando o discurso ao público e respeitando o contexto cultural de pessoas surdas e ouvintes. Também pesquisa terminologias, elabora roteiros para janelas de Libras e legendas e presta assessoria a clientes. Pela Lei nº 12.319/2010, alterada em 2023, a profissão exige curso técnico em Tradução e Interpretação em Libras, graduação específica (como Letras-Libras) ou outra graduação com especialização de pelo menos 360 horas e exame de proficiência.",
+    "atividades": [
+      "Interpretar discursos de forma simultânea ou consecutiva entre Libras e português",
+      "Adaptar o discurso ao público-alvo e trabalhar em registros linguísticos diversos",
+      "Traduzir textos, documentos e vídeos, inclusive para legendas",
+      "Elaborar roteiros para janelas de Libras e legendas visuais",
+      "Pesquisar fontes e terminologias e estudar temas específicos da interpretação",
+      "Interpretar em juízo e em repartições públicas",
+      "Avaliar as necessidades do cliente e verificar a adequação do ambiente e dos equipamentos"
+    ],
+    "habilidades": [
+      "Fluência e proficiência em Libras e em português",
+      "Agilidade de raciocínio e concentração",
+      "Neutralidade e discrição",
+      "Acuidade visual e auditiva",
+      "Capacidade de síntese e de improviso",
+      "Trabalho em equipe e sob pressão de tempo"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "CAS",
+    "riasec_primary": "C",
+    "salario": {
+      "media": 2950.69,
+      "p25": 2297,
+      "p75": 3383,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2614-25 — Intérprete de língua de sinais (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2614-25 — Intérprete de língua de sinais: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2614, MTE)",
+        "url": "https://codigocbo.com.br/cbo-261425-interprete-de-lingua-de-sinais",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 12.319/2010, com a redação da Lei nº 14.704/2023 — regulamenta a profissão de tradutor, intérprete e guia-intérprete de Libras (art. 4º: formação exigida)",
+        "url": "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12319.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 27-3091.00 — Interpreters and Translators: perfil de interesses (Conventional, Artistic, Social)",
+        "url": "https://www.onetonline.org/link/summary/27-3091.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Intérprete de Língua de Sinais — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 2.986 vínculos)",
+        "url": "https://www.salario.com.br/profissao/interprete-de-lingua-de-sinais-cbo-261425/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "fonoaudiologo",
+    "nome": "Fonoaudiólogo",
+    "cbo_code": "2238-10",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Avalia, diagnostica e trata alterações da comunicação e de funções relacionadas, como fala, linguagem oral e escrita, voz, audição, fluência e deglutição, em pessoas de todas as idades. Elabora planos terapêuticos, orienta pacientes, familiares e cuidadores e desenvolve programas de prevenção e promoção da saúde em clínicas, hospitais, escolas, empresas e serviços públicos. O exercício da profissão exige graduação em Fonoaudiologia e registro no Conselho Regional de Fonoaudiologia (CRFa).",
+    "atividades": [
+      "Realizar anamnese e avaliar fala, linguagem, voz, audição e deglutição",
+      "Analisar exames e estabelecer diagnóstico, prognóstico e plano terapêutico",
+      "Tratar distúrbios vocais e alterações da fala, da linguagem e da fluência",
+      "Habilitar o sistema auditivo e desenvolver habilidades auditivas",
+      "Orientar pacientes, familiares e cuidadores sobre condutas e hábitos de saúde",
+      "Planejar e implementar programas de prevenção e promoção da saúde",
+      "Registrar dados em prontuário e emitir laudos e relatórios"
+    ],
+    "habilidades": [
+      "Capacidade de observação e análise",
+      "Comunicação, inclusive não verbal",
+      "Criatividade e capacidade de adaptação",
+      "Tomada de decisão",
+      "Organização e objetividade",
+      "Trabalho em equipe"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRFa",
+    "riasec_code": "SIC",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 4447.46,
+      "p25": 3056,
+      "p75": 5340,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2238-10 — Fonoaudiólogo geral (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2238-10 — Fonoaudiólogo geral: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2238, MTE)",
+        "url": "https://codigocbo.com.br/cbo-223810-fonoaudiologo-geral",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 6.965/1981 — regulamenta a profissão de fonoaudiólogo e cria os Conselhos de Fonoaudiologia (arts. 1º, 17 e 18)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l6965.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 29-1127.00 — Speech-Language Pathologists: perfil de interesses (Social, Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/29-1127.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Fonoaudiólogo Geral — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 7.196 vínculos)",
+        "url": "https://www.salario.com.br/profissao/fonoaudiologo-geral-cbo-223810/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "biomedico",
+    "nome": "Biomédico",
+    "cbo_code": "2212-05",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Analisa amostras de material biológico (como sangue e urina), de alimentos e do ambiente: coleta e prepara as amostras, escolhe métodos e equipamentos e libera os laudos dos exames. Também pode atuar em bancos de sangue, reprodução assistida, diagnóstico por imagem e radioterapia, produção de vacinas e reagentes, circulação extracorpórea e pesquisa científica. O exercício da profissão exige graduação em Biomedicina (Ciências Biológicas, modalidade médica) e registro no Conselho Regional de Biomedicina (CRBM).",
+    "atividades": [
+      "Coletar, identificar e preparar amostras de material biológico",
+      "Planejar e realizar análises clínicas, bromatológicas e ambientais",
+      "Interpretar resultados e liberar e assinar laudos",
+      "Atuar em bancos de sangue, triando doadores e processando hemocomponentes",
+      "Realizar procedimentos de reprodução assistida",
+      "Operar equipamentos de diagnóstico por imagem e de radioterapia",
+      "Seguir normas de boas práticas, biossegurança e controle de qualidade"
+    ],
+    "habilidades": [
+      "Meticulosidade e concentração",
+      "Habilidade motora fina e acuidade visual",
+      "Capacidade de observação",
+      "Organização",
+      "Paciência e dedicação",
+      "Trabalho em equipe"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRBM",
+    "riasec_code": "IRC",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 3355.52,
+      "p25": 2539,
+      "p75": 3671,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2212-05 — Biomédico (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2212-05 — Biomédico: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2212, MTE)",
+        "url": "https://codigocbo.com.br/cbo-221205-biomedico",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 6.684/1979 — regulamenta a profissão de biomédico (art. 3º: quem pode exercer; arts. 20 e 21: carteira profissional do Conselho)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/1970-1979/l6684.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 7.017/1982 — desmembra os Conselhos de Biomedicina e de Biologia (art. 1º)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l7017.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 29-2011.00 — Medical and Clinical Laboratory Technologists: perfil de interesses (Investigative, Realistic, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/29-2011.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Biomédico — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 19.047 vínculos)",
+        "url": "https://www.salario.com.br/profissao/biomedico-cbo-221205/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "quimico",
+    "nome": "Químico",
+    "cbo_code": "2132-05",
+    "area": "Ciências Exatas e da Terra",
+    "descricao": "Realiza ensaios e análises químicas e físico-químicas, escolhendo métodos, reagentes e critérios de amostragem, e interpreta os resultados em laudos e relatórios. Produz e purifica substâncias, desenvolve e valida métodos de análise, monitora o impacto ambiental de substâncias e resíduos e coordena atividades em laboratórios e indústrias. O exercício da profissão exige curso superior em Química (bacharelado ou tecnologia) e registro no Conselho Regional de Química (CRQ).",
+    "atividades": [
+      "Selecionar métodos, reagentes e critérios de amostragem",
+      "Coletar e preparar amostras e realizar ensaios e análises químicas",
+      "Interpretar dados e emitir pareceres, laudos e relatórios técnicos",
+      "Sintetizar, extrair e purificar substâncias e definir a composição de produtos",
+      "Desenvolver e validar metodologias analíticas",
+      "Monitorar resíduos e o impacto ambiental de substâncias",
+      "Coordenar equipes e supervisionar procedimentos de laboratório e de produção"
+    ],
+    "habilidades": [
+      "Raciocínio lógico e capacidade de abstração",
+      "Senso crítico e persistência",
+      "Capacidade de observação",
+      "Organização",
+      "Trabalho com segurança",
+      "Trabalho em equipe"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRQ",
+    "riasec_code": "IRC",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 6429.15,
+      "p25": 3036,
+      "p75": 8310,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2132-05 — Químico (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2132-05 — Químico: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2132, MTE)",
+        "url": "https://codigocbo.com.br/cbo-213205-quimico",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 2.800/1956 — cria os Conselhos de Química (art. 25: registro obrigatório no Conselho Regional de Química)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l2800.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 19-2031.00 — Chemists: perfil de interesses (Investigative, Realistic, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/19-2031.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Químico — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 1.392 vínculos)",
+        "url": "https://www.salario.com.br/profissao/quimico-cbo-213205/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "geografo",
+    "nome": "Geógrafo",
+    "cbo_code": "2513-05",
+    "area": "Ciências Exatas e da Terra",
+    "descricao": "Estuda a organização do espaço a partir da relação entre os aspectos físicos e humanos do território. Faz pesquisas de campo, interpreta mapas, imagens de satélite e fotografias aéreas, trabalha com sistemas de informações geográficas (SIG) e produz mapas, laudos e pareceres. Participa do planejamento urbano, rural e ambiental, de zoneamentos e planos diretores, e monitora o uso e a ocupação da terra. Exige bacharelado em Geografia e registro no CREA. O salário abaixo vem de uma amostra pequena (353 vínculos) e deve ser lido com cautela.",
+    "atividades": [
+      "Realizar trabalhos de campo e levantar informações físicas, humanas e territoriais",
+      "Interpretar mapas, fotografias aéreas e imagens de satélite",
+      "Montar sistemas de informações geográficas (SIG) e fazer análises espaciais",
+      "Produzir mapas, atlas temáticos, laudos e pareceres técnicos",
+      "Monitorar o uso e a ocupação da terra e diagnosticar impactos",
+      "Participar da elaboração de planos diretores, zoneamentos e planos de manejo",
+      "Delimitar regiões e estabelecer bases territoriais para pesquisas e planejamento"
+    ],
+    "habilidades": [
+      "Raciocínio espacial e leitura de mapas",
+      "Raciocínio abstrato e capacidade de síntese",
+      "Trabalho em equipes interdisciplinares",
+      "Análise de dados e de imagens",
+      "Escrita de relatórios e textos técnicos",
+      "Cumprimento de normas técnicas"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CREA",
+    "riasec_code": "IR",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 6678.52,
+      "p25": 3407,
+      "p75": 9302,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2513-05 — Geógrafo (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2513-05 — Geógrafo: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2513, MTE)",
+        "url": "https://codigocbo.com.br/cbo-251305-geografo",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 19-3092.00 — Geographers: perfil de interesses (Investigative, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/19-3092.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Geógrafo — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 353 vínculos)",
+        "url": "https://www.salario.com.br/profissao/geografo-cbo-251305/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "engenheiro-ambiental",
+    "nome": "Engenheiro ambiental",
+    "cbo_code": "2140-05",
+    "area": "Agrárias e Meio Ambiente",
+    "descricao": "Elabora e implanta projetos ambientais, gerencia sistemas de gestão ambiental nas empresas, controla a emissão de poluentes, cuida da destinação de resíduos e conduz a recuperação de áreas contaminadas. Faz avaliações e investigações de campo, emite laudos, promove educação ambiental e presta consultoria. Exige graduação em Engenharia Ambiental e registro no CREA; a CBO também admite cursos de tecnologia na área ambiental.",
+    "atividades": [
+      "Levantar dados, definir objetivos e elaborar projetos ambientais",
+      "Participar da elaboração e da implantação do sistema de gestão ambiental (SGA)",
+      "Controlar emissões de poluentes e calibrar equipamentos de controle",
+      "Classificar, quantificar e definir a destinação de resíduos",
+      "Identificar passivos ambientais e implantar procedimentos de remediação",
+      "Realizar avaliações ambientais e visitas técnicas e emitir laudos",
+      "Promover educação ambiental e prestar consultoria"
+    ],
+    "habilidades": [
+      "Visão sistêmica",
+      "Raciocínio lógico e capacidade de análise",
+      "Resolução de problemas e antecipação de cenários",
+      "Senso crítico e tomada de decisão",
+      "Negociação",
+      "Trabalho em equipe multidisciplinar"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CREA",
+    "riasec_code": "IRC",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 9841.94,
+      "p25": 5400,
+      "p75": 12616,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2140-05 — Engenheiro ambiental (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2140-05 — Engenheiro ambiental: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2140, MTE)",
+        "url": "https://codigocbo.com.br/cbo-214005-engenheiro-ambiental",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 5.194/1966 — regula o exercício da engenharia (art. 55: exercício só após registro no Conselho Regional)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l5194.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 17-2081.00 — Environmental Engineers: perfil de interesses (Investigative, Realistic, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/17-2081.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Engenheiro Ambiental — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 1.938 vínculos)",
+        "url": "https://www.salario.com.br/profissao/engenheiro-ambiental-cbo-214005/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
   }
 ]
