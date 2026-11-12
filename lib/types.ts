@@ -346,3 +346,20 @@ export const RIASEC_INFO: Record<RIASECType, { nome: string; descricao: string; 
 
 // Community section tabs
 export type CommunityTab = 'experiences' | 'forum' | 'specialists'
+
+// Pedido do selo de especialista (migração 018). Só a própria pessoa e o
+// admin leem; a escrita passa pelas funções solicitar_especialista,
+// cancelar_pedido_especialista e decidir_pedido_especialista.
+export interface SpecialistRequest {
+  id: string
+  user_id: string
+  profession_cbo: string | null
+  profession_title: string | null
+  profession_status: 'atuo' | 'atuei' | null
+  evidence: string | null
+  message: string | null
+  status: 'pending' | 'approved' | 'rejected' | 'canceled' | 'revoked'
+  decision_reason: string | null
+  decided_at: string | null
+  created_at: string
+}

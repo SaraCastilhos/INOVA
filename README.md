@@ -19,7 +19,7 @@ O objetivo é reduzir a indecisão e a ansiedade ligadas à escolha profissional
 - **Comunidade**:
   - *Depoimentos* de profissionais, com curtidas e comentários. O autor pode editar o próprio depoimento e encerrar seus comentários.
   - *Fórum* de discussão com tópicos e respostas. O autor edita e fecha os próprios tópicos; o admin também fixa e modera qualquer conteúdo.
-  - *Especialistas verificados*: profissionais ou contas "ambos" podem solicitar verificação;
+  - *Especialistas verificados*: quem atua ou já atuou na profissão do perfil (CBO) pede o selo com uma comprovação (link ou registro no conselho); a equipe aprova ou recusa com motivo, que a pessoa vê na aba. A área do selo fica congelada na aprovação. O selo identifica o especialista, mas não restringe quem responde no fórum.
   - *Moderação*: conteúdo publica na hora (pós-moderação), passa por um filtro automático de termos ofensivos/spam no banco e pode ser denunciado para revisão.
 - **Perfil**: foto (upload real), bio, contato e perfil público (visível ao clicar no nome/foto de qualquer usuário em depoimentos, fórum ou na lista de especialistas).
 - **Gamificação**: badges por marcos de uso (primeiro teste, primeiro depoimento, primeiro tópico etc.), sem ranking público.
