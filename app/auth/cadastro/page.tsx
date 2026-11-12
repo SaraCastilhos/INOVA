@@ -6,6 +6,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Eye, EyeOff, Loader2, ArrowLeft, Check, AlertCircle } from 'lucide-react'
+import { ContinuarSemConta } from '@/components/continuar-sem-conta'
+import { marcarCadastro } from '@/lib/teste-pendente'
 
 type UserType = 'estudante' | 'profissional' | 'ambos'
 
@@ -104,6 +106,9 @@ export default function CadastroPage() {
       return
     }
 
+    // Se a pessoa fez o teste sem conta, o resultado guardado no navegador fica
+    // reservado para esta conta nova (gravado no primeiro login).
+    marcarCadastro(email)
     router.push('/auth/confirmar-email')
   }
 
@@ -354,6 +359,8 @@ export default function CadastroPage() {
               </div>
             )}
           </form>
+
+          <ContinuarSemConta />
 
           {/* Login link */}
           <p className="text-center text-muted-foreground">

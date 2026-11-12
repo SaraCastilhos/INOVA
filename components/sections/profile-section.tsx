@@ -82,6 +82,9 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
 
   const handleSignOut = async () => {
     await signOut()
+    // Sem login, "/?section=perfil" mostraria o convite do modo visitante;
+    // quem acabou de sair volta para a landing ("/" sem seção).
+    window.history.replaceState(null, '', '/')
   }
 
   return (

@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES, AREAS, guiaAtualizadoEm } from '@/lib/guia'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
 import { fmtBRL, fmtData } from '@/lib/format'
+import { pontuar } from '@/lib/instruments'
+import { lerTestePendente } from '@/lib/teste-pendente'
 import {
   Briefcase,
   GraduationCap,
@@ -68,7 +70,13 @@ export function abrirGuiaNoTipo(userId: string | undefined, tipo: RIASECType) {
 export function CareersSection() {
   const { user, testResults } = useAuth()
   const lastTest = testResults?.[0]
-  const jaFezTeste = Boolean(lastTest)
+  // Visitante (sem conta): vale o resultado do teste guardado no navegador.
+  const [topVisitante] = useState<RIASECType[]>(() => {
+    if (user) return []
+    const pendente = lerTestePendente()
+    return pendente ? pontuar(pendente.respostas).top3 : []
+  })
+  const jaFezTeste = Boolean(lastTest) || topVisitante.length > 0
 
   const storageKey = guiaKey(user?.id)
   const [saved] = useState(() => readGuiaState(storageKey))
@@ -111,7 +119,7 @@ export function CareersSection() {
   }
   const userTopTypes: RIASECType[] = lastTest
     ? ([lastTest.primary_type, lastTest.secondary_type, lastTest.tertiary_type].filter(Boolean) as RIASECType[])
-    : []
+    : topVisitante
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: 'profissoes', label: 'Profissões', icon: <Briefcase className="h-4 w-4" /> },

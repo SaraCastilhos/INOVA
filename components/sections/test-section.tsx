@@ -12,6 +12,8 @@ import { sugerirProfissoes } from '@/lib/professions'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
 import { AlertTriangle, ChevronLeft, ChevronRight, CheckCircle, ArrowRight, Loader2, ListChecks, Clock } from 'lucide-react'
 import type { Section } from '@/components/bottom-navigation'
+import { ConviteConta } from '@/components/convite-conta'
+import { lerTestePendente, salvarTestePendente } from '@/lib/teste-pendente'
 
 interface TestSectionProps {
   onNavigate: (section: Section) => void
@@ -57,10 +59,20 @@ function readTesteSalvo(key: string): TesteSalvo | null {
   }
 }
 
+// Visitante (sem conta) que volta outro dia: o progresso da sessão já sumiu,
+// mas o último resultado completo continua guardado no navegador
+// (lib/teste-pendente.ts) — abre direto nele.
+function readResultadoVisitante(): TesteSalvo | null {
+  const pendente = lerTestePendente()
+  return pendente
+    ? { version: INSTRUMENT_VERSION, phase: 'result', atual: ITENS.length - 1, respostas: pendente.respostas }
+    : null
+}
+
 export function TestSection({ onNavigate }: TestSectionProps) {
   const { user, saveTestResult } = useAuth()
   const storageKey = `inova:teste:${user?.id ?? 'anon'}`
-  const [saved] = useState(() => readTesteSalvo(storageKey))
+  const [saved] = useState(() => readTesteSalvo(storageKey) ?? (user ? null : readResultadoVisitante()))
   const [phase, setPhase] = useState<TestPhase>(saved?.phase ?? 'intro')
   const [currentQuestion, setCurrentQuestion] = useState(saved?.atual ?? 0)
   // respostas: posicao do item -> valor escolhido (0..escala.max)
@@ -81,7 +93,8 @@ export function TestSection({ onNavigate }: TestSectionProps) {
   }, [storageKey, phase, currentQuestion, answers])
 
   // O resultado é sempre recalculado das respostas (que só ficam completas e
-  // gravadas no banco antes de a tela de resultado abrir).
+  // gravadas — no banco, ou no navegador para o visitante — antes de a tela de
+  // resultado abrir).
   const resultado = phase === 'result' ? pontuar(answers) : null
 
   const abrirNoGuia = (tipo: RIASECType) => {
@@ -123,6 +136,14 @@ export function TestSection({ onNavigate }: TestSectionProps) {
   }
 
   const calculateResult = async () => {
+    // Sem conta: nada vai para o banco. O resultado fica só no navegador, para
+    // ser levado à conta caso a pessoa se cadastre depois (lib/teste-pendente.ts).
+    if (!user) {
+      salvarTestePendente(answers)
+      setPhase('result')
+      return
+    }
+
     setSaving(true)
     const { error } = await saveTestResult(pontuar(answers).scores, respostasParaVetor(answers))
     setSaving(false)
@@ -496,6 +517,13 @@ export function TestSection({ onNavigate }: TestSectionProps) {
                 </div>
               ))}
             </div>
+
+            {!user && (
+              <ConviteConta
+                titulo="Quer guardar este resultado?"
+                descricao="Crie sua conta e o resultado deste teste fica salvo nela. Com a conta você também acompanha seu histórico, ganha badges e participa da comunidade."
+              />
+            )}
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3">

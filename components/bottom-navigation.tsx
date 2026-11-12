@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { Home, FileText, Briefcase, Users, User } from 'lucide-react'
 
 export type Section = 'inicio' | 'teste' | 'carreiras' | 'comunidade' | 'perfil'
@@ -8,6 +9,8 @@ export type Section = 'inicio' | 'teste' | 'carreiras' | 'comunidade' | 'perfil'
 interface BottomNavigationProps {
   activeSection: Section
   onNavigate: (section: Section) => void
+  /** Uso sem conta: a barra lateral (computador) mostra Criar conta / Entrar. */
+  visitante?: boolean
 }
 
 const navItems: { id: Section; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
@@ -18,7 +21,7 @@ const navItems: { id: Section; label: string; icon: React.ComponentType<{ classN
   { id: 'perfil', label: 'Perfil', icon: User },
 ]
 
-export function BottomNavigation({ activeSection, onNavigate }: BottomNavigationProps) {
+export function BottomNavigation({ activeSection, onNavigate, visitante = false }: BottomNavigationProps) {
   return (
     <>
       {/* Mobile Bottom Navigation */}
@@ -83,9 +86,26 @@ export function BottomNavigation({ activeSection, onNavigate }: BottomNavigation
         </div>
 
         <div className="p-4 border-t border-border">
-          <p className="text-xs text-muted-foreground text-center">
-            INOVA - Orientação Profissional
-          </p>
+          {visitante ? (
+            <div className="flex flex-col gap-2">
+              <Link
+                href="/auth/cadastro"
+                className="w-full px-4 py-2 text-sm font-medium text-center bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Criar conta
+              </Link>
+              <Link
+                href="/auth/login"
+                className="w-full px-4 py-2 text-sm font-medium text-center border border-input text-foreground rounded-lg hover:bg-muted transition-colors"
+              >
+                Entrar
+              </Link>
+            </div>
+          ) : (
+            <p className="text-xs text-muted-foreground text-center">
+              INOVA - Orientação Profissional
+            </p>
+          )}
         </div>
       </nav>
     </>

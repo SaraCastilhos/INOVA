@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Eye, EyeOff, Loader2, ArrowLeft } from 'lucide-react'
+import { ContinuarSemConta } from '@/components/continuar-sem-conta'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -144,6 +145,8 @@ export default function LoginPage() {
               )}
             </button>
           </form>
+
+          <ContinuarSemConta />
 
           {/* Sign up link */}
           <p className="text-center text-muted-foreground">
