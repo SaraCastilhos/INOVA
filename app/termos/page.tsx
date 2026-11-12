@@ -70,9 +70,11 @@ export default function TermosPage() {
 
           <h2>4. Especialistas verificados</h2>
           <p>
-            Profissionais podem solicitar o selo de "Especialista Verificado" para
-            responder na categoria restrita do fórum. A aprovação é feita pela
-            equipe administrativa do INOVA.
+            Profissionais podem solicitar o selo de "Especialista Verificado", que
+            aparece junto ao nome em depoimentos, comentários e respostas do fórum
+            e na lista de especialistas. A aprovação é manual, feita pela equipe
+            administrativa do INOVA, que pode pedir comprovação da atuação na
+            área. O selo pode ser retirado se deixar de corresponder à realidade.
           </p>
 
           <h2>5. Exclusão de conta</h2>

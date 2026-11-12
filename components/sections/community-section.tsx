@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useAuth } from '@/contexts/auth-context'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import type { Experience, ExperienceComment, ForumTopic, PublicProfile, CommunityTab, ForumReply, ReportableContentType } from '@/lib/types'
+import type { Experience, ExperienceComment, ForumTopic, PublicProfile, CommunityTab, ForumReply, ReportableContentType, SpecialistRequest } from '@/lib/types'
 import { PUBLIC_PROFILE_COLUMNS } from '@/lib/types'
 import {
   descreverFormacao,
@@ -1798,23 +1798,32 @@ function TopicDetail({
   )
 }
 
-// Specialists Tab Component
+// Aba Especialistas. O pedido do selo passa pelas funções da migração 018:
+// comprovação obrigatória, área = profissão da CBO do perfil (congelada na
+// aprovação) e histórico em specialist_requests. O selo indica que a pessoa
+// é especialista; não restringe quem responde no fórum.
 function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: PublicProfile) => void }) {
-  const { user, profile, updateProfile } = useAuth()
+  const { user, profile, refreshProfile } = useAuth()
   const [specialists, setSpecialists] = useState<PublicProfile[]>([])
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
+  const [myRequest, setMyRequest] = useState<SpecialistRequest | null>(null)
   const [showRequestForm, setShowRequestForm] = useState(false)
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false)
+  const [canceling, setCanceling] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
     const fetchSpecialists = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('profiles')
         .select(PUBLIC_PROFILE_COLUMNS)
         .eq('is_specialist', true)
         .eq('specialist_status', 'approved')
         .order('display_name')
 
+      // Sem isso, uma falha na consulta aparecia como "Nenhum especialista".
+      setLoadError(!!error)
       setSpecialists((data as PublicProfile[]) || [])
       setLoading(false)
     }
@@ -1822,15 +1831,60 @@ function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: PublicProf
     fetchSpecialists()
   }, [supabase])
 
-  const handleRequestSpecialist = async (area: string) => {
-    if (!user) return
+  // Último pedido da própria pessoa (para mostrar data, motivo da recusa etc.).
+  const userId = user?.id
+  const fetchMyRequest = useCallback(async () => {
+    if (!userId) {
+      setMyRequest(null)
+      return
+    }
+    const { data } = await supabase
+      .from('specialist_requests')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+    setMyRequest((data as SpecialistRequest | null) ?? null)
+  }, [supabase, userId])
 
-    await updateProfile({
-      specialist_status: 'pending',
-      specialist_area: area
+  useEffect(() => {
+    fetchMyRequest()
+  }, [fetchMyRequest])
+
+  // Devolve true se o pedido foi gravado (o modal só fecha nesse caso).
+  const handleRequestSpecialist = async (evidence: string, message: string): Promise<boolean> => {
+    if (!user) return false
+
+    const { error } = await supabase.rpc('solicitar_especialista', {
+      p_evidencia: evidence,
+      p_mensagem: message || null
     })
 
+    if (error) {
+      toast.error(specialistError(error, 'Não foi possível enviar o pedido. Tente novamente.'))
+      return false
+    }
+
+    await Promise.all([refreshProfile(), fetchMyRequest()])
     setShowRequestForm(false)
+    toast.success('Pedido enviado! Acompanhe o andamento nesta aba.')
+    return true
+  }
+
+  const handleCancelRequest = async () => {
+    setCanceling(true)
+    const { error } = await supabase.rpc('cancelar_pedido_especialista')
+    setCanceling(false)
+    setShowCancelConfirm(false)
+
+    if (error) {
+      toast.error(specialistError(error, 'Não foi possível cancelar o pedido. Tente novamente.'))
+      return
+    }
+
+    await Promise.all([refreshProfile(), fetchMyRequest()])
+    toast.success('Pedido cancelado.')
   }
 
   if (loading) {
@@ -1841,52 +1895,121 @@ function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: PublicProf
     )
   }
 
-  const isEligibleForSpecialist = profile?.user_type === 'profissional' || profile?.user_type === 'ambos'
+  const status = profile?.specialist_status
+  const isSpecialist = !!profile?.is_specialist
+  const semProfissao = !!profile && !profile.profession_cbo
+  const soEstuda = !!profile?.profession_cbo && profile.profession_status === 'estudo'
+  // Pode abrir o pedido: atua/já atuou, ou ainda não informou a profissão
+  // (escolhe no próprio formulário, como no depoimento).
+  const podePedir = !!profile && !isSpecialist && status !== 'pending' && !soEstuda
+  const ultimaDecisao =
+    myRequest && (myRequest.status === 'rejected' || myRequest.status === 'revoked') ? myRequest : null
 
   return (
     <div className="space-y-6">
-      {/* Become Specialist CTA */}
-      {profile && !profile.is_specialist && profile.specialist_status === 'none' && (
-        isEligibleForSpecialist ? (
-          <div className="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-xl p-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center shrink-0">
-                <Award className="w-6 h-6 text-secondary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-foreground mb-1">
-                  Torne-se um Especialista Verificado
-                </h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Compartilhe sua expertise e ajude estudantes com dúvidas sobre sua área profissional.
-                </p>
-                <button
-                  onClick={() => setShowRequestForm(true)}
-                  className="px-4 py-2 bg-secondary text-secondary-foreground font-medium rounded-lg hover:bg-secondary/90 transition-colors"
-                >
-                  Solicitar verificação
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="bg-muted/50 rounded-xl p-4">
-            <p className="text-sm text-muted-foreground">
-              A verificação de especialista está disponível para contas do tipo &quot;Profissional&quot; ou &quot;Ambos&quot;.
+      {/* Já é especialista */}
+      {isSpecialist && (
+        <div className="bg-secondary/10 border border-secondary/20 rounded-xl p-4 flex items-start gap-3">
+          <BadgeCheck className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm text-foreground font-medium">
+              Você é especialista verificado{profile?.specialist_area ? ` em ${profile.specialist_area}` : ''}.
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              O selo aparece junto ao seu nome em depoimentos, comentários e respostas. A área
+              do selo fica fixa: mudar a profissão no perfil não altera o selo. Para outra área,
+              fale com a equipe pelo e-mail contat3.inova@gmail.com.
             </p>
           </div>
-        )
+        </div>
       )}
 
-      {profile?.specialist_status === 'pending' && (
-        <div className="bg-accent/10 border border-accent/20 rounded-xl p-4">
-          <p className="text-sm text-accent font-medium">
-            Sua solicitação de especialista está em análise. Você será notificado quando for aprovada.
+      {/* Em análise */}
+      {!isSpecialist && status === 'pending' && (
+        <div className="bg-accent/10 border border-accent/20 rounded-xl p-4 flex items-start gap-3">
+          <Clock className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-sm text-accent font-medium">
+              Seu pedido do selo de especialista está em análise pela equipe do INOVA.
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              {(myRequest?.profession_title || profile?.specialist_area) && (
+                <>Área: {myRequest?.profession_title || profile?.specialist_area}. </>
+              )}
+              {myRequest?.status === 'pending' && (
+                <>Enviado em {new Date(myRequest.created_at).toLocaleDateString('pt-BR')}. </>
+              )}
+              O resultado aparece aqui, nesta aba.
+            </p>
+            <button
+              onClick={() => setShowCancelConfirm(true)}
+              className="mt-3 text-sm text-muted-foreground hover:text-destructive underline underline-offset-2"
+            >
+              Cancelar pedido
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Recusado ou selo retirado: mostra o motivo */}
+      {!isSpecialist && status === 'rejected' && (
+        <div className="bg-muted/50 border border-border rounded-xl p-4">
+          <p className="text-sm text-foreground font-medium">
+            {ultimaDecisao?.status === 'revoked'
+              ? 'Seu selo de especialista foi retirado.'
+              : 'Seu pedido do selo de especialista não foi aprovado.'}
+          </p>
+          {ultimaDecisao?.decision_reason && (
+            <p className="text-sm text-muted-foreground mt-1">
+              Motivo: {ultimaDecisao.decision_reason}
+            </p>
+          )}
+          <p className="text-sm text-muted-foreground mt-1">
+            Se tiver dúvidas, fale com a equipe pelo e-mail contat3.inova@gmail.com.
           </p>
         </div>
       )}
 
-      {/* Specialist Request Form Modal */}
+      {/* Convite para pedir o selo */}
+      {podePedir && (
+        <div className="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center shrink-0">
+              <Award className="w-6 h-6 text-secondary" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-foreground mb-1">
+                {status === 'rejected' ? 'Pedir o selo novamente' : 'Torne-se um Especialista Verificado'}
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Se você atua ou já atuou em uma profissão, peça o selo de especialista. Ele aparece
+                junto ao seu nome em depoimentos, comentários e respostas do fórum, e você entra na
+                lista abaixo.
+                {semProfissao && ' Você vai informar sua profissão no próprio pedido.'}
+              </p>
+              <button
+                onClick={() => setShowRequestForm(true)}
+                className="px-4 py-2 bg-secondary text-secondary-foreground font-medium rounded-lg hover:bg-secondary/90 transition-colors"
+              >
+                {status === 'rejected' ? 'Solicitar novamente' : 'Solicitar verificação'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Quem só estuda para a profissão não pede o selo */}
+      {profile && !isSpecialist && status !== 'pending' && soEstuda && (
+        <div className="bg-muted/50 rounded-xl p-4">
+          <p className="text-sm text-muted-foreground">
+            O selo de especialista é para quem atua ou já atuou na profissão. No seu perfil, você
+            está estudando para ser {profile.profession_title}. Quando começar a atuar, atualize
+            sua situação em Perfil e peça o selo aqui.
+          </p>
+        </div>
+      )}
+
+      {/* Formulário do pedido */}
       {showRequestForm && (
         <SpecialistRequestModal
           onClose={() => setShowRequestForm(false)}
@@ -1894,8 +2017,37 @@ function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: PublicProf
         />
       )}
 
+      <AlertDialog open={showCancelConfirm} onOpenChange={setShowCancelConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancelar o pedido?</AlertDialogTitle>
+            <AlertDialogDescription>
+              O pedido sai da fila de análise. Você pode pedir de novo depois (até 3 pedidos a cada 30 dias).
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={canceling}>Manter pedido</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault()
+                handleCancelRequest()
+              }}
+              disabled={canceling}
+            >
+              {canceling ? 'Cancelando...' : 'Cancelar pedido'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Specialists List */}
-      {specialists.length === 0 ? (
+      {loadError ? (
+        <div className="text-center py-12 text-muted-foreground">
+          <Users className="w-12 h-12 mx-auto mb-4 opacity-50" />
+          <p>Não foi possível carregar a lista de especialistas.</p>
+          <p className="text-sm mt-1">Verifique sua conexão e recarregue a página.</p>
+        </div>
+      ) : specialists.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">
           <Users className="w-12 h-12 mx-auto mb-4 opacity-50" />
           <p>Nenhum especialista verificado ainda.</p>
@@ -1937,57 +2089,142 @@ function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: PublicProf
   )
 }
 
+// As funções da migração 018 recusam com mensagens já em português
+// (raise exception → código P0001); outros erros viram o texto genérico.
+function specialistError(error: { message: string; code?: string } | null, fallback: string) {
+  if (error?.code === 'P0001' && error.message) return error.message
+  return fallback
+}
+
+const SPECIALIST_EVIDENCE_LIMIT = 300
+const SPECIALIST_MESSAGE_LIMIT = 500
+
+// Formulário do pedido. A área é a profissão do perfil (CBO); quem ainda
+// não informou escolhe aqui mesmo e ela é salva no perfil antes do pedido,
+// como no formulário de depoimento.
 function SpecialistRequestModal({
   onClose,
   onSubmit
 }: {
   onClose: () => void
-  onSubmit: (area: string) => void
+  onSubmit: (evidence: string, message: string) => Promise<boolean>
 }) {
-  const [area, setArea] = useState('')
+  const { profile, updateProfile } = useAuth()
+  const [evidence, setEvidence] = useState('')
+  const [message, setMessage] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const temProfissao = !!profile?.profession_cbo && !!profile.profession_title
+  const [campos, setCampos] = useState<CamposProfissao>({
+    profissao: null,
+    status: null,
+    experiencia: null
+  })
+  const precisaProfissao = !temProfissao
+  const escolheuEstudo = precisaProfissao && campos.status === 'estudo'
+  const podeEnviar =
+    evidence.trim().length >= 5 &&
+    !submitting &&
+    (!precisaProfissao || (camposProfissaoValidos(campos) && !escolheuEstudo))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!area.trim()) return
+    if (!podeEnviar) return
 
     setSubmitting(true)
-    await onSubmit(area)
+    if (precisaProfissao) {
+      const { error } = await updateProfile(camposProfissaoParaPerfil(campos))
+      if (error) {
+        setSubmitting(false)
+        toast.error('Não foi possível salvar sua profissão. Tente novamente.')
+        return
+      }
+    }
+    await onSubmit(evidence.trim(), message.trim())
     setSubmitting(false)
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-card rounded-2xl w-full max-w-md">
+      <div className="bg-card rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-border flex items-center justify-between">
-          <h2 className="text-xl font-bold text-foreground">Solicitar Verificação</h2>
+          <h2 className="text-xl font-bold text-foreground">Pedir o selo de especialista</h2>
           <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Informe sua área de atuação profissional. Nossa equipe irá analisar sua solicitação.
-          </p>
+          {temProfissao ? (
+            <div className="bg-muted/50 p-4 rounded-lg text-sm">
+              <p className="text-muted-foreground">Área do selo</p>
+              <p className="font-medium text-foreground">
+                {descreverProfissao(profile!.profession_title!, profile!.profession_status)}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                É a profissão do seu perfil. Depois de aprovado, a área do selo fica fixa.
+                Para mudar antes de pedir, edite sua profissão em Perfil.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                Conte qual é a sua profissão. Ela fica salva no seu perfil e será a área do selo.
+              </p>
+              <CamposProfissaoForm value={campos} onChange={setCampos} />
+              {escolheuEstudo && (
+                <p className="text-sm text-destructive">
+                  O selo é para quem atua ou já atuou na profissão.
+                </p>
+              )}
+            </div>
+          )}
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Área de especialidade
+            <label htmlFor="specialist-evidence" className="block text-sm font-medium text-foreground mb-2">
+              Comprovação
             </label>
             <input
+              id="specialist-evidence"
               type="text"
-              value={area}
-              onChange={(e) => setArea(e.target.value)}
-              placeholder="Ex: Engenharia de Software, Medicina, Direito..."
+              value={evidence}
+              onChange={(e) => setEvidence(e.target.value)}
+              placeholder="Ex.: linkedin.com/in/seu-nome ou CRM-RS 12345"
+              maxLength={SPECIALIST_EVIDENCE_LIMIT}
               className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground"
               required
             />
+            <p className="text-xs text-muted-foreground mt-1">
+              Link de um perfil profissional (LinkedIn, currículo Lattes) ou o número do seu
+              registro no conselho da profissão (CRM, CREA, OAB...). Só a equipe do INOVA vê.
+            </p>
+          </div>
+
+          <div>
+            <label htmlFor="specialist-message" className="block text-sm font-medium text-foreground mb-2">
+              Mensagem <span className="text-muted-foreground font-normal">(opcional)</span>
+            </label>
+            <textarea
+              id="specialist-message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Algo que ajude na análise: onde você atua, há quanto tempo..."
+              rows={3}
+              maxLength={SPECIALIST_MESSAGE_LIMIT}
+              className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground resize-none"
+            />
+            <p className="text-xs text-muted-foreground mt-1 text-right">
+              {message.length}/{SPECIALIST_MESSAGE_LIMIT}
+            </p>
+          </div>
+
+          <div className="bg-muted/50 p-4 rounded-lg text-sm text-muted-foreground">
+            A equipe do INOVA analisa cada pedido manualmente. O resultado, e o motivo em caso de
+            recusa, aparece na aba Especialistas.
           </div>
 
           <button
             type="submit"
-            disabled={submitting || !area.trim()}
+            disabled={!podeEnviar}
             className="w-full py-3 bg-secondary text-secondary-foreground font-medium rounded-lg hover:bg-secondary/90 disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {submitting ? (
@@ -1996,7 +2233,7 @@ function SpecialistRequestModal({
                 Enviando...
               </>
             ) : (
-              'Enviar solicitação'
+              'Enviar pedido'
             )}
           </button>
         </form>

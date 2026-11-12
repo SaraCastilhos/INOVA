@@ -49,6 +49,7 @@ export default function PrivacidadePage() {
             <li>Dados de uso: respostas e resultados do teste vocacional RIASEC.</li>
             <li>Teste feito sem conta: as respostas ficam apenas no seu navegador e não são enviadas ao INOVA. Se você criar uma conta depois, nesse mesmo navegador, o resultado é salvo nela.</li>
             <li>Dados de perfil que você escolhe informar: foto, bio, contato, profissão (da lista oficial da CBO), situação nela, tempo de experiência e formação.</li>
+            <li>Pedido do selo de especialista, se você fizer: a comprovação informada (link de perfil profissional ou número de registro no conselho), a mensagem opcional e a decisão da equipe. Só você e a equipe do INOVA veem esses dados.</li>
             <li>Conteúdo publicado por você: depoimentos e mensagens do fórum.</li>
             <li>Métricas de acesso anônimas e agregadas (Vercel Analytics), usadas apenas para fins estatísticos, sem identificação individual.</li>
           </ul>
@@ -75,8 +76,11 @@ export default function PrivacidadePage() {
             você escolher informar (foto, bio, contato, profissão, tempo de
             experiência e formação), os depoimentos e as mensagens do fórum. A
             profissão informada também aparece nos seus depoimentos; ela é
-            declarada por você e não é verificada pelo INOVA. Seu e-mail e sua
-            data de nascimento nunca são exibidos a outras pessoas.
+            declarada por você e só é conferida pelo INOVA quando você pede o
+            selo de especialista. Se o selo for aprovado, ele e a área aparecem
+            publicamente junto ao seu nome. Seu e-mail, sua data de nascimento e
+            a comprovação enviada no pedido do selo nunca são exibidos a outras
+            pessoas.
           </p>
 
           <h2>5. Exclusão e anonimização</h2>
@@ -86,8 +90,8 @@ export default function PrivacidadePage() {
             <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">contat3.inova@gmail.com</a>{' '}
             a partir do endereço cadastrado, para confirmarmos que o pedido é seu.
             Ao excluir a conta, seus dados pessoais (nome, e-mail, data de
-            nascimento, foto, bio, contato, profissão, formação, resultados do teste
-            e conquistas) são
+            nascimento, foto, bio, contato, profissão, formação, resultados do teste,
+            conquistas e pedidos do selo de especialista) são
             apagados e não podem ser recuperados. As publicações feitas com ela
             (depoimentos, tópicos, respostas e comentários) são anonimizadas:
             continuam na Comunidade, mas sem vínculo com você, com o autor exibido

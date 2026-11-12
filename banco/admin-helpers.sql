@@ -83,20 +83,42 @@ insert into public.blocked_terms (term) values ('<termo>') on conflict do nothin
 delete from public.blocked_terms where term = '<termo>';
 
 -- ------------------------------------------------
--- 3) Aprovar solicitação de especialista
+-- 3) Pedidos do selo de especialista (migração 018)
 -- ------------------------------------------------
--- Mesma lógica: sem isso, quem pede verificação em "Especialistas"
--- fica travado em specialist_status = 'pending' pra sempre.
+-- Sem isso, quem pede o selo em "Especialistas" fica em análise pra
+-- sempre. A decisão passa SEMPRE pelas funções abaixo (não dar update
+-- direto em profiles): elas registram o histórico, gravam o motivo que a
+-- pessoa vê na tela e congelam a área do selo.
 
--- ver quem está pedindo
-select id, display_name, email, specialist_area, specialist_status
-from public.profiles
-where specialist_status = 'pending';
+-- ver pedidos em análise (comprovação = link ou registro para conferir)
+select r.id as pedido, p.display_name, p.email,
+       r.profession_title as area, r.profession_status as situacao,
+       r.evidence as comprovacao, r.message as mensagem, r.created_at
+from public.specialist_requests r
+join public.profiles p on p.id = r.user_id
+where r.status = 'pending'
+order by r.created_at;
 
--- aprovar (troque o e-mail)
-update public.profiles
-set is_specialist = true, specialist_status = 'approved'
-where email = '<email-da-conta>';
+-- aprovar (troque o id do pedido)
+select public.decidir_pedido_especialista('<id-do-pedido>', true);
+
+-- recusar (troque o id; o motivo é obrigatório e aparece para a pessoa)
+select public.decidir_pedido_especialista('<id-do-pedido>', false, '<motivo>');
+
+-- retirar o selo de quem já é especialista (motivo obrigatório, aparece
+-- para a pessoa). O selo some na hora em depoimentos, comentários e
+-- respostas (é lido ao vivo de profiles.is_specialist).
+select public.revogar_especialista(
+  (select id from public.profiles where email = '<email-da-conta>'),
+  '<motivo>'
+);
+
+-- histórico de uma pessoa
+select r.status, r.profession_title, r.evidence, r.decision_reason, r.created_at, r.decided_at
+from public.specialist_requests r
+join public.profiles p on p.id = r.user_id
+where p.email = '<email-da-conta>'
+order by r.created_at desc;
 
 -- ------------------------------------------------
 -- 4) Tópicos do fórum
