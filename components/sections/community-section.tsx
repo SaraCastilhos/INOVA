@@ -79,7 +79,7 @@ function ReportButton({
 }: {
   contentType: ReportableContentType
   contentId: string
-  authorId: string
+  authorId: string | null
   className?: string
   iconClassName?: string
 }) {
@@ -768,7 +768,7 @@ function CommentsModal({
                             )}
                           </button>
                         ) : (
-                          <span className="text-xs font-medium text-foreground">Usuário</span>
+                          <span className="text-xs font-medium text-foreground">Usuário removido</span>
                         )}
                         <div className="flex items-center gap-1 shrink-0">
                           {canDeleteComment && (
@@ -1589,7 +1589,7 @@ function TopicDetail({
                 {topic.profiles.display_name}
               </button>
             ) : (
-              'Usuário'
+              'Usuário removido'
             )}
           </span>
           <span>{new Date(topic.created_at).toLocaleDateString('pt-BR')}</span>
@@ -1636,7 +1636,7 @@ function TopicDetail({
                             {reply.profiles.display_name}
                           </span>
                         ) : (
-                          <span className="font-medium text-foreground">Usuário</span>
+                          <span className="font-medium text-foreground">Usuário removido</span>
                         )}
                         {reply.profiles?.is_specialist && (
                           <span className="flex items-center gap-1 px-2 py-0.5 bg-secondary/10 text-secondary text-xs font-medium rounded">

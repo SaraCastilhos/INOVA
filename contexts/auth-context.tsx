@@ -16,6 +16,7 @@ interface AuthContextType {
   signUp: (email: string, password: string, metadata: SignUpMetadata) => Promise<{ error: Error | null }>
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>
   signOut: () => Promise<void>
+  deleteAccount: () => Promise<{ error: Error | null }>
   refreshProfile: () => Promise<void>
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: Error | null }>
   saveTestResult: (scores: Record<RIASECType, number>, answers: number[]) => Promise<{ error: Error | null }>
@@ -223,6 +224,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     resetUserData()
   }
 
+  // Exclusão da própria conta (RNF07/RN05, migração 016). Ordem importa:
+  // 1) a foto sai do Storage enquanto a sessão ainda vale (a policy exige
+  //    auth.uid() = dono da pasta); se falhar, nada é apagado e dá para
+  //    tentar de novo — melhor do que deixar a foto pública órfã;
+  // 2) delete_own_account() apaga auth.users → perfil, testes, badges,
+  //    curtidas e denúncias somem; publicações ficam como "Usuário removido";
+  // 3) a sessão local é descartada (o usuário já não existe no servidor).
+  const deleteAccount = async () => {
+    if (!user) return { error: new Error('Not authenticated') }
+
+    const { data: files, error: listError } = await supabase.storage
+      .from('avatars')
+      .list(user.id)
+    if (listError) return { error: new Error(listError.message) }
+
+    if (files && files.length > 0) {
+      const { error: removeError } = await supabase.storage
+        .from('avatars')
+        .remove(files.map((f) => `${user.id}/${f.name}`))
+      if (removeError) return { error: new Error(removeError.message) }
+    }
+
+    const { error } = await supabase.rpc('delete_own_account')
+    if (error) return { error: new Error(error.message) }
+
+    await supabase.auth.signOut({ scope: 'local' })
+    resetUserData()
+    return { error: null }
+  }
+
   const updateProfile = async (updates: Partial<Profile>) => {
     if (!user) return { error: new Error('Not authenticated') }
 
@@ -323,6 +354,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signUp,
         signIn,
         signOut,
+        deleteAccount,
         refreshProfile,
         updateProfile,
         saveTestResult,
