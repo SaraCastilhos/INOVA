@@ -5,7 +5,6 @@ import { useAuth } from '@/contexts/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
-import { PROFISSOES } from '@/lib/guia'
 import { Target, Briefcase, ArrowRight, Sparkles, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
 import type { Section } from '@/components/bottom-navigation'
@@ -145,28 +144,6 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
           titulo="Crie sua conta grátis"
           descricao="Guarde o resultado do teste, acompanhe seu histórico, ganhe badges e participe da comunidade."
         />
-      )}
-
-      {/* Stats */}
-      {!visitante && (
-        <Card>
-          <CardContent className="pt-6">
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <p className="text-2xl font-bold text-primary">{testResults?.length ?? 0}</p>
-                <p className="text-xs text-muted-foreground">Testes feitos</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-secondary">{PROFISSOES.length}</p>
-                <p className="text-xs text-muted-foreground">Profissões</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-accent">{Object.keys(RIASEC_INFO).length}</p>
-                <p className="text-xs text-muted-foreground">Tipos RIASEC</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       )}
 
       {/* About INOVA */}
