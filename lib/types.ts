@@ -314,36 +314,56 @@ export interface Instrumento {
   itens: InstrumentoItem[]
 }
 
-export const RIASEC_INFO: Record<RIASECType, { nome: string; descricao: string; cor: string }> = {
+// cor: tom de marca do tipo (gráficos, bolinhas, fundos claros).
+// corForte: tom mais escuro do mesmo matiz, para texto colorido sobre fundo
+//   claro e para fundo com letra branca (contraste de pelo menos 4,5:1).
+// frase: resumo curto usado na frase-síntese do resultado do teste
+//   ("O que mais chama sua atenção: ajudar e ensinar pessoas; criar e ...").
+export const RIASEC_INFO: Record<
+  RIASECType,
+  { nome: string; descricao: string; cor: string; corForte: string; frase: string }
+> = {
   R: {
     nome: 'Realista',
     descricao: 'Prefere trabalhar com ferramentas, máquinas e coisas práticas',
-    cor: '#EF4444'
+    cor: '#EF4444',
+    corForte: '#B91C1C',
+    frase: 'trabalhar com as mãos e com máquinas'
   },
   I: {
     nome: 'Investigativo',
     descricao: 'Gosta de pesquisar, analisar e resolver problemas complexos',
-    cor: '#3B82F6'
+    cor: '#3B82F6',
+    corForte: '#1D4ED8',
+    frase: 'pesquisar e resolver problemas'
   },
   A: {
     nome: 'Artístico',
     descricao: 'Valoriza a criatividade, expressão e originalidade',
-    cor: '#8B5CF6'
+    cor: '#8B5CF6',
+    corForte: '#6D28D9',
+    frase: 'criar e se expressar'
   },
   S: {
     nome: 'Social',
     descricao: 'Gosta de ajudar, ensinar e trabalhar com pessoas',
-    cor: '#10B981'
+    cor: '#10B981',
+    corForte: '#047857',
+    frase: 'ajudar e ensinar pessoas'
   },
   E: {
     nome: 'Empreendedor',
     descricao: 'Gosta de liderar, persuadir e alcançar metas',
-    cor: '#F59E0B'
+    cor: '#F59E0B',
+    corForte: '#B45309',
+    frase: 'liderar e convencer'
   },
   C: {
     nome: 'Convencional',
     descricao: 'Prefere organização, detalhes e procedimentos claros',
-    cor: '#6366F1'
+    cor: '#6366F1',
+    corForte: '#4338CA',
+    frase: 'organizar e seguir procedimentos'
   }
 }
 
