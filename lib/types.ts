@@ -17,9 +17,41 @@ export interface Profile {
   lgpd_consent: boolean
   lgpd_consent_date: string | null
   last_type_change: string | null
+  // Perfil profissional (migração 017). profession_title é preenchido pelo
+  // banco a partir do código da CBO — o cliente só envia profession_cbo.
+  profession_cbo: string | null
+  profession_title: string | null
+  profession_status: ProfessionStatus | null
+  experience_range: ExperienceRange | null
+  education_level: EducationLevel | null
+  education_course: string | null
+  education_in_progress: boolean
   created_at: string
   updated_at: string
 }
+
+export type ProfessionStatus = 'atuo' | 'estudo' | 'atuei'
+export type ExperienceRange = 'ate-1' | '1-4' | '5-9' | '10-mais'
+export type EducationLevel =
+  | 'fundamental'
+  | 'medio'
+  | 'tecnico'
+  | 'graduacao'
+  | 'especializacao'
+  | 'mestrado'
+  | 'doutorado'
+
+// Colunas de profiles que qualquer pessoa pode ler (migração 017). E-mail,
+// data de nascimento e consentimento ficam de fora — o banco recusa
+// "select *" em profiles; o próprio usuário lê tudo por get_my_profile().
+export const PUBLIC_PROFILE_COLUMNS =
+  'id, display_name, avatar_url, bio, contact, user_type, is_specialist, specialist_status, specialist_area, is_admin, profession_cbo, profession_title, profession_status, experience_range, education_level, education_course, education_in_progress, created_at, updated_at'
+
+// Perfil como outra pessoa o vê.
+export type PublicProfile = Omit<
+  Profile,
+  'email' | 'birth_date' | 'lgpd_consent' | 'lgpd_consent_date' | 'last_type_change'
+>
 
 export interface TestResult {
   id: string
@@ -41,7 +73,11 @@ export interface Experience {
   id: string
   user_id: string | null // null = autor excluiu a conta (migração 016)
   author_name: string
+  // Cópia da profissão do perfil no momento da publicação (migração 017).
+  // Depoimentos antigos têm só o texto livre, sem código nem situação.
   profession: string
+  profession_cbo: string | null
+  profession_status: ProfessionStatus | null
   riasec_type: RIASECType | null
   content: string
   video_url: string | null
@@ -53,7 +89,7 @@ export interface Experience {
   created_at: string
   updated_at: string
   // Joined fields
-  profiles?: Profile
+  profiles?: PublicProfile
 }
 
 export interface ExperienceComment {
@@ -63,7 +99,7 @@ export interface ExperienceComment {
   content: string
   created_at: string
   // Joined fields
-  profiles?: Profile
+  profiles?: PublicProfile
 }
 
 export interface ForumTopic {
@@ -79,7 +115,7 @@ export interface ForumTopic {
   created_at: string
   updated_at: string
   // Joined fields
-  profiles?: Profile
+  profiles?: PublicProfile
 }
 
 export interface ForumReply {
@@ -91,7 +127,7 @@ export interface ForumReply {
   created_at: string
   updated_at: string
   // Joined fields
-  profiles?: Profile
+  profiles?: PublicProfile
 }
 
 export type ReportableContentType =
