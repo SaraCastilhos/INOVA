@@ -3209,5 +3209,455 @@
     "status": "publicado",
     "atualizado_em": "2026-11-12",
     "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "advogado",
+    "nome": "Advogado",
+    "cbo_code": "2410-05",
+    "area": "Serviços Sociais e Jurídicos",
+    "descricao": "Representa clientes na Justiça, propondo e contestando ações, participando de audiências e recorrendo de decisões. Fora dos tribunais, presta assessoria e consultoria jurídica a pessoas, empresas e entidades, media conflitos, firma acordos, elabora pareceres e pode contribuir na elaboração de projetos de lei. O exercício da profissão exige graduação em Direito e aprovação no Exame de Ordem, com inscrição na OAB. Muitos advogados trabalham por conta própria ou como sócios de escritórios; os valores de salário abaixo refletem apenas vínculos CLT e não representam a renda de quem advoga de forma autônoma.",
+    "atividades": [
+      "Ouvir o cliente, reunir documentos e definir a natureza jurídica da questão",
+      "Interpretar a norma jurídica e escolher a estratégia de atuação",
+      "Propor e contestar ações e acompanhar o andamento dos processos",
+      "Realizar audiências e sustentar oralmente as questões legais",
+      "Recorrer de decisões, cumprindo os prazos legais",
+      "Prestar assessoria jurídica fora dos tribunais, mediar questões e firmar acordos",
+      "Elaborar pareceres técnico-jurídicos e relatórios"
+    ],
+    "habilidades": [
+      "Leitura atenta e interpretação de textos legais",
+      "Raciocínio lógico e senso crítico",
+      "Argumentação e expressão oral",
+      "Escrita clara e precisa",
+      "Negociação e capacidade de convencimento",
+      "Escuta ativa e controle emocional"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "OAB",
+    "riasec_code": "ECI",
+    "riasec_primary": "E",
+    "salario": {
+      "media": 5753.85,
+      "p25": 2889,
+      "p75": 6709,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE) — apenas vínculos CLT, sem advogados autônomos",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2410-05 — Advogado (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2410-05 — Advogado: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2410, MTE)",
+        "url": "https://codigocbo.com.br/cbo-241005-advogado",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 23-1011.00 — Lawyers: perfil de interesses (Enterprising, Conventional, Investigative)",
+        "url": "https://www.onetonline.org/link/summary/23-1011.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Advogado — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 27.665 vínculos)",
+        "url": "https://www.salario.com.br/profissao/advogado-cbo-241005/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "cirurgiao-dentista-clinico-geral",
+    "nome": "Cirurgião-dentista clínico geral",
+    "cbo_code": "2232-08",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Atende e orienta pacientes, estabelece diagnóstico e prognóstico e executa procedimentos odontológicos, como restaurações, extrações, tratamento gengival e reabilitação oral. Também aplica medidas de prevenção e promoção da saúde bucal e atende pessoas de todas as idades em consultórios, clínicas, serviços públicos de saúde e organizações sociais. O exercício da profissão exige graduação em Odontologia e registro no CRO. Muitos dentistas atendem em consultório próprio; os valores de salário abaixo refletem apenas vínculos CLT e não representam a renda de quem trabalha de forma autônoma.",
+    "atividades": [
+      "Realizar anamnese, exame clínico e radiografias para estabelecer o diagnóstico",
+      "Planejar o tratamento e explicar ao paciente riscos, duração e custos",
+      "Restaurar dentes e tratar doenças periodontais (gengivais)",
+      "Realizar extrações, cirurgias bucais e tratamentos de reabilitação oral",
+      "Anestesiar pacientes e prescrever medicamentos",
+      "Orientar sobre higiene oral, alimentação e hábitos nocivos à saúde bucal",
+      "Participar de ações de saúde coletiva e de equipes multiprofissionais",
+      "Praticar medidas de biossegurança e registrar os procedimentos no prontuário"
+    ],
+    "habilidades": [
+      "Habilidade manual e coordenação motora fina",
+      "Percepção visual e senso estético",
+      "Raciocínio clínico e pensamento crítico",
+      "Empatia e atendimento humanizado",
+      "Comunicação clara com o paciente",
+      "Organização e cuidado com a biossegurança"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CRO",
+    "riasec_code": "IRS",
+    "riasec_primary": "I",
+    "salario": {
+      "media": 5533.61,
+      "p25": 3398,
+      "p75": 7134,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE) — apenas vínculos CLT, sem dentistas autônomos",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2232-08 — Cirurgião dentista - clínico geral (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2232-08 — Cirurgião dentista - clínico geral: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2232, MTE)",
+        "url": "https://codigocbo.com.br/cbo-223208-cirurgiao-dentista-clinico-geral",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 29-1021.00 — Dentists, General: perfil de interesses (Investigative, Realistic, Social)",
+        "url": "https://www.onetonline.org/link/summary/29-1021.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Cirurgião Dentista - Clínico Geral — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 6.660 vínculos)",
+        "url": "https://www.salario.com.br/profissao/cirurgiao-dentista-clinico-geral-cbo-223208/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "jornalista",
+    "nome": "Jornalista",
+    "cbo_code": "2611-25",
+    "area": "Comunicação e Informação",
+    "descricao": "Apura, redige, edita e registra em texto, imagem e som informações e notícias, e analisa e comenta acontecimentos. Busca e entrevista fontes, confronta dados e versões e prepara as matérias para jornais, revistas, rádio, televisão, internet e assessorias de imprensa, zelando pela precisão e pela ética da informação. Desde 2009, por decisão do STF, o diploma de Jornalismo não é obrigatório para exercer a profissão, mas a graduação na área continua sendo o caminho mais comum.",
+    "atividades": [
+      "Elaborar e executar pautas de reportagem",
+      "Buscar e entrevistar fontes de informação",
+      "Apurar e confrontar dados, fatos e versões",
+      "Redigir textos jornalísticos adequando a linguagem a cada veículo",
+      "Fotografar e gravar imagens e entrevistas jornalísticas",
+      "Editar, revisar e organizar matérias para publicação",
+      "Zelar pela precisão e veracidade da informação e pelo direito de resposta"
+    ],
+    "habilidades": [
+      "Escrita clara e objetiva",
+      "Curiosidade e capacidade de observação",
+      "Senso crítico e imparcialidade",
+      "Escuta ativa e habilidade de entrevista",
+      "Organização e trabalho com prazos curtos",
+      "Criatividade e capacidade de improvisação",
+      "Ética no trato da informação e das pessoas"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "AIE",
+    "riasec_primary": "A",
+    "salario": {
+      "media": 5041.32,
+      "p25": 2894,
+      "p75": 6216,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2611-25 — Jornalista (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2611-25 — Jornalista: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2611, MTE)",
+        "url": "https://codigocbo.com.br/cbo-261125-jornalista",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "STF — Supremo decide que é inconstitucional a exigência de diploma para o exercício do jornalismo (RE 511.961, 17/06/2009)",
+        "url": "https://noticias.stf.jus.br/postsnoticias/supremo-decide-que-e-inconstitucional-a-exigencia-de-diploma-para-o-exercicio-do-jornalismo/",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 27-3023.00 — News Analysts, Reporters, and Journalists: perfil de interesses (Artistic, Investigative, Enterprising)",
+        "url": "https://www.onetonline.org/link/summary/27-3023.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Jornalista — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 3.051 vínculos)",
+        "url": "https://www.salario.com.br/profissao/jornalista-cbo-261125/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "tecnico-de-enfermagem",
+    "nome": "Técnico de enfermagem",
+    "cbo_code": "3222-05",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Desempenha atividades técnicas de enfermagem em hospitais, clínicas, unidades de saúde, domicílios e outros serviços, sob supervisão do enfermeiro. Presta assistência direta ao paciente: controla sinais vitais, administra os medicamentos prescritos, faz curativos, auxilia em exames, procedimentos e cirurgias e participa de ações de prevenção e promoção da saúde. O exercício exige curso técnico em enfermagem (nível médio) e inscrição no COREN.",
+    "atividades": [
+      "Controlar sinais vitais e acompanhar a evolução do paciente",
+      "Preparar e administrar a medicação prescrita",
+      "Fazer curativos, punções venosas e outros cuidados ao paciente",
+      "Auxiliar a equipe em procedimentos, exames e cirurgias, inclusive na instrumentação cirúrgica",
+      "Coletar material para exames e controlar a aplicação de vacinas",
+      "Registrar no prontuário medicamentos, procedimentos e intercorrências",
+      "Seguir normas de biossegurança, esterilização e descarte de materiais",
+      "Orientar pacientes, familiares e comunidade e participar de campanhas de saúde"
+    ],
+    "habilidades": [
+      "Atenção e capacidade de observação",
+      "Coordenação motora fina",
+      "Empatia e atendimento humanizado",
+      "Trabalho em equipe",
+      "Organização e responsabilidade com rotinas e registros",
+      "Controle emocional e tomada de decisão em urgências",
+      "Sigilo e ética profissional"
+    ],
+    "formacao_requerida": "tecnico",
+    "regulamentada": true,
+    "conselho": "COREN",
+    "riasec_code": "SCR",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 2559.99,
+      "p25": 1892,
+      "p75": 3031,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 3222-05 — Técnico de enfermagem (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 3222-05 — Técnico de enfermagem: descrição sumária e formação (Classificação Brasileira de Ocupações, família 3222, MTE)",
+        "url": "https://codigocbo.com.br/cbo-322205-tecnico-de-enfermagem",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Lei nº 7.498/1986 — regulamenta o exercício da enfermagem (inscrição no Conselho Regional de Enfermagem; atribuições do técnico)",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l7498.htm",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 29-2061.00 — Licensed Practical and Licensed Vocational Nurses: perfil de interesses (Social, Conventional, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/29-2061.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Técnico de Enfermagem — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 424.807 vínculos)",
+        "url": "https://www.salario.com.br/profissao/tecnico-de-enfermagem-cbo-322205/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "engenheiro-mecanico",
+    "nome": "Engenheiro mecânico",
+    "cbo_code": "2144-05",
+    "area": "Indústria e Produção",
+    "descricao": "Projeta sistemas, conjuntos mecânicos, componentes e ferramentas, especificando materiais e fazendo cálculos e desenhos técnicos. Desenvolve processos de fabricação, testa sistemas e componentes, implanta rotinas de manutenção e elabora documentação técnica, como normas, manuais e laudos. Pode coordenar equipes e prestar consultoria técnica. O exercício da profissão exige graduação em Engenharia Mecânica ou afins e registro no CREA.",
+    "atividades": [
+      "Projetar sistemas, conjuntos mecânicos, componentes e ferramentas",
+      "Calcular, desenhar e especificar os materiais dos projetos",
+      "Definir as etapas de fabricação e controlar o processo produtivo e a qualidade",
+      "Testar sistemas e componentes e avaliar os resultados",
+      "Elaborar planos de manutenção preventiva e preditiva",
+      "Elaborar normas, manuais, especificações e laudos técnicos",
+      "Coordenar equipes e prestar consultoria e suporte técnico"
+    ],
+    "habilidades": [
+      "Raciocínio analítico e lógico",
+      "Matemática e ciências aplicadas",
+      "Visão espacial para desenho técnico",
+      "Pensamento crítico na solução de problemas",
+      "Trabalho em equipe e liderança",
+      "Leitura de literatura técnica e atualização sobre novas tecnologias"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CREA",
+    "riasec_code": "RIC",
+    "riasec_primary": "R",
+    "salario": {
+      "media": 11894.49,
+      "p25": 9000,
+      "p75": 14228,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2144-05 — Engenheiro mecânico (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2144-05 — Engenheiro mecânico: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2144, MTE)",
+        "url": "https://codigocbo.com.br/cbo-214405-engenheiro-mecanico",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 17-2141.00 — Mechanical Engineers: perfil de interesses (Realistic, Investigative, Conventional)",
+        "url": "https://www.onetonline.org/link/summary/17-2141.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Engenheiro Mecânico — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 6.733 vínculos)",
+        "url": "https://www.salario.com.br/profissao/engenheiro-mecanico-cbo-214405/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "profissional-de-educacao-fisica-na-saude",
+    "nome": "Profissional de educação física na saúde",
+    "cbo_code": "2241-40",
+    "area": "Saúde e Bem-estar",
+    "descricao": "Planeja, prescreve e orienta exercícios físicos, práticas corporais e atividades de lazer para promover a saúde e prevenir doenças, atendendo pessoas individualmente ou em grupo. Faz avaliação física, acompanha a execução dos exercícios e adapta as atividades às condições de cada pessoa, em academias, clínicas, unidades de saúde do SUS, escolas e espaços comunitários. O exercício exige graduação em Educação Física e registro no CREF.",
+    "atividades": [
+      "Realizar anamnese e avaliação física de alunos e pacientes",
+      "Planejar e prescrever exercícios conforme os objetivos e as condições de cada pessoa",
+      "Demonstrar os exercícios e corrigir a execução dos movimentos",
+      "Conduzir atendimentos individuais e atividades em grupo",
+      "Desenvolver ações de promoção da saúde e prevenção de doenças crônicas, inclusive no SUS",
+      "Interpretar as respostas do organismo ao exercício e definir indicações e contraindicações",
+      "Promover atividades de lazer e recreação"
+    ],
+    "habilidades": [
+      "Comunicação e capacidade de motivar pessoas",
+      "Escuta ativa e empatia",
+      "Capacidade de ensinar e orientar movimentos",
+      "Observação e acompanhamento do desempenho",
+      "Criatividade e capacidade de inovação",
+      "Liderança e organização de grupos",
+      "Trabalho em equipe multiprofissional"
+    ],
+    "formacao_requerida": "superior-conselho",
+    "regulamentada": true,
+    "conselho": "CREF",
+    "riasec_code": "SR",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 3256.31,
+      "p25": 2068,
+      "p75": 3520,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2241-40 — Profissional de educação física na saúde (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2241-40 — Profissional de educação física na saúde: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2241, MTE)",
+        "url": "https://codigocbo.com.br/cbo-224140-profissional-de-educacao-fisica-na-saude",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 39-9031.00 — Exercise Trainers and Group Fitness Instructors: perfil de interesses (Social, Realistic)",
+        "url": "https://www.onetonline.org/link/summary/39-9031.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Profissional de educação física na saúde — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 11.361 vínculos)",
+        "url": "https://www.salario.com.br/profissao/profissional-de-educacao-fisica-na-saude-cbo-224140/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
+  },
+  {
+    "slug": "professor-de-lingua-portuguesa-e-literatura-do-ensino-medio",
+    "nome": "Professor de língua portuguesa e literatura do ensino médio",
+    "cbo_code": "2321-45",
+    "area": "Educação",
+    "descricao": "Ensina língua portuguesa e literatura a estudantes do ensino médio, em escolas públicas e privadas. Planeja a disciplina e as aulas, seleciona textos e materiais, desenvolve atividades de leitura, escrita e reflexão crítica, avalia a aprendizagem e participa do projeto pedagógico e dos conselhos de classe da escola. Exige formação superior específica na área, como a licenciatura em Letras; na rede pública, o ingresso é por concurso. É comum trabalhar em jornada parcial: a média dos vínculos usados no salário abaixo é de cerca de 22 horas semanais.",
+    "atividades": [
+      "Planejar a disciplina e as aulas de acordo com o projeto pedagógico da escola",
+      "Selecionar textos, bibliografia e materiais didáticos",
+      "Ministrar aulas teóricas e práticas de língua e literatura",
+      "Desenvolver atividades de leitura, produção de textos e reflexão crítica",
+      "Elaborar, aplicar e corrigir avaliações e comentar os resultados com os alunos",
+      "Participar de conselhos de classe, reuniões pedagógicas e do atendimento a pais",
+      "Atualizar-se sobre a produção cultural e literária e sobre novas tecnologias de ensino"
+    ],
+    "habilidades": [
+      "Domínio da língua portuguesa e da literatura",
+      "Expressão clara, oral e escrita",
+      "Didática e estratégias de ensino",
+      "Escuta ativa e diálogo com os alunos",
+      "Administração de conflitos em sala de aula",
+      "Respeito à diversidade cultural e social",
+      "Reflexão contínua sobre a própria prática"
+    ],
+    "formacao_requerida": "superior",
+    "regulamentada": false,
+    "conselho": null,
+    "riasec_code": "S",
+    "riasec_primary": "S",
+    "salario": {
+      "media": 4459.01,
+      "p25": 2082,
+      "p75": 5044,
+      "moeda": "BRL",
+      "fonte": "Portal Salário, com base em microdados do Novo CAGED (MTE)",
+      "referencia": "2025-10/2026-09"
+    },
+    "fontes": [
+      {
+        "titulo": "CBO 2321-45 — Professor de língua e literatura brasileira no ensino médio (Classificação Brasileira de Ocupações, arquivos oficiais \"Estrutura CBO\" do MTE: ocupação, sinônimos e perfil ocupacional)",
+        "url": "https://cbo.mte.gov.br/cbosite/pages/downloads.jsf",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "CBO 2321-45 — Professor de língua e literatura brasileira no ensino médio: descrição sumária e formação (Classificação Brasileira de Ocupações, família 2321, MTE)",
+        "url": "https://codigocbo.com.br/cbo-232145-professor-de-lingua-e-literatura-brasileira-no-ensino-medio",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "O*NET-SOC 25-2031.00 — Secondary School Teachers, Except Special and Career/Technical Education: perfil de interesses (Social)",
+        "url": "https://www.onetonline.org/link/summary/25-2031.00",
+        "acesso_em": "2026-11-12"
+      },
+      {
+        "titulo": "Professor de Língua e Literatura Brasileira no Ensino Médio — Salário (Portal Salário, dados do CAGED/MTE, out/2025 a set/2026, 1.434 vínculos)",
+        "url": "https://www.salario.com.br/profissao/professor-de-lingua-e-literatura-brasileira-no-ensino-medio-cbo-232145/",
+        "acesso_em": "2026-11-12"
+      }
+    ],
+    "status": "publicado",
+    "atualizado_em": "2026-11-12",
+    "revisado_por": "Sara Castilhos"
   }
 ]
