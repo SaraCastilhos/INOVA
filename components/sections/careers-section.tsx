@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES, AREAS, guiaAtualizadoEm } from '@/lib/guia'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
-import { fmtBRL, fmtData } from '@/lib/format'
+import { fmtBRL, fmtData, normalizarBusca } from '@/lib/format'
 import { pontuar } from '@/lib/instruments'
 import { lerTestePendente } from '@/lib/teste-pendente'
 import {
@@ -35,6 +35,16 @@ type GuiaState = { tab: Tab; tipo: RIASECType | 'todos'; area: string; busca: st
 const VALID_TABS: Tab[] = ['profissoes', 'ingresso', 'universidades']
 const RIASEC_TYPES = Object.keys(RIASEC_INFO) as RIASECType[]
 const SCROLL_KEY = 'inova:guia:scroll'
+
+// Texto pesquisável de cada profissão, já sem acentos e em minúsculas
+// (montado uma vez). Campos separados por quebra de linha, que o campo de
+// busca não aceita, para uma busca não casar "emendando" dois campos.
+const TEXTO_BUSCA = new Map(
+  PROFISSOES.map((p) => [
+    p.slug,
+    normalizarBusca([p.nome, p.descricao, p.area, ...p.atividades, ...p.habilidades].join('\n')),
+  ]),
+)
 
 function readGuiaState(key: string): Partial<GuiaState> {
   if (typeof window === 'undefined') return {}
@@ -138,13 +148,8 @@ export function CareersSection() {
   const filteredProfissoes = PROFISSOES.filter((p) => {
     const matchesTipo = selectedFilter === 'todos' || p.riasec_primary === selectedFilter
     const matchesArea = areaFilter === 'todas' || p.area === areaFilter
-    const query = searchQuery.trim().toLowerCase()
-    const matchesSearch =
-      !query ||
-      p.nome.toLowerCase().includes(query) ||
-      p.descricao.toLowerCase().includes(query) ||
-      p.area.toLowerCase().includes(query) ||
-      p.atividades.some((a) => a.toLowerCase().includes(query))
+    const query = normalizarBusca(searchQuery.trim())
+    const matchesSearch = !query || TEXTO_BUSCA.get(p.slug)!.includes(query)
     return matchesTipo && matchesArea && matchesSearch
   })
 
@@ -175,7 +180,7 @@ export function CareersSection() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar por profissão, descrição ou atividade..."
+              placeholder="Buscar por profissão, atividade ou habilidade..."
               className="w-full pl-10 pr-4 py-2.5 border border-input rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
