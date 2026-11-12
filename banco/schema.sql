@@ -7,6 +7,21 @@
 create extension if not exists "uuid-ossp";
 
 -- ================================================
+-- OCUPAÇÕES DA CBO — migração 017
+-- ================================================
+-- Lista oficial (MTE). Carga em banco/dados/cbo-ocupacoes.sql, gerada por
+-- scripts/build-cbo.mjs. Leitura pública, escrita só pelo SQL Editor.
+create table if not exists public.cbo_ocupacoes (
+  codigo text primary key check (codigo ~ '^[0-9]{6}$'),
+  titulo text not null
+);
+
+alter table public.cbo_ocupacoes enable row level security;
+
+create policy "Anyone can read CBO" on public.cbo_ocupacoes
+  for select using (true);
+
+-- ================================================
 -- PROFILES TABLE
 -- ================================================
 create table if not exists public.profiles (
@@ -25,13 +40,26 @@ create table if not exists public.profiles (
   lgpd_consent boolean not null default false,
   lgpd_consent_date timestamptz,
   last_type_change timestamptz,
+  -- Perfil profissional (migração 017). profession_title é cópia do título
+  -- da CBO, preenchida pelo banco (enforce_profile_rules).
+  profession_cbo text references public.cbo_ocupacoes(codigo) on delete set null,
+  profession_title text,
+  profession_status text check (profession_status in ('atuo', 'estudo', 'atuei')),
+  experience_range text check (experience_range in ('ate-1', '1-4', '5-9', '10-mais')),
+  education_level text check (education_level in ('fundamental', 'medio', 'tecnico', 'graduacao', 'especializacao', 'mestrado', 'doutorado')),
+  education_course text check (char_length(education_course) <= 120),
+  education_in_progress boolean not null default false,
   created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  constraint profiles_profession_pair check ((profession_cbo is null) = (profession_status is null)),
+  constraint profiles_experience_range_status check (experience_range is null or profession_status in ('atuo', 'atuei'))
 );
 
 -- RLS for profiles
 alter table public.profiles enable row level security;
 
+-- Todos veem todos os perfis, mas só as colunas públicas — ver
+-- "PERFIL PROFISSIONAL E PRIVACIDADE" no fim do arquivo (grant select).
 create policy "Users can view all profiles" on public.profiles
   for select using (true);
 
@@ -96,16 +124,21 @@ create policy "Admins can update any profile" on public.profiles
     exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
   );
 
--- Auto-create profile on signup
+-- Auto-create profile on signup (birth_date vem dos metadados do signUp)
 create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer set search_path = public
 as $$
 begin
-  insert into public.profiles (id, display_name, email, user_type, lgpd_consent, lgpd_consent_date)
+  insert into public.profiles (id, display_name, email, birth_date, user_type, lgpd_consent, lgpd_consent_date)
   values (
     new.id,
     coalesce(new.raw_user_meta_data->>'display_name', split_part(new.email, '@', 1)),
     new.email,
+    case
+      when new.raw_user_meta_data->>'birth_date' ~ '^\d{4}-\d{2}-\d{2}$'
+        then (new.raw_user_meta_data->>'birth_date')::date
+      else null
+    end,
     coalesce(new.raw_user_meta_data->>'user_type', 'estudante'),
     coalesce((new.raw_user_meta_data->>'lgpd_consent')::boolean, false),
     case when (new.raw_user_meta_data->>'lgpd_consent')::boolean then now() else null end
@@ -154,7 +187,11 @@ create table if not exists public.experiences (
   id uuid primary key default uuid_generate_v4(),
   user_id uuid references public.profiles(id) on delete set null, -- null = autor excluiu a conta (migração 016)
   author_name text not null,
+  -- Cópia da profissão do perfil na publicação (migração 017,
+  -- set_experience_profession). Antigos: só texto livre, sem código.
   profession text not null,
+  profession_cbo text references public.cbo_ocupacoes(codigo) on delete set null,
+  profession_status text check (profession_status in ('atuo', 'estudo', 'atuei')),
   riasec_type text,
   content text not null check (char_length(content) <= 3000),
   video_url text,
@@ -191,7 +228,8 @@ create policy "Admins can delete any experience" on public.experiences
     exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
   );
 
--- Autor edita o próprio depoimento já aprovado (texto/profissão) e
+-- Autor edita o próprio depoimento já aprovado (só o texto — a profissão
+-- fica congelada por set_experience_profession, migração 017) e
 -- encerra/reabre os comentários (is_closed). O with check congela
 -- status='approved' e is_featured=false — sem UI para mudá-los e sem
 -- outro valor aceito, o autor não se auto-aprova nem se destaca.
@@ -738,3 +776,133 @@ $$;
 
 revoke all on function public.delete_own_account() from public, anon;
 grant execute on function public.delete_own_account() to authenticated;
+
+-- ================================================
+-- PERFIL PROFISSIONAL E PRIVACIDADE — migração 017
+-- ================================================
+-- profession_title é cópia do título oficial — o cliente não escolhe o
+-- texto, só o código. Contato some para menores de 18 anos. Bio e curso
+-- passam pelo filtro de termos (blocked_terms, migração 014).
+create or replace function public.enforce_profile_rules()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+declare
+  v_text text;
+  v_hit  text;
+begin
+  if new.profession_cbo is null then
+    new.profession_title := null;
+  else
+    select titulo into new.profession_title
+    from public.cbo_ocupacoes
+    where codigo = new.profession_cbo;
+  end if;
+
+  if new.profession_status = 'estudo' then
+    new.experience_range := null;
+  end if;
+
+  if new.education_level is null or new.education_level in ('fundamental', 'medio') then
+    new.education_course := null;
+  end if;
+
+  if new.birth_date is not null and new.birth_date > current_date - interval '18 years' then
+    new.contact := null;
+  end if;
+
+  -- Só checa o texto que mudou: uma bio antiga não trava a troca de foto,
+  -- e esta migração não falha por causa de perfis já existentes.
+  if tg_op = 'INSERT'
+     or new.bio is distinct from old.bio
+     or new.education_course is distinct from old.education_course then
+    v_text := coalesce(new.bio, '') || ' ' || coalesce(new.education_course, '');
+    select term into v_hit
+    from public.blocked_terms
+    where v_text ~* ('\y' || term || '\y')
+    limit 1;
+    if v_hit is not null then
+      raise exception 'Conteúdo não permitido: contém linguagem ofensiva.';
+    end if;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_enforce_profile_rules on public.profiles;
+create trigger trg_enforce_profile_rules
+  before insert or update on public.profiles
+  for each row execute procedure public.enforce_profile_rules();
+
+-- No insert: copia profissão + situação do perfil de quem publica (ignora
+-- o que o cliente mandar). Sem profissão no perfil, não publica.
+-- No update: a profissão do depoimento fica congelada — o autor edita só
+-- o texto. Depoimentos antigos (texto livre, sem código) continuam como
+-- estão.
+-- auth.uid() nulo = SQL Editor (admin): passa sem mexer.
+create or replace function public.set_experience_profession()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+declare
+  v_cbo    text;
+  v_title  text;
+  v_status text;
+begin
+  if auth.uid() is null then
+    return new;
+  end if;
+
+  if tg_op = 'UPDATE' then
+    new.profession := old.profession;
+    new.profession_cbo := old.profession_cbo;
+    new.profession_status := old.profession_status;
+    return new;
+  end if;
+
+  select profession_cbo, profession_title, profession_status
+    into v_cbo, v_title, v_status
+  from public.profiles
+  where id = auth.uid();
+
+  if v_cbo is null or v_title is null then
+    raise exception 'Informe sua profissão no perfil antes de publicar um depoimento.';
+  end if;
+
+  new.profession := v_title;
+  new.profession_cbo := v_cbo;
+  new.profession_status := v_status;
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_set_experience_profession on public.experiences;
+create trigger trg_set_experience_profession
+  before insert or update on public.experiences
+  for each row execute procedure public.set_experience_profession();
+
+-- A policy de linha continua "todos veem todos os perfis", mas só as
+-- colunas públicas abaixo. Ficam de fora: email, birth_date,
+-- lgpd_consent, lgpd_consent_date, last_type_change.
+-- id e is_admin precisam continuar legíveis: as policies das outras
+-- tabelas consultam profiles.is_admin com os direitos de quem acessa.
+--
+-- ATENÇÃO para migrações futuras: coluna nova em profiles NÃO fica
+-- legível automaticamente — se for pública, incluir num "grant select".
+revoke select on public.profiles from anon, authenticated;
+grant select (
+  id, display_name, avatar_url, bio, contact, user_type,
+  is_specialist, specialist_status, specialist_area, is_admin,
+  profession_cbo, profession_title, profession_status, experience_range,
+  education_level, education_course, education_in_progress,
+  created_at, updated_at
+) on public.profiles to anon, authenticated;
+
+-- Perfil completo (com e-mail e data de nascimento) só da própria pessoa.
+create or replace function public.get_my_profile()
+returns setof public.profiles language sql stable security definer set search_path = public
+as $$
+  select * from public.profiles where id = auth.uid();
+$$;
+
+revoke all on function public.get_my_profile() from public, anon;
+grant execute on function public.get_my_profile() to authenticated;

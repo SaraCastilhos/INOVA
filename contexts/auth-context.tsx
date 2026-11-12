@@ -43,12 +43,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const supabase = createClient()
 
-  const fetchProfile = useCallback(async (userId: string) => {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single()
+  // Perfil completo (com e-mail e data de nascimento) só pela RPC: o select
+  // direto em profiles devolve apenas as colunas públicas (migração 017). A
+  // RPC lê o perfil de auth.uid() — o da sessão atual.
+  const fetchProfile = useCallback(async () => {
+    const { data, error } = await supabase.rpc('get_my_profile').single()
 
     if (error) {
       console.error('Error fetching profile:', error)
@@ -87,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const loadUserData = useCallback(async (userId: string) => {
     const [profileData, testData, badgeData] = await Promise.all([
-      fetchProfile(userId),
+      fetchProfile(),
       fetchTestResults(userId),
       fetchBadges(userId)
     ])

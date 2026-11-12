@@ -5,7 +5,21 @@ import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/auth-context'
 import { createClient } from '@/lib/supabase/client'
-import type { Experience, ExperienceComment, ForumTopic, Profile, CommunityTab, ForumReply, ReportableContentType } from '@/lib/types'
+import Link from 'next/link'
+import type { Experience, ExperienceComment, ForumTopic, PublicProfile, CommunityTab, ForumReply, ReportableContentType } from '@/lib/types'
+import { PUBLIC_PROFILE_COLUMNS } from '@/lib/types'
+import {
+  descreverFormacao,
+  descreverProfissao,
+  EXPERIENCE_RANGE_LABELS,
+  slugDoGuia
+} from '@/lib/cbo'
+import {
+  CamposProfissaoForm,
+  camposProfissaoParaPerfil,
+  camposProfissaoValidos,
+  type CamposProfissao
+} from '@/components/perfil-profissional'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -41,7 +55,8 @@ import {
   Lock,
   Unlock,
   Pencil,
-  Flag
+  Flag,
+  BookOpen
 } from 'lucide-react'
 
 // Limites de tamanho inspirados no LinkedIn (posts ~3000, comentários
@@ -133,7 +148,7 @@ function ReportButton({
             onChange={(e) => setReason(e.target.value)}
             maxLength={500}
             rows={3}
-            placeholder="Ex: linguagem ofensiva, spam, informação falsa..."
+            placeholder="Ex: linguagem ofensiva, spam, informação ou profissão falsa..."
             className="w-full px-3 py-2 text-sm border border-input rounded-lg bg-background text-foreground resize-none"
           />
           <AlertDialogFooter>
@@ -155,7 +170,7 @@ function ReportButton({
 export function CommunitySection() {
   const [activeTab, setActiveTab] = useState<CommunityTab>('experiences')
   const [searchQuery, setSearchQuery] = useState('')
-  const [viewedProfile, setViewedProfile] = useState<Profile | null>(null)
+  const [viewedProfile, setViewedProfile] = useState<PublicProfile | null>(null)
 
   return (
     <div className="space-y-6">
@@ -227,7 +242,7 @@ function ExperiencesTab({
   onViewProfile
 }: {
   searchQuery: string
-  onViewProfile: (profile: Profile) => void
+  onViewProfile: (profile: PublicProfile) => void
 }) {
   const { user, profile, awardCountBadges } = useAuth()
   const [experiences, setExperiences] = useState<Experience[]>([])
@@ -244,7 +259,7 @@ function ExperiencesTab({
     setLoading(true)
     const { data } = await supabase
       .from('experiences')
-      .select('*, profiles(id, display_name, avatar_url, is_specialist, specialist_area, bio, contact, user_type, created_at)')
+      .select(`*, profiles(${PUBLIC_PROFILE_COLUMNS})`)
       .eq('status', 'approved')
       .order('created_at', { ascending: false })
 
@@ -343,15 +358,12 @@ function ExperiencesTab({
     toast.success('Depoimento excluído.')
   }
 
-  const handleSubmitExperience = async (data: {
-    profession: string
-    content: string
-  }) => {
+  // A profissão não vai no insert: o banco copia a do perfil (migração 017).
+  const handleSubmitExperience = async (data: { content: string }) => {
     if (!user) return
 
     const { error } = await supabase.from('experiences').insert({
       user_id: user.id,
-      profession: data.profession,
       content: data.content,
       status: 'approved'
     })
@@ -368,12 +380,14 @@ function ExperiencesTab({
     fetchExperiences()
   }
 
-  const handleEditExperience = async (data: { profession: string; content: string }) => {
+  // Na edição, só o texto muda — a profissão do depoimento fica a da época
+  // em que foi publicado.
+  const handleEditExperience = async (data: { content: string }) => {
     if (!editingExperience) return
 
     const { data: rows, error } = await supabase
       .from('experiences')
-      .update({ profession: data.profession, content: data.content })
+      .update({ content: data.content })
       .eq('id', editingExperience.id)
       .select('id')
 
@@ -448,7 +462,10 @@ function ExperiencesTab({
       {editingExperience && (
         <ExperienceFormModal
           initial={{
-            profession: editingExperience.profession,
+            profession: descreverProfissao(
+              editingExperience.profession,
+              editingExperience.profession_status
+            ),
             content: editingExperience.content
           }}
           onClose={() => setEditingExperience(null)}
@@ -534,10 +551,11 @@ function ExperienceCard({
   canManage: boolean
   onEdit: () => void
   onToggleClosed: () => void
-  onViewProfile: (profile: Profile) => void
+  onViewProfile: (profile: PublicProfile) => void
 }) {
   const [showComments, setShowComments] = useState(false)
   const [commentsCount, setCommentsCount] = useState(experience.comments_count)
+  const guiaSlug = slugDoGuia(experience.profession_cbo)
 
   return (
     <div className="bg-card rounded-xl border border-border p-5 space-y-4">
@@ -562,7 +580,9 @@ function ExperienceCard({
                 <BadgeCheck className="w-4 h-4 text-secondary" />
               )}
             </div>
-            <p className="text-sm text-muted-foreground">{experience.profession}</p>
+            <p className="text-sm text-muted-foreground">
+              {descreverProfissao(experience.profession, experience.profession_status)}
+            </p>
           </div>
         </button>
         <div className="flex items-center gap-1 shrink-0">
@@ -599,6 +619,16 @@ function ExperienceCard({
 
       {/* Content */}
       <p className="text-foreground leading-relaxed">{experience.content}</p>
+
+      {guiaSlug && (
+        <Link
+          href={`/profissoes/${guiaSlug}`}
+          className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+        >
+          Conheça essa profissão no guia
+          <ChevronRight className="w-4 h-4" />
+        </Link>
+      )}
 
       {/* Footer */}
       <div className="flex items-center justify-between pt-2 border-t border-border">
@@ -652,7 +682,7 @@ function CommentsModal({
   experience: Experience
   onClose: () => void
   onCommentsCountChange: (updater: (count: number) => number) => void
-  onViewProfile: (profile: Profile) => void
+  onViewProfile: (profile: PublicProfile) => void
 }) {
   const { user, profile, awardCountBadges } = useAuth()
   const supabase = createClient()
@@ -667,7 +697,7 @@ function CommentsModal({
     setLoading(true)
     const { data } = await supabase
       .from('experience_comments')
-      .select('*, profiles(id, display_name, avatar_url, is_specialist, specialist_area, bio, contact, user_type, created_at)')
+      .select(`*, profiles(${PUBLIC_PROFILE_COLUMNS})`)
       .eq('experience_id', experience.id)
       .order('created_at', { ascending: true })
 
@@ -854,26 +884,47 @@ function CommentsModal({
   )
 }
 
+// Formulário de depoimento. A profissão vem do perfil (migração 017): quem
+// já informou vê qual profissão vai aparecer; quem ainda não informou
+// escolhe aqui mesmo (na lista da CBO), e ela é salva no perfil antes de
+// publicar. Na edição, a profissão não muda — só o texto.
 function ExperienceFormModal({
   onClose,
   onSubmit,
   initial
 }: {
   onClose: () => void
-  onSubmit: (data: { profession: string; content: string }) => void
+  onSubmit: (data: { content: string }) => Promise<void>
   initial?: { profession: string; content: string }
 }) {
+  const { profile, updateProfile } = useAuth()
   const isEdit = !!initial
-  const [profession, setProfession] = useState(initial?.profession ?? '')
   const [content, setContent] = useState(initial?.content ?? '')
   const [submitting, setSubmitting] = useState(false)
+  const temProfissao = !!profile?.profession_cbo && !!profile.profession_title
+  const [campos, setCampos] = useState<CamposProfissao>({
+    profissao: null,
+    status: null,
+    experiencia: null
+  })
+  const precisaProfissao = !isEdit && !temProfissao
+  const podeEnviar =
+    !!content.trim() && !submitting && (!precisaProfissao || camposProfissaoValidos(campos))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!profession.trim() || !content.trim()) return
+    if (!podeEnviar) return
 
     setSubmitting(true)
-    await onSubmit({ profession, content })
+    if (precisaProfissao) {
+      const { error } = await updateProfile(camposProfissaoParaPerfil(campos))
+      if (error) {
+        setSubmitting(false)
+        toast.error('Não foi possível salvar sua profissão. Tente novamente.')
+        return
+      }
+    }
+    await onSubmit({ content })
     setSubmitting(false)
   }
 
@@ -890,19 +941,33 @@ function ExperienceFormModal({
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Sua profissão
-            </label>
-            <input
-              type="text"
-              value={profession}
-              onChange={(e) => setProfession(e.target.value)}
-              placeholder="Ex: Engenheiro de Software"
-              className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground"
-              required
-            />
-          </div>
+          {isEdit ? (
+            <div className="bg-muted/50 p-4 rounded-lg text-sm">
+              <p className="text-muted-foreground">Publicado como</p>
+              <p className="font-medium text-foreground">{initial.profession}</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                A profissão de um depoimento continua a da época em que ele foi publicado.
+              </p>
+            </div>
+          ) : temProfissao ? (
+            <div className="bg-muted/50 p-4 rounded-lg text-sm">
+              <p className="text-muted-foreground">Você vai publicar como</p>
+              <p className="font-medium text-foreground">
+                {descreverProfissao(profile!.profession_title!, profile!.profession_status)}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Para mudar, edite sua profissão em Perfil.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                Antes do primeiro depoimento, conte qual é a sua profissão. Ela fica salva no seu
+                perfil e aparece nos seus depoimentos.
+              </p>
+              <CamposProfissaoForm value={campos} onChange={setCampos} />
+            </div>
+          )}
 
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -928,7 +993,7 @@ function ExperienceFormModal({
 
           <button
             type="submit"
-            disabled={submitting || !profession.trim() || !content.trim()}
+            disabled={!podeEnviar}
             className="w-full py-3 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {submitting ? (
@@ -955,7 +1020,7 @@ function ForumTab({
   onViewProfile
 }: {
   searchQuery: string
-  onViewProfile: (profile: Profile) => void
+  onViewProfile: (profile: PublicProfile) => void
 }) {
   const { user, profile, awardCountBadges } = useAuth()
   const [topics, setTopics] = useState<ForumTopic[]>([])
@@ -971,7 +1036,7 @@ function ForumTab({
     setLoading(true)
     const { data } = await supabase
       .from('forum_topics')
-      .select('*, profiles(id, display_name, avatar_url, is_specialist, specialist_area, bio, contact, user_type, created_at)')
+      .select(`*, profiles(${PUBLIC_PROFILE_COLUMNS})`)
       .order('is_pinned', { ascending: false })
       .order('created_at', { ascending: false })
 
@@ -1418,7 +1483,7 @@ function TopicDetail({
   onBack: () => void
   canDelete: boolean
   onDelete: () => void
-  onViewProfile: (profile: Profile) => void
+  onViewProfile: (profile: PublicProfile) => void
   canPin: boolean
   canManage: boolean
   onEdit: () => void
@@ -1440,7 +1505,7 @@ function TopicDetail({
     const fetchReplies = async () => {
       const { data } = await supabase
         .from('forum_replies')
-        .select('*, profiles(id, display_name, avatar_url, is_specialist, specialist_area, bio, contact, user_type, created_at)')
+        .select(`*, profiles(${PUBLIC_PROFILE_COLUMNS})`)
         .eq('topic_id', topic.id)
         .order('created_at', { ascending: true })
 
@@ -1484,7 +1549,7 @@ function TopicDetail({
 
     const { data } = await supabase
       .from('forum_replies')
-      .select('*, profiles(id, display_name, avatar_url, is_specialist, specialist_area, bio, contact, user_type, created_at)')
+      .select(`*, profiles(${PUBLIC_PROFILE_COLUMNS})`)
       .eq('topic_id', topic.id)
       .order('created_at', { ascending: true })
 
@@ -1734,9 +1799,9 @@ function TopicDetail({
 }
 
 // Specialists Tab Component
-function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: Profile) => void }) {
+function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: PublicProfile) => void }) {
   const { user, profile, updateProfile } = useAuth()
-  const [specialists, setSpecialists] = useState<Profile[]>([])
+  const [specialists, setSpecialists] = useState<PublicProfile[]>([])
   const [loading, setLoading] = useState(true)
   const [showRequestForm, setShowRequestForm] = useState(false)
   const supabase = createClient()
@@ -1745,12 +1810,12 @@ function SpecialistsTab({ onViewProfile }: { onViewProfile: (profile: Profile) =
     const fetchSpecialists = async () => {
       const { data } = await supabase
         .from('profiles')
-        .select('*')
+        .select(PUBLIC_PROFILE_COLUMNS)
         .eq('is_specialist', true)
         .eq('specialist_status', 'approved')
         .order('display_name')
 
-      setSpecialists((data as Profile[]) || [])
+      setSpecialists((data as PublicProfile[]) || [])
       setLoading(false)
     }
 
@@ -1940,7 +2005,33 @@ function SpecialistRequestModal({
   )
 }
 
-function PublicProfileModal({ profile, onClose }: { profile: Profile; onClose: () => void }) {
+type DepoimentoDoPerfil = Pick<
+  Experience,
+  'id' | 'profession' | 'profession_status' | 'content' | 'likes_count' | 'comments_count' | 'created_at'
+>
+
+// Perfil público: dados profissionais declarados + os depoimentos da pessoa.
+// Só mostra colunas públicas (migração 017) — nunca e-mail ou nascimento.
+function PublicProfileModal({ profile, onClose }: { profile: PublicProfile; onClose: () => void }) {
+  const supabase = createClient()
+  const [depoimentos, setDepoimentos] = useState<DepoimentoDoPerfil[] | null>(null)
+
+  useEffect(() => {
+    let cancelado = false
+    supabase
+      .from('experiences')
+      .select('id, profession, profession_status, content, likes_count, comments_count, created_at')
+      .eq('user_id', profile.id)
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        if (!cancelado) setDepoimentos((data as DepoimentoDoPerfil[]) ?? [])
+      })
+    return () => {
+      cancelado = true
+    }
+  }, [supabase, profile.id])
+
   const getUserTypeIcon = () => {
     switch (profile.user_type) {
       case 'estudante': return <GraduationCap className="w-4 h-4" />
@@ -1957,9 +2048,11 @@ function PublicProfileModal({ profile, onClose }: { profile: Profile; onClose: (
     }
   }
 
+  const guiaSlug = slugDoGuia(profile.profession_cbo)
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-card rounded-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto">
+      <div className="bg-card rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-border flex items-center justify-between">
           <h2 className="text-lg font-bold text-foreground">Perfil</h2>
           <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
@@ -1993,6 +2086,40 @@ function PublicProfileModal({ profile, onClose }: { profile: Profile; onClose: (
             </div>
           </div>
 
+          {(profile.profession_title || profile.education_level) && (
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              {profile.profession_title && (
+                <div className="flex items-start gap-2 text-sm text-foreground">
+                  <Briefcase className="w-4 h-4 shrink-0 mt-0.5 text-muted-foreground" />
+                  <div>
+                    <p>
+                      {descreverProfissao(profile.profession_title, profile.profession_status)}
+                      {profile.experience_range && (
+                        <span className="text-muted-foreground">
+                          {' · '}{EXPERIENCE_RANGE_LABELS[profile.experience_range].toLowerCase()}
+                        </span>
+                      )}
+                    </p>
+                    {guiaSlug && (
+                      <Link href={`/profissoes/${guiaSlug}`} className="text-xs text-primary hover:underline">
+                        Conheça essa profissão no guia
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              )}
+              {profile.education_level && (
+                <div className="flex items-start gap-2 text-sm text-foreground">
+                  <BookOpen className="w-4 h-4 shrink-0 mt-0.5 text-muted-foreground" />
+                  <p>{descreverFormacao(profile)}</p>
+                </div>
+              )}
+              <p className="text-xs text-muted-foreground">
+                Informações declaradas pela pessoa, não verificadas pelo INOVA.
+              </p>
+            </div>
+          )}
+
           {profile.bio && (
             <p className="text-sm text-foreground leading-relaxed">{profile.bio}</p>
           )}
@@ -2005,7 +2132,7 @@ function PublicProfileModal({ profile, onClose }: { profile: Profile; onClose: (
           )}
 
           {profile.created_at && (
-            <div className="flex items-center gap-2 text-xs text-muted-foreground pt-3 border-t border-border">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Calendar className="w-3.5 h-3.5 shrink-0" />
               <span>
                 Membro desde{' '}
@@ -2013,6 +2140,39 @@ function PublicProfileModal({ profile, onClose }: { profile: Profile; onClose: (
               </span>
             </div>
           )}
+
+          <div className="pt-4 border-t border-border space-y-3">
+            <h4 className="text-sm font-semibold text-foreground">
+              Depoimentos{depoimentos && depoimentos.length > 0 ? ` (${depoimentos.length})` : ''}
+            </h4>
+            {depoimentos === null ? (
+              <div className="flex justify-center py-4">
+                <Loader2 className="w-5 h-5 animate-spin text-primary" />
+              </div>
+            ) : depoimentos.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Nenhum depoimento publicado.</p>
+            ) : (
+              depoimentos.map((d) => (
+                <div key={d.id} className="p-3 rounded-lg border border-border space-y-1.5">
+                  <p className="text-xs text-muted-foreground">
+                    {descreverProfissao(d.profession, d.profession_status)}
+                  </p>
+                  <p className="text-sm text-foreground leading-relaxed line-clamp-4">{d.content}</p>
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Heart className="w-3 h-3" /> {d.likes_count}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MessageCircle className="w-3 h-3" /> {d.comments_count}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3 h-3" /> {new Date(d.created_at).toLocaleDateString('pt-BR')}
+                    </span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </div>

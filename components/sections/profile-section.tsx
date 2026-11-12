@@ -18,8 +18,21 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
-import type { Profile } from '@/lib/types'
+import type { EducationLevel, Profile } from '@/lib/types'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
+import {
+  descreverFormacao,
+  descreverProfissao,
+  EDUCATION_LEVEL_LABELS,
+  EXPERIENCE_RANGE_LABELS,
+  isMenorDeIdade,
+  nivelTemCurso
+} from '@/lib/cbo'
+import {
+  CamposProfissaoForm,
+  camposProfissaoParaPerfil,
+  type CamposProfissao
+} from '@/components/perfil-profissional'
 import { isResultadoDeOutraVersao, maxPorTipoDoResultado } from '@/lib/instruments'
 import {
   User,
@@ -36,6 +49,7 @@ import {
   Loader2,
   Phone,
   Trash2,
+  BookOpen,
   X
 } from 'lucide-react'
 import type { Section } from '@/components/bottom-navigation'
@@ -112,6 +126,34 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
                 {getUserTypeIcon()}
                 <span>{getUserTypeLabel()}</span>
               </div>
+              {profile.profession_title && (
+                <p className="flex items-start gap-2 text-sm text-foreground mt-2">
+                  <Briefcase className="h-4 w-4 shrink-0 mt-0.5 text-muted-foreground" />
+                  <span>
+                    {descreverProfissao(profile.profession_title, profile.profession_status)}
+                    {profile.experience_range && (
+                      <span className="text-muted-foreground">
+                        {' · '}{EXPERIENCE_RANGE_LABELS[profile.experience_range].toLowerCase()}
+                      </span>
+                    )}
+                  </span>
+                </p>
+              )}
+              {profile.education_level && (
+                <p className="flex items-start gap-2 text-sm text-foreground mt-1">
+                  <BookOpen className="h-4 w-4 shrink-0 mt-0.5 text-muted-foreground" />
+                  <span>{descreverFormacao(profile)}</span>
+                </p>
+              )}
+              {!profile.profession_title && (
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(true)}
+                  className="text-sm text-primary hover:underline mt-2"
+                >
+                  Adicionar sua profissão
+                </button>
+              )}
               {profile.bio && (
                 <p className="text-sm text-foreground mt-3 leading-relaxed">{profile.bio}</p>
               )}
@@ -341,6 +383,18 @@ function EditProfileModal({ profile, onClose }: { profile: Profile; onClose: () 
   const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url)
   const [bio, setBio] = useState(profile.bio ?? '')
   const [contact, setContact] = useState(profile.contact ?? '')
+  const [profissao, setProfissao] = useState<CamposProfissao>({
+    profissao:
+      profile.profession_cbo && profile.profession_title
+        ? { codigo: profile.profession_cbo, titulo: profile.profession_title }
+        : null,
+    status: profile.profession_status,
+    experiencia: profile.experience_range
+  })
+  const [educationLevel, setEducationLevel] = useState<EducationLevel | null>(profile.education_level)
+  const [educationCourse, setEducationCourse] = useState(profile.education_course ?? '')
+  const [educationInProgress, setEducationInProgress] = useState(profile.education_in_progress)
+  const menorDeIdade = isMenorDeIdade(profile.birth_date)
   const [uploading, setUploading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
@@ -378,18 +432,30 @@ function EditProfileModal({ profile, onClose }: { profile: Profile; onClose: () 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (profissao.profissao && !profissao.status) {
+      toast.error('Escolha sua situação na profissão.')
+      return
+    }
     setSubmitting(true)
 
     const { error } = await updateProfile({
       avatar_url: avatarUrl,
       bio: bio.trim() || null,
-      contact: contact.trim() || null
+      contact: menorDeIdade ? null : contact.trim() || null,
+      ...camposProfissaoParaPerfil(profissao),
+      education_level: educationLevel,
+      education_course: nivelTemCurso(educationLevel) ? educationCourse.trim() || null : null,
+      education_in_progress: !!educationLevel && educationInProgress
     })
 
     setSubmitting(false)
 
     if (error) {
-      toast.error('Erro ao salvar perfil. Tente novamente.')
+      toast.error(
+        error.message.includes('Conteúdo não permitido')
+          ? error.message
+          : 'Erro ao salvar perfil. Tente novamente.'
+      )
       return
     }
 
@@ -441,6 +507,66 @@ function EditProfileModal({ profile, onClose }: { profile: Profile; onClose: () 
             <p className="text-xs text-muted-foreground">JPG ou PNG, até 2MB.</p>
           </div>
 
+          <fieldset className="space-y-4">
+            <legend className="text-sm font-semibold text-foreground mb-1">Profissão</legend>
+            <CamposProfissaoForm value={profissao} onChange={setProfissao} />
+            <p className="text-xs text-muted-foreground">
+              Aparece no seu perfil e nos seus depoimentos. É uma informação declarada por você,
+              não verificada pelo INOVA.
+            </p>
+          </fieldset>
+
+          <fieldset className="space-y-4">
+            <legend className="text-sm font-semibold text-foreground mb-1">
+              Formação <span className="text-muted-foreground font-normal">(opcional)</span>
+            </legend>
+            <div>
+              <label htmlFor="education-level" className="block text-sm font-medium text-foreground mb-2">
+                Nível
+              </label>
+              <select
+                id="education-level"
+                value={educationLevel ?? ''}
+                onChange={(e) => setEducationLevel((e.target.value || null) as EducationLevel | null)}
+                className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground"
+              >
+                <option value="">Prefiro não informar</option>
+                {(Object.keys(EDUCATION_LEVEL_LABELS) as EducationLevel[]).map((nivel) => (
+                  <option key={nivel} value={nivel}>
+                    {EDUCATION_LEVEL_LABELS[nivel]}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {nivelTemCurso(educationLevel) && (
+              <div>
+                <label htmlFor="education-course" className="block text-sm font-medium text-foreground mb-2">
+                  Curso
+                </label>
+                <input
+                  id="education-course"
+                  type="text"
+                  value={educationCourse}
+                  onChange={(e) => setEducationCourse(e.target.value)}
+                  placeholder="Ex: Enfermagem, Técnico em Informática"
+                  maxLength={120}
+                  className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground"
+                />
+              </div>
+            )}
+            {educationLevel && (
+              <label className="flex items-center gap-2 text-sm text-foreground">
+                <input
+                  type="checkbox"
+                  checked={educationInProgress}
+                  onChange={(e) => setEducationInProgress(e.target.checked)}
+                  className="h-4 w-4 accent-primary"
+                />
+                Ainda estou cursando
+              </label>
+            )}
+          </fieldset>
+
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Sobre você <span className="text-muted-foreground font-normal">(opcional)</span>
@@ -456,19 +582,28 @@ function EditProfileModal({ profile, onClose }: { profile: Profile; onClose: () 
             <p className="text-xs text-muted-foreground mt-1 text-right">{bio.length}/500</p>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Contato <span className="text-muted-foreground font-normal">(opcional)</span>
-            </label>
-            <input
-              type="text"
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
-              placeholder="Ex: WhatsApp, e-mail ou LinkedIn"
-              maxLength={200}
-              className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground"
-            />
-          </div>
+          {menorDeIdade ? (
+            <p className="text-xs text-muted-foreground bg-muted/50 p-3 rounded-lg">
+              Por segurança, perfis de menores de 18 anos não exibem contato.
+            </p>
+          ) : (
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Contato <span className="text-muted-foreground font-normal">(opcional)</span>
+              </label>
+              <input
+                type="text"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                placeholder="Ex: LinkedIn ou e-mail profissional"
+                maxLength={200}
+                className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Fica visível para qualquer pessoa que abrir seu perfil.
+              </p>
+            </div>
+          )}
 
           <div className="flex gap-3">
             <button
@@ -540,7 +675,8 @@ function DeleteAccountDialog() {
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>
                 Isso não pode ser desfeito. Seu nome, e-mail, data de nascimento, foto,
-                bio, contato, resultados do teste e conquistas serão apagados.
+                bio, contato, profissão, formação, resultados do teste e conquistas serão
+                apagados.
               </p>
               <p>
                 Depoimentos, tópicos, respostas e comentários que você publicou continuam

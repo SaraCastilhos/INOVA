@@ -7,6 +7,7 @@ verdade: o app lê daqui, não do banco.
 |---|---|
 | `professions.json` | A lista de fichas de profissão. Editado à mão, revisado em _pull request_. |
 | `professions.schema.json` | JSON Schema do formato de uma ficha (para o editor/IDE validar enquanto você digita). |
+| `cbo.json` | Lista oficial de ocupações da CBO (código, título, sinônimos) usada na busca de profissão do perfil. **Gerado**, não editar à mão — ver abaixo. |
 
 O validador fica em `scripts/validate-professions.mjs` e roda com:
 
@@ -86,3 +87,21 @@ feat(guia): adiciona <nome da profissão> (CBO 0000-00)
 ```
 
 Uma profissão por commit facilita a revisão e o histórico de fontes.
+
+---
+
+## Lista da CBO (`cbo.json`)
+
+Alimenta o campo "Sua profissão" do perfil (migração 017). A pessoa só pode
+escolher uma ocupação da lista, então não há texto livre nem erro de digitação.
+
+Para gerar ou atualizar:
+
+1. Em <https://cbo.mte.gov.br/cbosite/pages/downloads.jsf>, baixe **Estrutura
+   CBO (CSV) - Arquivo ZIP** e extraia numa pasta fora do projeto.
+2. `node scripts/build-cbo.mjs <pasta-extraida> <AAAA-MM-DD do download>`
+3. O script escreve `data/cbo.json` e `banco/dados/cbo-ocupacoes.sql`. Rode o
+   `.sql` no SQL Editor do Supabase (depois da migração 017) para a tabela
+   `cbo_ocupacoes` ficar igual à lista do app — o banco recusa código que não
+   esteja nela.
+
