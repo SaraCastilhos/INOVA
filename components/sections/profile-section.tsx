@@ -40,9 +40,7 @@ import {
   History,
   RefreshCw,
   LogOut,
-  GraduationCap,
   Briefcase,
-  Users,
   Award,
   Pencil,
   Camera,
@@ -70,22 +68,6 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
       month: 'long',
       year: 'numeric'
     })
-  }
-
-  const getUserTypeIcon = () => {
-    switch (profile.user_type) {
-      case 'estudante': return <GraduationCap className="h-5 w-5" />
-      case 'profissional': return <Briefcase className="h-5 w-5" />
-      case 'ambos': return <Users className="h-5 w-5" />
-    }
-  }
-
-  const getUserTypeLabel = () => {
-    switch (profile.user_type) {
-      case 'estudante': return 'Estudante'
-      case 'profissional': return 'Profissional'
-      case 'ambos': return 'Estudante e Profissional'
-    }
   }
 
   const lastTest = testResults?.[0] ?? null
@@ -122,10 +104,6 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-bold text-foreground">{profile.display_name}</h2>
-              <div className="flex items-center gap-2 text-muted-foreground mt-1">
-                {getUserTypeIcon()}
-                <span>{getUserTypeLabel()}</span>
-              </div>
               {profile.profession_title && (
                 <p className="flex items-start gap-2 text-sm text-foreground mt-2">
                   <Briefcase className="h-4 w-4 shrink-0 mt-0.5 text-muted-foreground" />

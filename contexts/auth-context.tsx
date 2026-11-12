@@ -26,7 +26,6 @@ interface AuthContextType {
 
 interface SignUpMetadata {
   display_name: string
-  user_type: 'estudante' | 'profissional' | 'ambos'
   birth_date?: string
   lgpd_consent: boolean
 }

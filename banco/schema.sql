@@ -29,6 +29,9 @@ create table if not exists public.profiles (
   display_name text not null,
   email text,
   birth_date date,
+  -- OBSOLETOS desde 12/11/2026 (user_type e last_type_change): o tipo de
+  -- conta foi substituído pelo perfil profissional (profession_status) e o
+  -- app não lê nem grava mais. Ficam no banco por compatibilidade.
   user_type text not null default 'estudante' check (user_type in ('estudante', 'profissional', 'ambos')),
   avatar_url text,
   bio text check (char_length(bio) <= 500),

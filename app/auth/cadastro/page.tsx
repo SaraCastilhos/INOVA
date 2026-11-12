@@ -9,14 +9,6 @@ import { Eye, EyeOff, Loader2, ArrowLeft, Check, AlertCircle } from 'lucide-reac
 import { ContinuarSemConta } from '@/components/continuar-sem-conta'
 import { marcarCadastro } from '@/lib/teste-pendente'
 
-type UserType = 'estudante' | 'profissional' | 'ambos'
-
-const userTypeOptions = [
-  { value: 'estudante', label: 'Estudante', description: 'Estou explorando carreiras' },
-  { value: 'profissional', label: 'Profissional', description: 'Quero compartilhar experiências' },
-  { value: 'ambos', label: 'Ambos', description: 'Estudante e profissional' }
-] as const
-
 export default function CadastroPage() {
   const router = useRouter()
   const supabase = createClient()
@@ -27,7 +19,6 @@ export default function CadastroPage() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [birthDate, setBirthDate] = useState('')
-  const [userType, setUserType] = useState<UserType>('estudante')
   const [lgpdConsent, setLgpdConsent] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -89,7 +80,6 @@ export default function CadastroPage() {
         emailRedirectTo: `${window.location.origin}/auth/callback`,
         data: {
           display_name: displayName,
-          user_type: userType,
           birth_date: birthDate || null,
           lgpd_consent: lgpdConsent
         }
@@ -142,7 +132,7 @@ export default function CadastroPage() {
               Crie sua conta
             </h1>
             <p className="text-muted-foreground mt-2">
-              {step === 1 ? 'Passo 1 de 2: Dados de acesso' : 'Passo 2 de 2: Seu perfil'}
+              {step === 1 ? 'Passo 1 de 2: Dados de acesso' : 'Passo 2 de 2: Sobre você'}
             </p>
           </div>
 
@@ -259,44 +249,6 @@ export default function CadastroPage() {
             {step === 2 && (
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-3">
-                    Qual é o seu perfil?
-                  </label>
-                  <div className="space-y-3">
-                    {userTypeOptions.map((option) => (
-                      <label
-                        key={option.value}
-                        className={`flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all ${
-                          userType === option.value
-                            ? 'border-primary bg-primary/5'
-                            : 'border-input hover:border-primary/50'
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="userType"
-                          value={option.value}
-                          checked={userType === option.value}
-                          onChange={(e) => setUserType(e.target.value as UserType)}
-                          className="sr-only"
-                        />
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                          userType === option.value ? 'border-primary' : 'border-muted-foreground'
-                        }`}>
-                          {userType === option.value && (
-                            <div className="w-2.5 h-2.5 rounded-full bg-primary" />
-                          )}
-                        </div>
-                        <div>
-                          <p className="font-medium text-foreground">{option.label}</p>
-                          <p className="text-sm text-muted-foreground">{option.description}</p>
-                        </div>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
                   <label htmlFor="birthDate" className="block text-sm font-medium text-foreground mb-2">
                     Data de nascimento <span className="text-muted-foreground font-normal">(opcional)</span>
                   </label>
@@ -308,6 +260,9 @@ export default function CadastroPage() {
                     max={new Date().toISOString().split('T')[0]}
                     className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Profissão e formação você pode informar depois, no seu perfil.
+                  </p>
                 </div>
 
                 {/* LGPD Consent */}
