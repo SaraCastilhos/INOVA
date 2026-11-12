@@ -47,6 +47,7 @@ export default function PrivacidadePage() {
           <ul>
             <li>Dados de cadastro: nome, e-mail, senha (armazenada com hash) e, opcionalmente, data de nascimento.</li>
             <li>Dados de uso: respostas e resultados do teste vocacional RIASEC.</li>
+            <li>Teste feito sem conta: as respostas ficam apenas no seu navegador e não são enviadas ao INOVA. Se você criar uma conta depois, nesse mesmo navegador, o resultado é salvo nela.</li>
             <li>Conteúdo publicado por você: depoimentos e mensagens do fórum.</li>
             <li>Métricas de acesso anônimas e agregadas (Vercel Analytics), usadas apenas para fins estatísticos, sem identificação individual.</li>
           </ul>

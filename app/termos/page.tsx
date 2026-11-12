@@ -53,6 +53,7 @@ export default function TermosPage() {
 
           <h2>2. Cadastro e conta</h2>
           <ul>
+            <li>O teste vocacional e o guia de profissões podem ser usados sem conta. A comunidade e o histórico de resultados exigem cadastro.</li>
             <li>O cadastro exige nome, e-mail, senha e, opcionalmente, data de nascimento.</li>
             <li>O INOVA é voltado a pessoas com 14 anos ou mais. Se você tem menos de 18 anos, use a plataforma com a ciência dos seus pais ou responsáveis.</li>
             <li>Você é responsável por manter a confidencialidade da sua senha.</li>
