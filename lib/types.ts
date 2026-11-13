@@ -252,16 +252,6 @@ export interface FormaIngresso {
   link: string
 }
 
-export interface Universidade {
-  id: string
-  nome: string
-  sigla: string
-  cidade: string
-  cursos: string[]
-  formasIngresso: string[]
-  link: string
-}
-
 // ---- Instrumento de avaliação (teste vocacional) ----
 // Conteúdo curado e versionado em data/instruments/. O formato é garantido por
 // scripts/validate-instruments.mjs e documentado em

@@ -171,6 +171,8 @@ function validateFicha(p, slugsSeen, cbosSeen) {
 // páginas de curso de cada instituição.
 const NIVEIS = ['graduacao', 'tecnologo', 'tecnico']
 const REGIOES = ['paranhana', 'vizinhas', 'porto-alegre']
+const INGRESSOS = ['prova', 'enem', 'sisu', 'sorteio']
+const BOLSAS = ['prouni', 'fies']
 let cursoIds = new Set()
 
 function validateCatalogo(cat) {
@@ -184,6 +186,17 @@ function validateCatalogo(cat) {
     if (!REGIOES.includes(i.regiao)) e.push(`${r}: regiao inválida`)
     if (!isUrl(i.fonte)) e.push(`${r}: fonte precisa ser URL`)
     if (!isDate(i.acesso_em)) e.push(`${r}: acesso_em precisa ser AAAA-MM-DD`)
+    if (typeof i.gratuita !== 'boolean') e.push(`${r}: gratuita precisa ser true ou false`)
+    for (const [campo, permitidos] of [['ingresso', INGRESSOS], ['bolsas', BOLSAS]]) {
+      const v = i[campo]
+      if (!Array.isArray(v) || v.some((x) => !permitidos.includes(x)) || new Set(v).size !== v.length)
+        e.push(`${r}: ${campo} precisa ser lista sem repetição de ${permitidos.join(', ')}`)
+    }
+    if (!isUrl(i.ingresso_url)) e.push(`${r}: ingresso_url precisa ser URL`)
+    if (i.ingresso_nota !== undefined && !isStr(i.ingresso_nota)) e.push(`${r}: ingresso_nota precisa ser texto`)
+    // sem forma de ingresso confirmada, a nota precisa dizer como se informar
+    if (Array.isArray(i.ingresso) && i.ingresso.length === 0 && !isStr(i.ingresso_nota))
+      e.push(`${r}: sem ingresso confirmado, ingresso_nota é obrigatória`)
   }
   for (const c of cat.cursos ?? []) {
     const r = `curso ${c?.id ?? '?'}`

@@ -1,8 +1,8 @@
-import type { FormaIngresso, Universidade } from './types'
+import type { FormaIngresso } from './types'
 
 // Dados do guia de carreiras. As profissões vivem em data/professions.json
 // (conteúdo curado e versionado) e são reexportadas daqui; formas de ingresso
-// e universidades ficam neste arquivo.
+// ficam neste arquivo; instituições e cursos, em data/cursos.json (lib/cursos.ts).
 export { PROFISSOES, AREAS, guiaAtualizadoEm } from './professions'
 
 export const FORMAS_INGRESSO: FormaIngresso[] = [
@@ -52,51 +52,4 @@ export const FORMAS_INGRESSO: FormaIngresso[] = [
     link: '#'
   },
 ]
-
-export const UNIVERSIDADES: Universidade[] = [
-  {
-    id: '1',
-    nome: 'Faculdades Integradas de Taquara',
-    sigla: 'FACCAT',
-    cidade: 'Taquara',
-    cursos: ['Administração', 'Direito', 'Psicologia', 'Engenharia de Produção', 'Sistemas de Informação'],
-    formasIngresso: ['ENEM', 'Vestibular próprio', 'PROUNI', 'FIES'],
-    link: 'https://www.faccat.br'
-  },
-  {
-    id: '2',
-    nome: 'Universidade Estadual do Rio Grande do Sul',
-    sigla: 'UERGS',
-    cidade: 'Várias unidades',
-    cursos: ['Pedagogia', 'Gestão Ambiental', 'Administração', 'Desenvolvimento Rural'],
-    formasIngresso: ['ENEM/SISU', 'Vestibular próprio'],
-    link: 'https://www.uergs.edu.br'
-  },
-  {
-    id: '3',
-    nome: 'Universidade do Vale do Rio dos Sinos',
-    sigla: 'UNISINOS',
-    cidade: 'São Leopoldo',
-    cursos: ['Engenharias', 'Medicina', 'Arquitetura', 'Comunicação Social', 'Ciências Contábeis'],
-    formasIngresso: ['ENEM', 'Vestibular próprio', 'PROUNI', 'FIES'],
-    link: 'https://www.unisinos.br'
-  },
-  {
-    id: '4',
-    nome: 'Universidade Feevale',
-    sigla: 'FEEVALE',
-    cidade: 'Novo Hamburgo',
-    cursos: ['Design', 'Jogos Digitais', 'Moda', 'Enfermagem', 'Fisioterapia'],
-    formasIngresso: ['ENEM', 'Vestibular próprio', 'PROUNI', 'FIES'],
-    link: 'https://www.feevale.br'
-  },
-  {
-    id: '5',
-    nome: 'Pontifícia Universidade Católica do RS',
-    sigla: 'PUCRS',
-    cidade: 'Porto Alegre',
-    cursos: ['Medicina', 'Direito', 'Engenharia de Software', 'Comunicação', 'Psicologia'],
-    formasIngresso: ['ENEM', 'Vestibular próprio', 'PROUNI', 'FIES'],
-    link: 'https://www.pucrs.br'
-  },
-]
+

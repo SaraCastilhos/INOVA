@@ -203,6 +203,11 @@ export default async function ProfissaoDetalhePage({ params }: { params: Params 
                                 {o.instituicao.cidade !== REGIAO_LABEL[g.regiao] && (
                                   <span className="text-muted-foreground"> ({o.instituicao.cidade})</span>
                                 )}
+                                {o.instituicao.gratuita && (
+                                  <span className="ml-1 rounded px-1 py-px text-[10px] font-medium bg-green-500/10 text-green-700 dark:text-green-400">
+                                    gratuita
+                                  </span>
+                                )}
                               </span>
                             ))}
                           </dd>

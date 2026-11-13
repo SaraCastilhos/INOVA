@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/auth-context'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { PROFISSOES, FORMAS_INGRESSO, UNIVERSIDADES, AREAS, guiaAtualizadoEm } from '@/lib/guia'
+import { PROFISSOES, FORMAS_INGRESSO, AREAS, guiaAtualizadoEm } from '@/lib/guia'
+import { OndeEstudarTab } from './onde-estudar-tab'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
 import { fmtBRL, fmtData, normalizarBusca } from '@/lib/format'
 import { pontuar } from '@/lib/instruments'
@@ -16,7 +17,6 @@ import {
   GraduationCap,
   Building2,
   ExternalLink,
-  MapPin,
   Filter,
   X,
   Search,
@@ -134,7 +134,7 @@ export function CareersSection() {
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: 'profissoes', label: 'Profissões', icon: <Briefcase className="h-4 w-4" /> },
     { id: 'ingresso', label: 'Formas de Ingresso', icon: <GraduationCap className="h-4 w-4" /> },
-    { id: 'universidades', label: 'Universidades', icon: <Building2 className="h-4 w-4" /> },
+    { id: 'universidades', label: 'Onde estudar', icon: <Building2 className="h-4 w-4" /> },
   ]
 
   const hasActiveFilters = selectedFilter !== 'todos' || areaFilter !== 'todas' || searchQuery.trim() !== ''
@@ -383,63 +383,8 @@ export function CareersSection() {
         </div>
       )}
 
-      {/* Universidades Tab */}
-      {activeTab === 'universidades' && (
-        <div className="space-y-4">
-          <Card className="bg-secondary/5 border-secondary/20">
-            <CardContent className="pt-4">
-              <div className="flex items-center gap-2 text-secondary">
-                <MapPin className="h-5 w-5" />
-                <span className="font-medium">Foco regional: Vale do Paranhana/RS</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          {UNIVERSIDADES.map((uni) => (
-            <Card key={uni.id} className="card-hover">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-lg text-foreground">{uni.nome}</CardTitle>
-                    <CardDescription className="flex items-center gap-1 mt-1">
-                      <span className="font-bold text-primary">{uni.sigla}</span>
-                      <span>-</span>
-                      <span>{uni.cidade}</span>
-                    </CardDescription>
-                  </div>
-                  <Building2 className="h-6 w-6 text-secondary" />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2">Cursos em destaque:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {uni.cursos.map((curso) => (
-                      <span key={curso} className="px-2 py-1 rounded-lg text-xs bg-secondary/10 text-secondary font-medium">
-                        {curso}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2">Formas de ingresso:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {uni.formasIngresso.map((forma) => (
-                      <span key={forma} className="px-2 py-1 rounded-lg text-xs bg-primary/10 text-primary font-medium">
-                        {forma}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <a href={uni.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-primary hover:underline">
-                  Visitar site
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+      {/* Onde estudar Tab: gerada de data/cursos.json */}
+      {activeTab === 'universidades' && <OndeEstudarTab />}
     </div>
   )
 }

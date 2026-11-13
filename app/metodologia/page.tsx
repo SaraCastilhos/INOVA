@@ -127,6 +127,16 @@ export default function MetodologiaPage() {
             , o cadastro oficial de cursos superiores do MEC. A oferta muda a cada
             semestre: confirme na instituição antes de se inscrever.
           </p>
+          <p>
+            Para cada instituição também informamos se ela é gratuita ou cobra
+            mensalidade, como se entra (prova própria, nota do Enem, SiSU ou sorteio) e
+            se ela declara aceitar ProUni ou FIES. Tudo isso foi lido na página oficial
+            de ingresso ou de valores da própria instituição. O que a página não
+            confirmava ficou de fora em vez de ser deduzido: por exemplo, não indicamos
+            ProUni onde a instituição não o menciona, e para as escolas estaduais, cujas
+            regras de matrícula não estão publicadas na internet, indicamos o telefone
+            da escola.
+          </p>
 
           <h2>Como uma profissão é publicada</h2>
           <p>
