@@ -138,3 +138,20 @@ Ao atualizar: confira a lista de cursos no site de cada instituição, só
 presencial (cursos de portal "online"/EaD não entram — a PUCRS, por exemplo,
 redireciona alguns cursos para online.pucrs.br), e troque `acesso_em`. Atenção:
 a "Escola Técnica Estadual Parobé" fica em Porto Alegre, não em Parobé.
+
+## Conferir os links (`npm run check:links`)
+
+Confere por HTTP todos os links das fichas (`fontes`) e do `cursos.json`
+(instituições, páginas de ingresso e de curso). Leva menos de um minuto e é
+separado do validador porque depende de rede. Rodar antes de cada atualização
+do conteúdo e de vez em quando (sites de instituições mudam). `-- cursos` ou
+`-- fontes` conferem só uma parte.
+
+O relatório separa: **quebrados** (404, domínio fora do ar: corrigir; faz o
+comando falhar), **a conferir** (foi parar em outro site ou na página inicial:
+abrir e ver se o conteúdo ainda é o mesmo) e **bloqueados** (o site recusa
+script: o ifrs.edu.br tem anti-robô e o processoseletivo.ifsul.edu.br tem
+certificado incompleto; abrir no navegador). Um link de fonte que morreu não é
+trocado por outro qualquer: ou se acha a mesma página em outro endereço, ou a
+fonte sai se outra fonte da ficha já sustenta a informação (foi o caso do
+espelho cargos.com.br em 12/11/2026, coberto pela CBO oficial).

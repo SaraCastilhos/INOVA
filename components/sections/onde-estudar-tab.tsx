@@ -82,7 +82,7 @@ export function OndeEstudarTab() {
       )}
 
       {visiveis.map(({ instituicao: inst, cursos }) => (
-        <Card key={inst.id}>
+        <Card key={inst.id} className="gap-3">
           <CardHeader>
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
