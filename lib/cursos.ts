@@ -10,12 +10,23 @@ import type { Profissao } from './types'
 export type NivelCurso = 'graduacao' | 'tecnologo' | 'tecnico'
 export type RegiaoInstituicao = 'paranhana' | 'vizinhas' | 'porto-alegre'
 
+export type FormaIngressoInst = 'prova' | 'enem' | 'sisu' | 'sorteio'
+export type BolsaInst = 'prouni' | 'fies'
+
 export interface Instituicao {
   id: string
   nome: string
   sigla: string
   cidade: string
   regiao: RegiaoInstituicao
+  // sem mensalidade (pública e gratuita) ou com mensalidade
+  gratuita: boolean
+  // formas de ingresso confirmadas na página oficial (ingresso_url)
+  ingresso: FormaIngressoInst[]
+  // programas federais que a instituição declara aceitar
+  bolsas: BolsaInst[]
+  ingresso_nota?: string
+  ingresso_url: string
   fonte: string
   acesso_em: string
 }
@@ -51,7 +62,70 @@ export const REGIAO_LABEL: Record<RegiaoInstituicao, string> = {
   'porto-alegre': 'Porto Alegre',
 }
 
-const ORDEM_REGIAO: RegiaoInstituicao[] = ['paranhana', 'vizinhas', 'porto-alegre']
+export const ORDEM_REGIAO: RegiaoInstituicao[] = ['paranhana', 'vizinhas', 'porto-alegre']
+
+export const INGRESSO_LABEL: Record<FormaIngressoInst, string> = {
+  prova: 'Prova própria',
+  enem: 'Nota do Enem',
+  sisu: 'SiSU',
+  sorteio: 'Sorteio',
+}
+
+export const BOLSA_LABEL: Record<BolsaInst, string> = {
+  prouni: 'ProUni',
+  fies: 'FIES',
+}
+
+const ORDEM_NIVEL: NivelCurso[] = ['graduacao', 'tecnologo', 'tecnico']
+
+export interface CursoDaInstituicao {
+  id: string
+  nome: string
+  nivel: NivelCurso
+  url: string
+  profissoes: { slug: string; nome: string }[]
+}
+
+export interface InstituicaoComCursos {
+  instituicao: Instituicao
+  cursos: CursoDaInstituicao[]
+}
+
+// Visão inversa do catálogo, para a aba "Onde estudar" do guia: cada
+// instituição com os cursos que oferece e, em cada curso, as profissões
+// publicadas que o indicam. Ordem: região (mais perto primeiro), depois nome.
+export function instituicoesComCursos(
+  profissoes: Pick<Profissao, 'slug' | 'nome' | 'cursos'>[],
+): InstituicaoComCursos[] {
+  const porCurso = new Map<string, { slug: string; nome: string }[]>()
+  for (const p of profissoes) {
+    for (const id of p.cursos) {
+      if (!porCurso.has(id)) porCurso.set(id, [])
+      porCurso.get(id)!.push({ slug: p.slug, nome: p.nome })
+    }
+  }
+  return [...INSTITUICOES]
+    .sort(
+      (a, b) =>
+        ORDEM_REGIAO.indexOf(a.regiao) - ORDEM_REGIAO.indexOf(b.regiao) ||
+        a.nome.localeCompare(b.nome, 'pt-BR'),
+    )
+    .map((instituicao) => ({
+      instituicao,
+      cursos: DADOS.cursos
+        .flatMap((c) => {
+          const o = c.ofertas.find((x) => x.instituicao === instituicao.id)
+          return o
+            ? [{ id: c.id, nome: c.nome, nivel: c.nivel, url: o.url, profissoes: porCurso.get(c.id) ?? [] }]
+            : []
+        })
+        .sort(
+          (a, b) =>
+            ORDEM_NIVEL.indexOf(a.nivel) - ORDEM_NIVEL.indexOf(b.nivel) ||
+            a.nome.localeCompare(b.nome, 'pt-BR'),
+        ),
+    }))
+}
 
 export interface OfertaCurso {
   instituicao: Instituicao

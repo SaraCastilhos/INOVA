@@ -108,11 +108,20 @@ Para gerar ou atualizar:
 
 ## Onde estudar (`cursos.json`)
 
-Alimenta a seção "Onde estudar" da página de cada profissão. Tem duas listas:
+Alimenta a seção "Onde estudar" da página de cada profissão e a aba "Onde
+estudar" do guia (a mesma informação vista pela instituição, gerada por
+`instituicoesComCursos()` em `lib/cursos.ts`). Tem duas listas:
 
 - `instituicoes`: as instituições pesquisadas, com cidade, região
   (`paranhana`, `vizinhas` ou `porto-alegre`), a página onde a lista de cursos
-  foi lida (`fonte`) e a data (`acesso_em`).
+  foi lida (`fonte`) e a data (`acesso_em`). Também diz se é `gratuita`
+  (`true`/`false`), as formas de `ingresso` confirmadas (`prova`, `enem`,
+  `sisu`, `sorteio`), as `bolsas` federais que declara aceitar (`prouni`,
+  `fies`), a página oficial de ingresso (`ingresso_url`) e, se precisar, uma
+  `ingresso_nota` curta. Só entra o que a página oficial diz: o que não foi
+  confirmado fica fora (lista vazia), não é deduzido. Sem nenhuma forma de
+  ingresso confirmada, a `ingresso_nota` é obrigatória e diz como se informar.
+  Atenção: a Liberato é pública estadual mas cobra mensalidade (`gratuita: false`).
 - `cursos`: o catálogo de cursos (`graduacao`, `tecnologo` ou `tecnico`), cada um
   com as instituições que o oferecem **presencialmente** e o link da página do
   curso naquela instituição. Curso sem nenhuma oferta encontrada fica com

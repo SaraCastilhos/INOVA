@@ -7,6 +7,15 @@
       "sigla": "FACCAT",
       "cidade": "Taquara",
       "regiao": "paranhana",
+      "gratuita": false,
+      "ingresso": [
+        "prova",
+        "enem"
+      ],
+      "bolsas": [
+        "fies"
+      ],
+      "ingresso_url": "https://www2.faccat.br/portal/?q=node/4510",
       "fonte": "https://www2.faccat.br/portal/",
       "acesso_em": "2026-11-12"
     },
@@ -16,6 +25,14 @@
       "sigla": "IFRS Rolante",
       "cidade": "Rolante",
       "regiao": "paranhana",
+      "gratuita": true,
+      "ingresso": [
+        "prova",
+        "sorteio"
+      ],
+      "bolsas": [],
+      "ingresso_nota": "Cursos técnicos integrados ao ensino médio, técnicos e de graduação: todos gratuitos. A forma de seleção (prova ou sorteio) depende do curso e está no edital.",
+      "ingresso_url": "https://ingresso.ifrs.edu.br/2027/",
       "fonte": "https://ifrs.edu.br/rolante/ensino/cursos-2/",
       "acesso_em": "2026-11-12"
     },
@@ -25,6 +42,11 @@
       "sigla": "CIMOL",
       "cidade": "Taquara",
       "regiao": "paranhana",
+      "gratuita": true,
+      "ingresso": [],
+      "bolsas": [],
+      "ingresso_nota": "Escola pública estadual. A matrícula nos cursos técnicos é feita com a escola: telefone (51) 3542-1309.",
+      "ingresso_url": "https://educacao.rs.gov.br/escolas-com-educacao-profissional",
       "fonte": "https://educacao.rs.gov.br/tecnico-em-mecanica",
       "acesso_em": "2026-11-12"
     },
@@ -34,6 +56,15 @@
       "sigla": "IFSul Sapiranga",
       "cidade": "Sapiranga",
       "regiao": "vizinhas",
+      "gratuita": true,
+      "ingresso": [
+        "prova",
+        "sorteio",
+        "sisu"
+      ],
+      "bolsas": [],
+      "ingresso_nota": "Técnicos integrados ao ensino médio e graduação: prova (vestibular). Técnicos para quem já terminou ou está cursando o ensino médio: sorteio. Algumas vagas de graduação também pelo SiSU.",
+      "ingresso_url": "https://processoseletivo.ifsul.edu.br/",
       "fonte": "https://www.sapiranga.ifsul.edu.br/",
       "acesso_em": "2026-11-12"
     },
@@ -43,6 +74,15 @@
       "sigla": "Feevale",
       "cidade": "Novo Hamburgo",
       "regiao": "vizinhas",
+      "gratuita": false,
+      "ingresso": [
+        "prova",
+        "enem"
+      ],
+      "bolsas": [
+        "prouni"
+      ],
+      "ingresso_url": "https://www.feevale.br/institucional/ingresso",
       "fonte": "https://www.feevale.br/",
       "acesso_em": "2026-11-12"
     },
@@ -52,6 +92,13 @@
       "sigla": "Liberato",
       "cidade": "Novo Hamburgo",
       "regiao": "vizinhas",
+      "gratuita": false,
+      "ingresso": [
+        "prova"
+      ],
+      "bolsas": [],
+      "ingresso_nota": "Instituição pública estadual, mas cobra mensalidade; tem bolsas parciais e integrais próprias, por pedido. Cursos diurnos: prova de seleção. Cursos noturnos: processo de inscrição (veja o edital).",
+      "ingresso_url": "https://www.liberato.com.br/processo-seletivo/",
       "fonte": "https://www.liberato.com.br/cursos-tecnicos/",
       "acesso_em": "2026-11-12"
     },
@@ -61,6 +108,15 @@
       "sigla": "Unisinos",
       "cidade": "São Leopoldo e Porto Alegre",
       "regiao": "vizinhas",
+      "gratuita": false,
+      "ingresso": [
+        "prova",
+        "enem"
+      ],
+      "bolsas": [
+        "prouni"
+      ],
+      "ingresso_url": "https://www.unisinos.br/graduacao/",
       "fonte": "https://www.unisinos.br/graduacao/cursos?modalidade=P",
       "acesso_em": "2026-11-12"
     },
@@ -70,6 +126,14 @@
       "sigla": "UFRGS",
       "cidade": "Porto Alegre",
       "regiao": "porto-alegre",
+      "gratuita": true,
+      "ingresso": [
+        "prova",
+        "sisu"
+      ],
+      "bolsas": [],
+      "ingresso_nota": "70% das vagas pelo vestibular da UFRGS e 30% pelo SiSU; dá para tentar os dois.",
+      "ingresso_url": "https://www.ufrgs.br/ingresso/",
       "fonte": "https://www.ufrgs.br/site/ensino/graduacao/",
       "acesso_em": "2026-11-12"
     },
@@ -79,6 +143,12 @@
       "sigla": "UFCSPA",
       "cidade": "Porto Alegre",
       "regiao": "porto-alegre",
+      "gratuita": true,
+      "ingresso": [
+        "sisu"
+      ],
+      "bolsas": [],
+      "ingresso_url": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/sisu",
       "fonte": "https://ufcspa.edu.br/estude-na-ufcspa/graduacao/conheca-os-cursos",
       "acesso_em": "2026-11-12"
     },
@@ -88,6 +158,15 @@
       "sigla": "PUCRS",
       "cidade": "Porto Alegre",
       "regiao": "porto-alegre",
+      "gratuita": false,
+      "ingresso": [
+        "prova",
+        "enem"
+      ],
+      "bolsas": [
+        "prouni"
+      ],
+      "ingresso_url": "https://portal.pucrs.br/ensino/formas-de-ingresso/",
       "fonte": "https://portal.pucrs.br/ensino/graduacao/",
       "acesso_em": "2026-11-12"
     },
@@ -97,6 +176,14 @@
       "sigla": "IFRS Porto Alegre",
       "cidade": "Porto Alegre",
       "regiao": "porto-alegre",
+      "gratuita": true,
+      "ingresso": [
+        "prova",
+        "sorteio"
+      ],
+      "bolsas": [],
+      "ingresso_nota": "Cursos técnicos e de graduação, todos gratuitos. A forma de seleção (prova ou sorteio) depende do curso e está no edital.",
+      "ingresso_url": "https://ingresso.ifrs.edu.br/2027/",
       "fonte": "https://poa.ifrs.edu.br/index.php/cursos-relevancia",
       "acesso_em": "2026-11-12"
     },
@@ -106,6 +193,11 @@
       "sigla": "ETE Parobé",
       "cidade": "Porto Alegre",
       "regiao": "porto-alegre",
+      "gratuita": true,
+      "ingresso": [],
+      "bolsas": [],
+      "ingresso_nota": "Escola pública estadual. A matrícula nos cursos técnicos é feita com a escola: telefone (51) 3221-6953.",
+      "ingresso_url": "https://educacao.rs.gov.br/escolas-com-educacao-profissional",
       "fonte": "https://educacao.rs.gov.br/tecnico-em-mecanica",
       "acesso_em": "2026-11-12"
     }
