@@ -48,8 +48,11 @@ import {
   Phone,
   Trash2,
   BookOpen,
+  ShieldCheck,
+  ChevronRight,
   X
 } from 'lucide-react'
+import Link from 'next/link'
 import type { Section } from '@/components/bottom-navigation'
 
 interface ProfileSectionProps {
@@ -313,6 +316,22 @@ export function ProfileSection({ onNavigate }: ProfileSectionProps) {
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Painel de administração — só para admin (profiles.is_admin). O banco
+          também barra quem não é admin, mesmo que abra /admin direto. */}
+      {profile.is_admin && (
+        <Link
+          href="/admin"
+          className="flex items-center gap-3 p-4 rounded-xl border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-colors"
+        >
+          <ShieldCheck className="h-5 w-5 text-primary shrink-0" />
+          <div className="flex-1">
+            <p className="font-medium text-foreground">Painel de administração</p>
+            <p className="text-sm text-muted-foreground">Denúncias, selos de especialista e termos bloqueados</p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
+        </Link>
       )}
 
       {/* Sign Out */}

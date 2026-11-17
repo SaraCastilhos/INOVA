@@ -1,8 +1,14 @@
 -- ================================================
 -- Helpers administrativos — INOVA
 -- NÃO é uma migração (não roda uma vez só). São consultas prontas
--- pra copiar/colar no SQL Editor do Supabase sempre que precisar
--- moderar conteúdo manualmente, enquanto não existe painel admin.
+-- pra copiar/colar no SQL Editor do Supabase.
+--
+-- Desde a migração 019 o dia a dia da moderação é feito no painel
+-- (site → Perfil → Painel de administração, rota /admin): denúncias,
+-- pedidos e selos de especialista, depoimentos escondidos e termos
+-- bloqueados. Estas consultas ficam como alternativa. O que SÓ dá para
+-- fazer por aqui, de propósito: tornar alguém admin (seção 1) e excluir
+-- uma conta a pedido por e-mail (seção 5).
 -- ================================================
 
 -- ------------------------------------------------
