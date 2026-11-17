@@ -79,8 +79,13 @@ export default function MetodologiaPage() {
                 Novo CAGED
               </a>{' '}
               (MTE). Exibimos o salário médio mensal e a faixa entre o 1º e o 3º
-              quartil, com o período de referência. Quando a fonte usada é um
-              agregador desses dados, isso é indicado na própria ficha.
+              quartil, com o período de referência. O CAGED registra contratações
+              e desligamentos com carteira assinada, então os valores refletem
+              sobretudo quem está entrando ou mudando de emprego e costumam ficar
+              abaixo do salário de quem tem muitos anos na área; trabalho autônomo
+              não entra. Cargos de concurso público usam a tabela oficial de
+              vencimentos. Quando a fonte usada é um agregador desses dados, isso
+              é indicado na própria ficha.
             </li>
             <li>
               <strong>Perfil RIASEC (código de interesses):</strong>{' '}
@@ -154,8 +159,8 @@ export default function MetodologiaPage() {
           <h2>Limitações conhecidas</h2>
           <ul>
             <li>
-              Os valores de remuneração são médias nacionais e variam bastante por
-              região, porte da empresa e experiência.
+              Os valores de remuneração são médias e faixas nacionais e variam
+              bastante por região, porte da empresa e experiência.
             </li>
             <li>
               O código RIASEC é uma referência de apoio, derivada de uma base
@@ -184,16 +189,24 @@ export default function MetodologiaPage() {
             por tipo, e para cada uma você indica o quanto gostaria de fazê-la, numa
             escala de {INSTRUMENTO.escala.opcoes.length} pontos. A pontuação de cada tipo é
             a soma das respostas (de {INSTRUMENTO.pontuacao.min_por_tipo} a{' '}
-            {INSTRUMENTO.pontuacao.max_por_tipo}), e o resultado mostra os três tipos
-            com maior pontuação.
+            {INSTRUMENTO.pontuacao.max_por_tipo}).
+          </p>
+          <p>
+            O resultado mostra o seu código de Holland, formado pelas letras dos três
+            tipos com maior pontuação, e um hexágono com a pontuação dos seis tipos
+            (tipos vizinhos no hexágono têm interesses parecidos). Em seguida, para
+            cada um dos três tipos, sugere profissões do guia que têm aquele tipo como
+            principal, começando pelas que têm mais letras em comum com o seu código.
+            As sugestões vêm apenas das {PROFISSOES.length} profissões publicadas no
+            guia, por isso nem todas vão combinar com você: use-as como ponto de
+            partida para explorar.
           </p>
           <ul>
             <li>
-              Não existe versão oficial do instrumento em português. A tradução
-              foi feita pela equipe do INOVA
-              {INSTRUMENTO.status === 'rascunho'
-                ? ' e ainda está em revisão por especialistas.'
-                : ` e revisada por ${INSTRUMENTO.revisado_por}.`}
+              Não existe versão oficial do instrumento em português. A tradução é
+              uma adaptação feita pela equipe do INOVA. Os estudos de qualidade do
+              instrumento (Rounds et al., 2016) foram feitos com a versão original,
+              em inglês.
             </li>
             <li>
               Cada resultado é salvo junto com a versão do questionário que o gerou
@@ -214,8 +227,12 @@ export default function MetodologiaPage() {
 
           <h2>Encontrou algo desatualizado?</h2>
           <p>
-            Envie um aviso para a equipe do INOVA indicando a profissão e a fonte
-            mais recente. As correções entram na próxima revisão do guia.
+            Envie um aviso para{' '}
+            <a href="mailto:contat3.inova@gmail.com" className="text-primary hover:underline">
+              contat3.inova@gmail.com
+            </a>{' '}
+            indicando a profissão e a fonte mais recente. As correções entram na
+            próxima revisão do guia.
           </p>
         </div>
       </main>

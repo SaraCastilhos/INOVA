@@ -13,3 +13,10 @@ export const fmtData = (iso: string) => {
 // "tecnico" acha "Técnico em…".
 export const normalizarBusca = (texto: string) =>
   texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+
+// Os salários do guia vêm, quase todos, do Novo CAGED (via Portal Salário):
+// registros de contratações e desligamentos com carteira assinada. Isso fica
+// abaixo do que ganha quem tem muitos anos na área — usuário do teste piloto
+// (17/11/2026) achou os valores "abaixo da média de mercado". A exceção são
+// cargos de concurso, cuja fonte é a tabela de vencimentos.
+export const salarioEhCaged = (fonte: string) => /Novo CAGED/i.test(fonte)

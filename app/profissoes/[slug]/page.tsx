@@ -24,7 +24,7 @@ import {
   EMEC_URL,
 } from '@/lib/cursos'
 import { RIASEC_INFO, FORMACAO_LABELS } from '@/lib/types'
-import { fmtBRL, fmtData } from '@/lib/format'
+import { fmtBRL, fmtData, salarioEhCaged } from '@/lib/format'
 
 // Página pública (sem exigir login — ver nota em lib/supabase/middleware.ts: o
 // app não protege rotas por middleware, o gate de autenticação é só no
@@ -109,12 +109,24 @@ export default async function ProfissaoDetalhePage({ params }: { params: Params 
         <p className="text-foreground leading-relaxed">{profissao.descricao}</p>
 
         <div className="rounded-xl border border-border p-4">
+          <p className="text-sm text-muted-foreground mb-1">
+            {salarioEhCaged(profissao.salario.fonte)
+              ? 'Salário de contratação com carteira assinada'
+              : 'Remuneração pela tabela oficial do cargo'}
+          </p>
           <p className="text-lg font-semibold text-secondary">
             {fmtBRL(profissao.salario.media)}
             <span className="text-sm text-muted-foreground font-normal">
               {' '}(média; faixa {fmtBRL(profissao.salario.p25)}–{fmtBRL(profissao.salario.p75)})
             </span>
           </p>
+          {salarioEhCaged(profissao.salario.fonte) && (
+            <p className="text-sm text-muted-foreground mt-2">
+              São valores de quem foi contratado ou saiu do emprego no período, por
+              isso costumam ficar abaixo do que ganha quem tem muitos anos na área.
+              Trabalho autônomo não entra na conta.
+            </p>
+          )}
           <p className="text-sm text-muted-foreground mt-1">
             Fonte: {profissao.salario.fonte} · ref. {profissao.salario.referencia}
           </p>

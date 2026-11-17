@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { PROFISSOES, FORMAS_INGRESSO, AREAS, guiaAtualizadoEm } from '@/lib/guia'
 import { OndeEstudarTab } from './onde-estudar-tab'
 import { RIASEC_INFO, type RIASECType } from '@/lib/types'
-import { fmtBRL, fmtData, normalizarBusca } from '@/lib/format'
+import { fmtBRL, fmtData, normalizarBusca, salarioEhCaged } from '@/lib/format'
 import { pontuar } from '@/lib/instruments'
 import { lerTestePendente } from '@/lib/teste-pendente'
 import {
@@ -300,7 +300,7 @@ export function CareersSection() {
 
                     <p className="text-sm font-medium text-secondary">
                       {fmtBRL(profissao.salario.media)}
-                      <span className="text-xs text-muted-foreground font-normal"> média</span>
+                      <span className="text-xs text-muted-foreground font-normal">{salarioEhCaged(profissao.salario.fonte) ? ' média de contratação' : ' tabela do cargo'}</span>
                     </p>
 
                     <span className="inline-flex items-center gap-1 text-sm text-primary">
