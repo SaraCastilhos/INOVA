@@ -20,8 +20,7 @@ interface AuthContextType {
   refreshProfile: () => Promise<void>
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: Error | null }>
   saveTestResult: (scores: Record<RIASECType, number>, answers: number[]) => Promise<{ error: Error | null }>
-  awardBadge: (badgeCode: string) => Promise<void>
-  awardCountBadges: (table: string, thresholds: Record<number, string>) => Promise<void>
+  refreshBadges: () => Promise<void>
 }
 
 interface SignUpMetadata {
@@ -286,59 +285,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         instrument_version: INSTRUMENT_VERSION
       })
 
-    if (!error) {
-      await awardCountBadges('test_results', { 1: 'first_test', 3: 'test_master' })
-      await refreshProfile()
-    }
+    // As badges do teste são concedidas pelo banco (gatilho da migração 020);
+    // refreshProfile relê perfil, testes e badges.
+    if (!error) await refreshProfile()
 
     return { error: error ? new Error(error.message) : null }
   }
 
-  // Concede badges "primeira vez" a partir da contagem real no banco (fonte de
-  // verdade). thresholds mapeia total de registros do usuário → código do badge,
-  // ex.: { 1: 'first_topic' } ou { 1: 'first_test', 3: 'test_master' }.
-  // Se a contagem falhar, nenhum badge é concedido (silencioso, como antes).
-  const awardCountBadges = async (table: string, thresholds: Record<number, string>) => {
+  // Badges são concedidas pelo banco, por gatilho, a cada teste ou publicação
+  // nova (migração 020) — o app não insere em user_badges. Depois de publicar,
+  // basta reler a lista para a badge nova aparecer no perfil.
+  const refreshBadges = useCallback(async () => {
     if (!user) return
-
-    const { count } = await supabase
-      .from(table)
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-
-    if (typeof count !== 'number') return
-
-    for (const [threshold, badgeCode] of Object.entries(thresholds)) {
-      if (count === Number(threshold)) await awardBadge(badgeCode)
-    }
-  }
-
- const awardBadge = async (badgeCode: string) => {
-  if (!user) return
-
-  // ✅ Verificar se já tem o badge antes de tentar inserir
-  const alreadyEarned = badges.some(b => b.badges?.code === badgeCode)
-  if (alreadyEarned) return
-
-  const { data: badge } = await supabase
-    .from('badges')
-    .select('id')
-    .eq('code', badgeCode)
-    .single()
-
-  if (!badge) return
-
-  const { error } = await supabase
-    .from('user_badges')
-    .insert({ user_id: user.id, badge_id: badge.id })
-
-  // Constraint unique no banco é a última linha de defesa
-  // O erro de duplicata pode ocorrer em race conditions — é esperado e ignorado
-  if (!error) {
-    const updatedBadges = await fetchBadges(user.id)
-    setBadges(updatedBadges)
-  }
-}
+    setBadges(await fetchBadges(user.id))
+  }, [user, fetchBadges])
 
   return (
     <AuthContext.Provider
@@ -356,8 +316,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         refreshProfile,
         updateProfile,
         saveTestResult,
-        awardBadge,
-        awardCountBadges
+        refreshBadges
       }}
     >
       {children}

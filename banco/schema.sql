@@ -693,8 +693,8 @@ alter table public.user_badges enable row level security;
 create policy "Users can view own badges" on public.user_badges
   for select using (auth.uid() = user_id);
 
-create policy "System can insert badges" on public.user_badges
-  for insert with check (auth.uid() = user_id);
+-- Sem policy de insert: as badges são concedidas só pelo banco, por gatilho
+-- (migração 020 — ver "BADGES CONCEDIDAS PELO BANCO" no fim do arquivo).
 
 -- ================================================
 -- STORAGE — Fotos de perfil
@@ -1467,4 +1467,103 @@ grant execute on function public.admin_listar_depoimentos_ocultos() to authentic
 grant execute on function public.admin_definir_status_depoimento(uuid, text) to authenticated;
 grant execute on function public.admin_listar_pedidos_especialista() to authenticated;
 grant execute on function public.admin_listar_especialistas() to authenticated;
+
+-- ================================================
+-- BADGES CONCEDIDAS PELO BANCO — migração 020
+-- ================================================
+-- Um gatilho em cada tabela-fonte concede as badges que a pessoa já merece
+-- (contagem >= limite). O app não insere em user_badges: sem policy de
+-- insert e sem permissão de escrita para anon/authenticated.
+
+-- ------------------------------------------------
+-- 1) Concessão
+-- ------------------------------------------------
+-- Critérios (os mesmos de antes, agora com "pelo menos"):
+--   first_test       1+ resultado do teste
+--   test_master      3+ resultados do teste
+--   first_experience 1+ depoimento
+--   first_topic      1+ tópico no fórum
+--   first_reply      1+ resposta no fórum
+--   first_comment    1+ comentário em depoimento
+-- Conta todas as linhas da pessoa (inclusive depoimento escondido): a
+-- badge marca que ela participou, não que o conteúdo segue no ar.
+create or replace function public.conceder_badges(p_usuario uuid)
+returns void language plpgsql security definer set search_path = public
+as $$
+declare
+  v_testes integer;
+begin
+  if p_usuario is null then
+    return;
+  end if;
+
+  select count(*) into v_testes from public.test_results where user_id = p_usuario;
+
+  insert into public.user_badges (user_id, badge_id)
+  select p_usuario, b.id
+  from public.badges b
+  where (b.code = 'first_test' and v_testes >= 1)
+     or (b.code = 'test_master' and v_testes >= 3)
+     or (b.code = 'first_experience'
+         and exists (select 1 from public.experiences where user_id = p_usuario))
+     or (b.code = 'first_topic'
+         and exists (select 1 from public.forum_topics where user_id = p_usuario))
+     or (b.code = 'first_reply'
+         and exists (select 1 from public.forum_replies where user_id = p_usuario))
+     or (b.code = 'first_comment'
+         and exists (select 1 from public.experience_comments where user_id = p_usuario))
+  on conflict (user_id, badge_id) do nothing;
+end;
+$$;
+
+-- Só o banco chama (gatilho e a conferência abaixo).
+revoke all on function public.conceder_badges(uuid) from public, anon, authenticated;
+
+-- Gatilho genérico das tabelas-fonte. Uma falha na badge nunca pode impedir
+-- a publicação ou o teste de serem gravados: o erro vira só um aviso.
+create or replace function public.trg_conceder_badges()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+begin
+  begin
+    perform public.conceder_badges(new.user_id);
+  exception when others then
+    raise warning 'Badges não concedidas para %: %', new.user_id, sqlerrm;
+  end;
+  return null;
+end;
+$$;
+
+revoke all on function public.trg_conceder_badges() from public, anon, authenticated;
+
+drop trigger if exists trg_conceder_badges on public.test_results;
+create trigger trg_conceder_badges
+  after insert on public.test_results
+  for each row execute procedure public.trg_conceder_badges();
+
+drop trigger if exists trg_conceder_badges on public.experiences;
+create trigger trg_conceder_badges
+  after insert on public.experiences
+  for each row execute procedure public.trg_conceder_badges();
+
+drop trigger if exists trg_conceder_badges on public.forum_topics;
+create trigger trg_conceder_badges
+  after insert on public.forum_topics
+  for each row execute procedure public.trg_conceder_badges();
+
+drop trigger if exists trg_conceder_badges on public.forum_replies;
+create trigger trg_conceder_badges
+  after insert on public.forum_replies
+  for each row execute procedure public.trg_conceder_badges();
+
+drop trigger if exists trg_conceder_badges on public.experience_comments;
+create trigger trg_conceder_badges
+  after insert on public.experience_comments
+  for each row execute procedure public.trg_conceder_badges();
+
+-- ------------------------------------------------
+-- 2) Fecha a inserção pelo app
+-- ------------------------------------------------
+drop policy if exists "System can insert badges" on public.user_badges;
+revoke insert, update, delete on public.user_badges from anon, authenticated;
 

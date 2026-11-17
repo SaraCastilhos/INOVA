@@ -166,3 +166,26 @@ delete from auth.users where id = '<id-da-conta>';
 -- Passo 3 — a foto de perfil NÃO é apagada junto (fica no Storage). Apague pelo
 -- painel: Storage > avatars > pasta com o id da conta. Evite "delete from
 -- storage.objects" por SQL: remove o registro mas pode deixar o arquivo.
+
+-- ------------------------------------------------
+-- 6) Badges sem a conquista correspondente (migração 020)
+-- ------------------------------------------------
+-- Desde a 020 só o banco concede badges. Antes, o navegador concedia e
+-- qualquer usuário conseguia se dar uma badge pelo console. Esta consulta
+-- lista badges sem o teste ou a publicação que as justificaria.
+-- Falso positivo possível: quem apagou a própria publicação depois de
+-- ganhar a badge. As badges só aparecem para a própria pessoa (RN06).
+select p.display_name, b.code as badge, ub.earned_at, ub.id as user_badge_id
+from public.user_badges ub
+join public.badges b on b.id = ub.badge_id
+join public.profiles p on p.id = ub.user_id
+where (b.code = 'first_test'       and (select count(*) from public.test_results t where t.user_id = ub.user_id) < 1)
+   or (b.code = 'test_master'      and (select count(*) from public.test_results t where t.user_id = ub.user_id) < 3)
+   or (b.code = 'first_experience' and not exists (select 1 from public.experiences e where e.user_id = ub.user_id))
+   or (b.code = 'first_topic'      and not exists (select 1 from public.forum_topics f where f.user_id = ub.user_id))
+   or (b.code = 'first_reply'      and not exists (select 1 from public.forum_replies r where r.user_id = ub.user_id))
+   or (b.code = 'first_comment'    and not exists (select 1 from public.experience_comments c where c.user_id = ub.user_id))
+order by ub.earned_at desc;
+
+-- remover uma badge indevida (troque o id; pela consulta acima)
+-- delete from public.user_badges where id = '<user_badge_id>';

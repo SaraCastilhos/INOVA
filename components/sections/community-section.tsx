@@ -243,7 +243,7 @@ function ExperiencesTab({
   searchQuery: string
   onViewProfile: (profile: PublicProfile) => void
 }) {
-  const { user, profile, awardCountBadges } = useAuth()
+  const { user, profile, refreshBadges } = useAuth()
   const [experiences, setExperiences] = useState<Experience[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -372,7 +372,7 @@ function ExperiencesTab({
       return
     }
 
-    await awardCountBadges('experiences', { 1: 'first_experience' })
+    await refreshBadges()
 
     toast.success('Depoimento publicado!')
     setShowForm(false)
@@ -683,7 +683,7 @@ function CommentsModal({
   onCommentsCountChange: (updater: (count: number) => number) => void
   onViewProfile: (profile: PublicProfile) => void
 }) {
-  const { user, profile, awardCountBadges } = useAuth()
+  const { user, profile, refreshBadges } = useAuth()
   const supabase = createClient()
 
   const [comments, setComments] = useState<ExperienceComment[]>([])
@@ -725,7 +725,7 @@ function CommentsModal({
       return
     }
 
-    await awardCountBadges('experience_comments', { 1: 'first_comment' })
+    await refreshBadges()
 
     setCommentInput('')
     setSubmitting(false)
@@ -1021,7 +1021,7 @@ function ForumTab({
   searchQuery: string
   onViewProfile: (profile: PublicProfile) => void
 }) {
-  const { user, profile, awardCountBadges } = useAuth()
+  const { user, profile, refreshBadges } = useAuth()
   const [topics, setTopics] = useState<ForumTopic[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -1061,7 +1061,7 @@ function ForumTab({
       return
     }
 
-    await awardCountBadges('forum_topics', { 1: 'first_topic' })
+    await refreshBadges()
 
     toast.success('Tópico criado com sucesso!')
     setShowForm(false)
@@ -1489,7 +1489,7 @@ function TopicDetail({
   onTogglePin: () => void
   onToggleClose: () => void
 }) {
-  const { user, profile, awardCountBadges } = useAuth()
+  const { user, profile, refreshBadges } = useAuth()
   const [replies, setReplies] = useState<ForumReply[]>([])
   const [loading, setLoading] = useState(true)
   const [replyContent, setReplyContent] = useState('')
@@ -1540,7 +1540,7 @@ function TopicDetail({
       return
     }
 
-    await awardCountBadges('forum_replies', { 1: 'first_reply' })
+    await refreshBadges()
 
     setReplyContent('')
     setSubmitting(false)
