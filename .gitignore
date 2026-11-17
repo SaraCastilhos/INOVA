@@ -12,3 +12,10 @@ next-env.d.ts
 
 # Anotações da pesquisa (TCC) — mantidas só localmente
 pesquisa/
+
+# Arquivos brutos baixados (ex.: Estrutura CBO do MTE) — o resultado gerado é que vai para o git
+*.zip
+*.ZIP
+
+# Gerado pelo `next dev` (instruções para agentes de IA)
+AGENTS.md

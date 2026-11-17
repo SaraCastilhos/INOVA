@@ -266,7 +266,7 @@ export interface EscalaOpcao {
 export interface InstrumentoItem {
   posicao: number
   tipo: RIASECType
-  texto: string // tradução pt-BR (rascunho até revisão por juízes)
+  texto: string // tradução pt-BR (rascunho até concluir a validação)
   texto_original: string // texto verbatim da fonte, para conferência
 }
 

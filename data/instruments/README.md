@@ -36,9 +36,9 @@ muito"). Pontuação = soma dos valores por tipo; faixa 0 a 20 por tipo.
 
 ## Status e versão
 
-- `status: "rascunho"` → **não validado**. A tradução ainda não passou por
-  revisão por juízes especialistas; o teste roda, mas com aviso.
-- `status: "publicado"` → só depois da revisão por juízes, com `revisado_por`
+- `status: "rascunho"` → **não validado**: a tradução é uma adaptação não oficial
+  e a validação ainda não terminou. O teste roda normalmente.
+- `status: "publicado"` → só depois de concluída a validação, com `revisado_por`
   preenchido.
 - `version` muda a **cada alteração de conteúdo** (item, escala, pontuação).
   Convenção: `mini-ip-ptbr-<n.n>` — sufixo `.0/.1/...` enquanto rascunho;
@@ -46,14 +46,14 @@ muito"). Pontuação = soma dos valores por tipo; faixa 0 a 20 por tipo.
 - `test_results.instrument_version` grava essa string junto de cada resultado
   (migração 015). Resultados com versões diferentes **não são comparáveis**.
 
-## Como alterar os itens (ex.: aplicar correções dos juízes)
+## Como alterar os itens (ex.: aplicar correções da validação)
 
 1. Edite `texto` no `onet-mini-ip.json`. **Não** mexa em `texto_original` (é a
    referência) nem em `tipo`/`posicao` sem um bom motivo registrado.
 2. Suba a `version` e ajuste `atualizado_em`.
 3. `npm run validate:instruments` — corrija o que apontar.
 4. Confira no app (`npm run dev` → aba Teste).
-5. Ao concluir a revisão por juízes: preencha `revisado_por`, mude `status` para
+5. Ao concluir a validação: preencha `revisado_por`, mude `status` para
    `"publicado"`, suba a `version` para `mini-ip-ptbr-1.0`. Commit.
 
 ## Convenção de commit

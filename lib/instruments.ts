@@ -7,7 +7,7 @@ import type { Instrumento, InstrumentoItem, RIASECType } from './types'
 //
 // Adaptação pt-BR do O*NET Mini Interest Profiler (Mini-IP), 30 itens, 5 por
 // tipo RIASEC, escala de 5 pontos (0 a 4). Enquanto status = "rascunho", os
-// itens ainda não passaram por revisão por juízes.
+// itens ainda não passaram pela validação.
 export const INSTRUMENTO = miniIp as unknown as Instrumento
 
 export const INSTRUMENT_SLUG = INSTRUMENTO.slug

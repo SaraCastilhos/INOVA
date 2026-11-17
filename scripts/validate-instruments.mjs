@@ -42,7 +42,7 @@ function validate(inst) {
   if (!STATUS.includes(inst.status)) at(`status inválido: ${JSON.stringify(inst.status)}`)
   if (!isDate(inst.atualizado_em)) at('atualizado_em precisa ser AAAA-MM-DD')
   if (inst.status === 'publicado' && !isStr(inst.revisado_por, 2)) {
-    at('status "publicado" exige revisado_por preenchido (nomes dos juízes / responsável)')
+    at('status "publicado" exige revisado_por preenchido (responsável pela validação)')
   }
   if (typeof inst.revisado_por !== 'string') at('revisado_por precisa ser string (pode ser "" enquanto rascunho)')
 

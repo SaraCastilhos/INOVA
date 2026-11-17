@@ -1,12 +1,12 @@
 {
-  "name": "my-project",
+  "name": "inova",
   "version": "0.1.0",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
     "validate:professions": "node scripts/validate-professions.mjs",
     "validate:instruments": "node scripts/validate-instruments.mjs",
     "check:links": "node scripts/check-links.mjs"

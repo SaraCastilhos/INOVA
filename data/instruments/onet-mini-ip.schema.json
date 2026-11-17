@@ -32,7 +32,7 @@
     "atualizado_em": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
     "revisado_por": {
       "type": "string",
-      "description": "Obrigatório quando status = publicado (nomes dos juízes / responsável). Vazio enquanto rascunho."
+      "description": "Obrigatório quando status = publicado (responsável pela validação). Vazio enquanto rascunho."
     },
     "origem": {
       "type": "object",
